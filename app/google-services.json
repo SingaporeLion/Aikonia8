@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "574791439863",
+    "project_id": "aikonia-b01a2",
+    "storage_bucket": "aikonia-b01a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574791439863:android:2871742739cff24bf38af2",
+        "android_client_info": {
+          "package_name": "com.aikonia.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDijz3KJEx2MYY1knO7EFB2BLoJDydkKwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
