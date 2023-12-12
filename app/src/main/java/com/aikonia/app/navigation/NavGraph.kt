@@ -34,15 +34,19 @@ import com.aikonia.app.ui.startchat.StartChatViewModel
 import android.content.SharedPreferences
 import androidx.compose.ui.platform.LocalContext
 import android.content.Context
+import com.aikonia.app.data.source.local.UserRepository
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @ExperimentalAnimationApi
 @Composable
+
 fun NavGraph(
     navController: NavHostController,
     bottomBarState: MutableState<Boolean>,
     darkMode: MutableState<Boolean>,
-    purchaseHelper: PurchaseHelper
+    purchaseHelper: PurchaseHelper,
+    userRepository: UserRepository  // Hinzugefügter Parameter
+
 ) {
 
     val paddingBottom =
@@ -86,9 +90,11 @@ fun NavGraph(
             route = Screen.Welcome.route
         ) {
             val startChatViewModel: StartChatViewModel = hiltViewModel()
+
             WelcomeScreen(
                 userName = startChatViewModel.getCurrentUserName(),
-                navigateToHistory = {
+                userRepository = userRepository,  // Hinzugefügt
+                navigateToChat = {
                     navController.navigate(Screen.History.route)
                 },
                 playClickSound = {

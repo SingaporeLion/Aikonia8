@@ -43,9 +43,16 @@ import com.aikonia.app.navigation.Screen
 import com.aikonia.app.ui.theme.ConversAITheme
 import com.aikonia.app.ui.upgrade.PurchaseHelper
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.aikonia.app.data.source.local.UserRepository
+import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var userRepository: UserRepository  // Injizieren von UserRepository
 
     private val viewModel: MainActivityViewModel by viewModels()
 
@@ -99,6 +106,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.statusBarColor = Color.TRANSPARENT
         loadRewarded(this)
+
         val purchaseHelper = PurchaseHelper(this)
         purchaseHelper.billingSetup()
 
@@ -123,19 +131,16 @@ class MainActivity : ComponentActivity() {
             val darkTheme = remember { mutableStateOf(darkThemeCurrent) }
 
             ConversAITheme(darkTheme = darkTheme.value) {
-
                 val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
-
                 val bottomSheetNavigator = rememberBottomSheetNavigator()
                 val navController = rememberAnimatedNavController(bottomSheetNavigator)
-
+                val userRepository: UserRepository by hiltViewModel()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
 
                 when (navBackStackEntry?.destination?.route) {
                     Screen.Upgrade.route -> bottomBarState.value = false
                     Screen.Splash.route -> bottomBarState.value = false
-                    "${Screen.Chat.route}?name={name}&role={role}&examples={examples}&id={id}" -> bottomBarState.value =
-                        false
+                    "${Screen.Chat.route}?name={name}&role={role}&examples={examples}&id={id}" -> bottomBarState.value = false
                     null -> bottomBarState.value = false
                     else -> bottomBarState.value = true
                 }
@@ -144,10 +149,7 @@ class MainActivity : ComponentActivity() {
 
                 ModalBottomSheetLayout(
                     bottomSheetNavigator = bottomSheetNavigator,
-                    sheetShape = RoundedCornerShape(
-                        topStart = 35.dp,
-                        topEnd = 35.dp
-                    )
+                    sheetShape = RoundedCornerShape(topStart = 35.dp, topEnd = 35.dp)
                 ) {
                     Box(
                         modifier = Modifier
@@ -156,18 +158,17 @@ class MainActivity : ComponentActivity() {
                             .navigationBarsPadding()
                             .captionBarPadding()
                             .imePadding()
-                            .statusBarsPadding(),
-                    )
-                    {
+                            .statusBarsPadding()
+                    ) {
                         NavGraph(
                             navController = navController,
-                            bottomBarState,
+                            bottomBarState = bottomBarState,
                             darkMode = darkTheme,
-                            purchaseHelper
+                            purchaseHelper = purchaseHelper, // Übergeben des purchaseHelper
+                            userRepository = userRepository
                         )
                         Column(
-                            Modifier
-                                .fillMaxHeight(),
+                            Modifier.fillMaxHeight()
                         ) {
                             Spacer(modifier = Modifier.weight(1f))
                             BottomNavigationBar(navController, bottomBarState)
