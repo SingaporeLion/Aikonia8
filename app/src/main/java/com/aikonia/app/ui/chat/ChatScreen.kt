@@ -44,7 +44,6 @@ import com.aikonia.app.R
 @Composable
 fun ChatScreen(
     navigateToBack: () -> Unit,
-    navigateToUpgrade: () -> Unit,
     name: String?,
     examples: List<String>?,
     viewModel: ChatViewModel = hiltViewModel()

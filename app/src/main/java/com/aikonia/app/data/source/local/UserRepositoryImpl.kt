@@ -11,7 +11,8 @@ class UserRepositoryImpl(private val userDao: UserDao, private val sharedPrefere
 
     override suspend fun saveUser(user: User) {
         withContext(Dispatchers.IO) {
-            userDao.insertUser(user)
+            val userId = userDao.insertUser(user)  // Nimmt an, dass insertUser die ID des eingefügten Benutzers zurückgibt
+            sharedPreferences.edit().putInt("userIdKey", userId.toInt()).apply()
         }
     }
 
@@ -22,11 +23,11 @@ class UserRepositoryImpl(private val userDao: UserDao, private val sharedPrefere
     }
 
     override suspend fun getCurrentUserName(): String {
-        // Hier die Benutzer-ID abrufen
-        val userId = sharedPreferences.getInt("userIdKey", -1)
+        // Hier die Benutzer-ID als Long abrufen
+        val userId = sharedPreferences.getInt("userIdKey", -1).toLong()
         // Prüfen, ob eine gültige ID vorhanden ist
-        if (userId != -1) {
-            val currentUser = userDao.getCurrentUser(userId)
+        if (userId != -1L) {
+            val currentUser = userDao.getCurrentUser(userId.toInt())
             return currentUser.name
         } else {
             // Fallback, falls keine Benutzer-ID gespeichert ist

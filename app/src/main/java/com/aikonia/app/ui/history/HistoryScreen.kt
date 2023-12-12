@@ -36,14 +36,16 @@ import com.aikonia.app.common.components.AppBar
 import com.aikonia.app.common.toFormattedDate
 import com.aikonia.app.ui.theme.*
 import com.aikonia.app.R
-
+import com.aikonia.app.ui.startchat.StartChatViewModel
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun HistoryScreen(
     navigateToChat: (String, String, List<String>?, String) -> Unit,
     navigateToDeleteConversations: () -> Unit,
     historyViewModel: HistoryViewModel = hiltViewModel(),
+    startChatViewModel: StartChatViewModel = hiltViewModel(),
     savedStateHandle: SavedStateHandle? = null
+
 ) {
 
 
@@ -56,7 +58,7 @@ fun HistoryScreen(
     val conversations by historyViewModel.conversationsState.collectAsState()
     val isFetching by historyViewModel.isFetching.collectAsState()
     val darkMode by historyViewModel.darkMode.collectAsState()
-
+    val currentUser by startChatViewModel.currentUser.collectAsState()
 
     LaunchedEffect(true) {
         historyViewModel.getConversations()
@@ -283,14 +285,12 @@ fun HistoryScreen(
                     }, key = { it.id }) { conversation ->
 
                         val currentItem by rememberUpdatedState(conversation)
-
                         val dismissState = rememberDismissState()
 
                         if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                            historyViewModel.deleteConversation(
-                                conversation.id
-                            )
+                            historyViewModel.deleteConversation(conversation.id)
                         }
+
                         SwipeToDismiss(
                             state = dismissState,
                             modifier = Modifier
@@ -344,10 +344,12 @@ fun HistoryScreen(
                                 Row(
                                     modifier = Modifier
                                         .bounceClick {
+                                            // Abrufen der Benutzerdaten und Weiterleitung zum ChatScreen mit diesen Daten
+
                                             navigateToChat(
-                                                "",
-                                                "",
-                                                null,
+                                                currentUser?.name ?: "",
+                                                currentUser?.birthYear ?: "",
+                                                listOf(currentUser?.gender ?: ""),
                                                 currentItem.id
                                             )
                                         }
@@ -364,7 +366,6 @@ fun HistoryScreen(
                                         )
                                         .padding(vertical = 15.dp, horizontal = 15.dp),
                                     verticalAlignment = Alignment.CenterVertically
-
                                 ) {
                                     Column(
                                         verticalArrangement = Arrangement.Center,

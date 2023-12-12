@@ -32,6 +32,9 @@ import com.aikonia.app.ui.upgrade.UpgradeScreen
 import com.aikonia.app.ui.welcome.WelcomeScreen
 import com.aikonia.app.ui.startchat.StartChatViewModel
 import android.content.SharedPreferences
+import androidx.compose.ui.platform.LocalContext
+import android.content.Context
+
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @ExperimentalAnimationApi
 @Composable
@@ -98,7 +101,7 @@ fun NavGraph(
         ) {
             SplashScreen(
                 navigateToStartChat = {
-                    navController.navigate(Screen.StartChat.route) {
+                    navController.navigate(Screen.Welcome.route) {
                         popUpTo(Screen.Splash.route) {
                             inclusive = true
                         }
@@ -143,16 +146,32 @@ fun NavGraph(
                 }
             }
         ) {
-            //StartChatScreen(
-            //    navigateToChat = { name, role, examples ->
-            //        val examplesString = examples?.joinToString(separator = "|")
-            //        navController.navigate("${Screen.Chat.route}?name=$name&role=$role&examples=$examplesString")
-             //   },
-                //navigateToUpgrade = {
-                //    navController.navigate(Screen.Upgrade.route)
-               // },
+            // Holen des ApplicationContext
+            val context = LocalContext.current
 
-          //  )
+            // Holen der SharedPreferences-Instanz
+            val sharedPreferences = context.getSharedPreferences("mova_shared_pref", Context.MODE_PRIVATE)
+
+            StartChatScreen(
+                navigateToMenu = {
+                    // Implementieren Sie die Navigation zurück zum Hauptmenü
+                    // Beispiel: navController.navigate(Screen.MainMenu.route) { ... }
+                },
+                navigateToChat = { name, role, examples ->
+                    val examplesString = examples?.joinToString(separator = "|")
+                    navController.navigate("${Screen.Chat.route}?name=$name&role=$role&examples=$examplesString")
+                },
+                navigateToWelcome = {
+                    // Direkte Navigation zum WelcomeScreen
+                    navController.navigate(Screen.Welcome.route) {
+                        popUpTo(Screen.Splash.route) {
+                            inclusive = true
+                        }
+                    }
+                },
+                sharedPreferences = sharedPreferences // Übergabe der SharedPreferences-Instanz
+                // ... (weitere potenzielle Parameter und Funktionen für StartChatScreen)
+            )
         }
 
         composable(route = "${Screen.Chat.route}?name={name}&role={role}&examples={examples}&id={id}",
@@ -241,22 +260,23 @@ fun NavGraph(
 
             var exampleList: List<String> = emptyList()
 
-            if (it.arguments?.getString("examples") != "null") {
-                exampleList =
-                    it.arguments?.getString("examples")?.split("|")?.toTypedArray()?.toList()
-                        ?: emptyList()
+            val name = it.arguments?.getString("name") ?: ""
+            val examplesString = it.arguments?.getString("examples")
+            if (examplesString != null && examplesString != "null") {
+                exampleList = examplesString.split("|").toList()
             }
-
 
             ChatScreen(
                 navigateToBack = {
-                    navController.popBackStack()
+                    // Navigation zurück zum History-Screen
+                    navController.navigate(Screen.History.route) {
+                        popUpTo(Screen.Chat.route) {
+                            inclusive = true
+                        }
+                    }
                 },
-                navigateToUpgrade = {
-                    navController.navigate(Screen.Upgrade.route)
-                },
-                it.arguments?.getString("name"),
-                exampleList
+                name = name,
+                examples = exampleList
             )
         }
 

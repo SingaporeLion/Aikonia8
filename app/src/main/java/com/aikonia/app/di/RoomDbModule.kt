@@ -38,11 +38,11 @@ class RoomDbModule {
     @Singleton
     fun provideUserDao(db: ConversAIDatabase): UserDao = db.userDao()
 
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences {
-        return appContext.getSharedPreferences("name_of_your_preference_file", Context.MODE_PRIVATE)
-    }
+    //@Provides
+    //@Singleton
+    //fun provideSharedPreferences(@ApplicationContext appContext: Context): SharedPreferences {
+    //    return appContext.getSharedPreferences("name_of_your_preference_file", Context.MODE_PRIVATE)
+    //}
 
 
     @Provides

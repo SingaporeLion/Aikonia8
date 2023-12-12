@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import android.content.SharedPreferences
+import kotlinx.coroutines.flow.StateFlow
 
 @HiltViewModel
 class StartChatViewModel @Inject constructor(
@@ -23,7 +25,9 @@ class StartChatViewModel @Inject constructor(
     private val isFirstTimeUseCase: IsFirstTimeUseCase,
     private val setFirstTimeUseCase: SetFirstTimeUseCase,
     private val isThereUpdateUseCase: IsThereUpdateUseCase,
-    private val getCurrentLanguageCodeUseCase: GetCurrentLanguageCodeUseCase
+    private val getCurrentLanguageCodeUseCase: GetCurrentLanguageCodeUseCase,
+    private val sharedPreferences: SharedPreferences
+
 ) : ViewModel() {
 
     val isProVersion = mutableStateOf(false)
@@ -72,5 +76,21 @@ class StartChatViewModel @Inject constructor(
     fun checkUserDataExists(userId: Int) = viewModelScope.launch {
         val userExists = userRepository.getUserById(userId) != null
         _isUserDataSaved.value = userExists
+    }
+
+    // State-Flow für den aktuellen Benutzer
+    private val _currentUser = MutableStateFlow<User?>(null)
+    val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
+
+    // Funktion zum asynchronen Laden des aktuellen Benutzers
+    fun loadCurrentUser() = viewModelScope.launch {
+        // ID des aktuellen Benutzers abrufen
+        val userId = sharedPreferences.getInt("userIdKey", -1).toLong()
+        val user = if (userId != -1L) {
+            userRepository.getUserById(userId.toInt())
+        } else {
+            null
+        }
+        _currentUser.value = user
     }
 }

@@ -52,12 +52,14 @@ import android.content.SharedPreferences
 fun StartChatScreen(
     navigateToMenu: () -> Unit,
     navigateToChat: (String, String, List<String>?) -> Unit,
+    navigateToWelcome: () -> Unit,
     startChatViewModel: StartChatViewModel = hiltViewModel(),
-    sharedPreferences: SharedPreferences // Bereitstellen der SharedPreferences-Instanz hier
+    sharedPreferences: SharedPreferences
 ) {
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
     var showUpdateDialog by remember { mutableStateOf(false) }
+
     var name by remember { mutableStateOf("") }
     var birthYear by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
@@ -78,13 +80,22 @@ fun StartChatScreen(
         if (shouldStartInMenu) {
             navigateToMenu()
         } else {
-            startChatViewModel.checkUserDataExists(1) // Beispiel-UserID
-            startChatViewModel.getCurrentLanguageCode()
-            changeLanguage(startChatViewModel.currentLanguageCode.value)
-            startChatViewModel.getFirstTime()
-            startChatViewModel.getProVersion()
-            startChatViewModel.isThereUpdate()
+            // Abrufen der Benutzer-ID
+            val userId = sharedPreferences.getInt("userIdKey", -1).toLong()
+            if (userId != -1L) {
+                startChatViewModel.checkUserDataExists(userId.toInt())
+            }
+
+            // ... (Rest der Logik bleibt gleich)
+
+            // Entscheidung, ob zum Chat oder zum Welcome-Screen navigiert werden soll
+            if (isUserDataSaved) {
+                navigateToChat(name, birthYear, listOf(gender))
+            } else {
+                navigateToWelcome()
+            }
         }
+
 
         if (isOnline(context).not()) showDialog = true
         if (startChatViewModel.isThereUpdate.value) showUpdateDialog = true
@@ -110,16 +121,16 @@ fun StartChatScreen(
                         Uri.parse("market://details?id=com.aikonia.app")
                     )
                 )
-            } catch (e: ActivityNotFoundException) {
+           } catch (e: ActivityNotFoundException) {
                 context.startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse("https://play.google.com/store/apps/details?id=com.aikonia.app")
-                    )
-                )
-            }
+                   )
+               )
+           }
         }
-    }
+     }
 
     Column(
         Modifier
@@ -283,3 +294,4 @@ fun StartChatScreen(
         }
     }
 }
+

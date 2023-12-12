@@ -9,7 +9,7 @@ import com.aikonia.app.data.source.local.User  // Stellen Sie sicher, dass der r
 @Dao
 interface UserDao {
     @Insert
-    suspend fun insertUser(user: User)
+    suspend fun insertUser(user: User): Long
 
     @Query("SELECT * FROM user_table WHERE id = :userId")
     suspend fun getUserById(userId: Int): User?
