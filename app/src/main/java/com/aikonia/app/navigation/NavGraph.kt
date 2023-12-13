@@ -86,14 +86,8 @@ fun NavGraph(
             })
         }
 
-        composable(
-            route = Screen.Welcome.route
-        ) {
-            val startChatViewModel: StartChatViewModel = hiltViewModel()
-
+        composable(route = Screen.Welcome.route) {
             WelcomeScreen(
-                userName = startChatViewModel.getCurrentUserName(),
-                userRepository = userRepository,  // Hinzugefügt
                 navigateToChat = {
                     navController.navigate(Screen.History.route)
                 },

@@ -134,7 +134,6 @@ class MainActivity : ComponentActivity() {
                 val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
                 val bottomSheetNavigator = rememberBottomSheetNavigator()
                 val navController = rememberAnimatedNavController(bottomSheetNavigator)
-                val userRepository: UserRepository by hiltViewModel()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
 
                 when (navBackStackEntry?.destination?.route) {

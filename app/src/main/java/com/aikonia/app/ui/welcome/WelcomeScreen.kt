@@ -19,25 +19,24 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.ui.unit.dp
 import com.aikonia.app.R // Ersetzen Sie dies durch Ihren tatsächlichen Ressourcen-Importpfad
 import com.aikonia.app.data.source.local.UserRepository
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun WelcomeScreen(
-    userName: String,
-    userRepository: UserRepository,
-    navigateToChat: () -> Unit,  // Funktion zum Navigieren zum Chat
-    playClickSound: () -> Unit  // Funktion, um einen Klick-Sound abzuspielen
+    navigateToChat: () -> Unit,
+    playClickSound: () -> Unit
 ) {
-    val context = LocalContext.current
-    val backgroundImage = painterResource(id = R.drawable.aikonia_screen) // Ersetzen Sie mit Ihrem Hintergrundbild
+    val userRepository: UserRepository by hiltViewModel()
+    val backgroundImage = painterResource(id = R.drawable.aikonia_screen)
 
-    // Überprüfe, ob der Benutzer bereits existiert
-    LaunchedEffect(userName) {
-        if (userName.isEmpty() || userName == "Unbekannter Benutzer") {
-            val currentUserName = userRepository.getCurrentUserName()
-            if (currentUserName != "Unbekannter Benutzer") {
-                navigateToChat()
-            }
-        } else {
+    // Initialisieren des Benutzernamens als leerer String
+    var userName by remember { mutableStateOf("") }
+
+    // LaunchedEffect, um den Benutzernamen bei jedem Rendering der Komponente zu überprüfen
+    LaunchedEffect(Unit) {
+        userName = userRepository.getCurrentUserName()
+        if (userName != "Unbekannter Benutzer") {
             navigateToChat()
         }
     }
