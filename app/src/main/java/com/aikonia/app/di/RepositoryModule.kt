@@ -25,4 +25,5 @@ abstract class RepositoryModule {
     @Binds
     abstract fun provideFirebaseRepository(firebaseRepositoryImpl: FirebaseRepositoryImpl): FirebaseRepository
 
+
 }

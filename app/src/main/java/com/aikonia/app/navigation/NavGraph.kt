@@ -86,7 +86,9 @@ fun NavGraph(
             })
         }
 
-        composable(route = Screen.Welcome.route) {
+        composable(
+            route = Screen.Welcome.route
+        ) {
             WelcomeScreen(
                 navigateToChat = {
                     navController.navigate(Screen.History.route)

@@ -27,17 +27,17 @@ fun WelcomeScreen(
     navigateToChat: () -> Unit,
     playClickSound: () -> Unit
 ) {
-    val userRepository: UserRepository by hiltViewModel()
+    val viewModel: WelcomeScreenViewModel = hiltViewModel()
     val backgroundImage = painterResource(id = R.drawable.aikonia_screen)
 
-    // Initialisieren des Benutzernamens als leerer String
     var userName by remember { mutableStateOf("") }
 
-    // LaunchedEffect, um den Benutzernamen bei jedem Rendering der Komponente zu überprüfen
     LaunchedEffect(Unit) {
-        userName = userRepository.getCurrentUserName()
-        if (userName != "Unbekannter Benutzer") {
-            navigateToChat()
+        viewModel.getCurrentUserName { name ->
+            userName = name
+            if (userName != "Unbekannter Benutzer") {
+                navigateToChat()
+            }
         }
     }
 
