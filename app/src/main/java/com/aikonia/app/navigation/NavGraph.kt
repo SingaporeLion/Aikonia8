@@ -39,14 +39,12 @@ import com.aikonia.app.data.source.local.UserRepository
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @ExperimentalAnimationApi
 @Composable
-
 fun NavGraph(
     navController: NavHostController,
     bottomBarState: MutableState<Boolean>,
     darkMode: MutableState<Boolean>,
     purchaseHelper: PurchaseHelper,
-    userRepository: UserRepository  // Hinzugefügter Parameter
-
+    userRepository: UserRepository // UserRepository-Instanz
 ) {
 
     val paddingBottom =
@@ -87,27 +85,35 @@ fun NavGraph(
         }
 
         composable(
-            route = Screen.Welcome.route
-        ) {
-            WelcomeScreen(
-                navigateToChat = {
-                    navController.navigate(Screen.History.route)
-                },
-                playClickSound = {
-                    // Implementieren Sie die Funktionalität, um einen Klicksound abzuspielen
-                }
-            )
-        }
-        composable(
             route = Screen.Splash.route
         ) {
             SplashScreen(
                 navigateToStartChat = {
-                    navController.navigate(Screen.Welcome.route) {
-                        popUpTo(Screen.Splash.route) {
-                            inclusive = true
-                        }
+                    // Navigiere zu StartChatScreen, wenn keine Benutzerdaten vorhanden sind
+                    navController.navigate(Screen.StartChat.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
                     }
+                },
+                navigateToWelcome = {
+                    // Navigiere zu WelcomeScreen, wenn Benutzerdaten vorhanden sind
+                    navController.navigate(Screen.Welcome.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                },
+                userRepository = userRepository // UserRepository-Instanz übergeben
+            )
+        }
+
+        // WelcomeScreen Composable
+        composable(
+            route = Screen.Welcome.route
+        ) {
+            WelcomeScreen(
+                navigateToChat = {
+                    navController.navigate(Screen.History.route) // oder eine andere Route, falls nötig
+                },
+                playClickSound = {
+                    // Implementieren Sie hier den Klick-Sound
                 }
             )
         }
