@@ -22,15 +22,15 @@ import kotlinx.coroutines.flow.StateFlow
 class StartChatViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val isProVersionUseCase: IsProVersionUseCase,
-    private val isFirstTimeUseCase: IsFirstTimeUseCase,
-    private val setFirstTimeUseCase: SetFirstTimeUseCase,
+    //private val isFirstTimeUseCase: IsFirstTimeUseCase,
+    //private val setFirstTimeUseCase: SetFirstTimeUseCase,
     private val isThereUpdateUseCase: IsThereUpdateUseCase,
     private val getCurrentLanguageCodeUseCase: GetCurrentLanguageCodeUseCase,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     val isProVersion = mutableStateOf(false)
-    val isFirstTime = mutableStateOf(true)
+    //val isFirstTime = mutableStateOf(true)
     val isThereUpdate = mutableStateOf(false)
     val currentLanguageCode = mutableStateOf("de")
 
@@ -48,11 +48,11 @@ class StartChatViewModel @Inject constructor(
         isThereUpdate.value = isThereUpdateUseCase()
     }
 
-    fun getFirstTime() = viewModelScope.launch {
-        isFirstTime.value = isFirstTimeUseCase()
-    }
+    //fun getFirstTime() = viewModelScope.launch {
+    //    isFirstTime.value = isFirstTimeUseCase()
+   // }
 
-    fun setFirstTime(isFirstTime: Boolean) = setFirstTimeUseCase(isFirstTime)
+   // fun setFirstTime(isFirstTime: Boolean) = setFirstTimeUseCase(isFirstTime)
 
     fun getCurrentLanguageCode() = viewModelScope.launch {
         currentLanguageCode.value = getCurrentLanguageCodeUseCase()
@@ -75,6 +75,7 @@ class StartChatViewModel @Inject constructor(
         } else {
             null
         }
+        _isUserDataSaved.value = _currentUser.value != null
     }
 
     fun checkUserDataExists(userId: Int) = viewModelScope.launch {

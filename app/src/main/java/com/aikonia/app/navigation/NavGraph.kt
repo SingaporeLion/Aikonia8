@@ -90,7 +90,7 @@ fun NavGraph(
             SplashScreen(
                 navigateToStartChat = {
                     // Navigiere zu StartChatScreen, wenn keine Benutzerdaten vorhanden sind
-                    navController.navigate(Screen.Chat.route) {
+                    navController.navigate(Screen.StartChat.route) {
                         popUpTo(Screen.Splash.route) { inclusive = true }
                     }
                 },
