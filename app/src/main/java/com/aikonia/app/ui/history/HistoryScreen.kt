@@ -37,6 +37,7 @@ import com.aikonia.app.common.toFormattedDate
 import com.aikonia.app.ui.theme.*
 import com.aikonia.app.R
 import com.aikonia.app.ui.startchat.StartChatViewModel
+
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun HistoryScreen(
@@ -45,7 +46,6 @@ fun HistoryScreen(
     historyViewModel: HistoryViewModel = hiltViewModel(),
     startChatViewModel: StartChatViewModel = hiltViewModel(),
     savedStateHandle: SavedStateHandle? = null
-
 ) {
 
 
@@ -58,7 +58,7 @@ fun HistoryScreen(
     val conversations by historyViewModel.conversationsState.collectAsState()
     val isFetching by historyViewModel.isFetching.collectAsState()
     val darkMode by historyViewModel.darkMode.collectAsState()
-    val currentUser by startChatViewModel.currentUser.collectAsState()
+    val currentUser by startChatViewModel.currentUser.collectAsState(initial = null)
 
     LaunchedEffect(true) {
         historyViewModel.getConversations()
@@ -279,7 +279,6 @@ fun HistoryScreen(
                         .padding(horizontal = 10.dp)
                         .padding(top = 10.dp)
                 ) {
-
                     items(items = conversations.filter {
                         it.title.contains(searchText.value, ignoreCase = true)
                     }, key = { it.id }) { conversation ->
@@ -296,9 +295,7 @@ fun HistoryScreen(
                             modifier = Modifier
                                 .padding(vertical = Dp(1f))
                                 .animateItemPlacement(),
-                            directions = setOf(
-                                DismissDirection.EndToStart
-                            ),
+                            directions = setOf(DismissDirection.EndToStart),
                             dismissThresholds = { direction ->
                                 FractionalThreshold(if (direction == DismissDirection.EndToStart) 0.1f else 0.05f)
                             },
@@ -317,14 +314,6 @@ fun HistoryScreen(
 
                                 Box(
                                     modifier = Modifier
-                                        .bounceClick {
-                                            navigateToChat(
-                                                "",
-                                                "",
-                                                null,
-                                                currentItem.id
-                                            )
-                                        }
                                         .padding(vertical = 5.dp, horizontal = 5.dp)
                                         .fillMaxSize()
                                         .background(color, RoundedCornerShape(16.dp))

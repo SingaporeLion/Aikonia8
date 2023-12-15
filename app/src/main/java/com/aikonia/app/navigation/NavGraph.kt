@@ -90,7 +90,7 @@ fun NavGraph(
             SplashScreen(
                 navigateToStartChat = {
                     // Navigiere zu StartChatScreen, wenn keine Benutzerdaten vorhanden sind
-                    navController.navigate(Screen.StartChat.route) {
+                    navController.navigate(Screen.Chat.route) {
                         popUpTo(Screen.Splash.route) { inclusive = true }
                     }
                 },
@@ -99,8 +99,7 @@ fun NavGraph(
                     navController.navigate(Screen.Welcome.route) {
                         popUpTo(Screen.Splash.route) { inclusive = true }
                     }
-                },
-                userRepository = userRepository // UserRepository-Instanz übergeben
+                }
             )
         }
 

@@ -27,7 +27,6 @@ class StartChatViewModel @Inject constructor(
     private val isThereUpdateUseCase: IsThereUpdateUseCase,
     private val getCurrentLanguageCodeUseCase: GetCurrentLanguageCodeUseCase,
     private val sharedPreferences: SharedPreferences
-
 ) : ViewModel() {
 
     val isProVersion = mutableStateOf(false)
@@ -36,14 +35,17 @@ class StartChatViewModel @Inject constructor(
     val currentLanguageCode = mutableStateOf("de")
 
     private val _isUserDataSaved = MutableStateFlow(false)
-    val isUserDataSaved = _isUserDataSaved.asStateFlow()
+    val isUserDataSaved: StateFlow<Boolean> = _isUserDataSaved.asStateFlow()
+
+    private val _currentUser = MutableStateFlow<User?>(null)
+    val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
+
+    init {
+        loadCurrentUser()
+    }
 
     fun isThereUpdate() = viewModelScope.launch {
         isThereUpdate.value = isThereUpdateUseCase()
-    }
-
-    fun getProVersion() = viewModelScope.launch {
-        isProVersion.value = isProVersionUseCase()
     }
 
     fun getFirstTime() = viewModelScope.launch {
@@ -59,38 +61,24 @@ class StartChatViewModel @Inject constructor(
     fun saveUser(name: String, birthYear: String, gender: String) = viewModelScope.launch {
         userRepository.saveUser(User(name = name, birthYear = birthYear, gender = gender))
         _isUserDataSaved.value = true
+        loadCurrentUser() // Update current user after user is saved
     }
 
     fun resetUserDataSavedStatus() {
         _isUserDataSaved.value = false
     }
 
-    fun getCurrentUserName(): String {
-        var userName = ""
-        viewModelScope.launch {
-            userName = userRepository.getCurrentUserName()
+    private fun loadCurrentUser() = viewModelScope.launch {
+        val userId = sharedPreferences.getInt("userIdKey", -1)
+        _currentUser.value = if (userId != -1) {
+            userRepository.getUserById(userId)
+        } else {
+            null
         }
-        return userName
     }
 
     fun checkUserDataExists(userId: Int) = viewModelScope.launch {
         val userExists = userRepository.getUserById(userId) != null
         _isUserDataSaved.value = userExists
-    }
-
-    // State-Flow für den aktuellen Benutzer
-    private val _currentUser = MutableStateFlow<User?>(null)
-    val currentUser: StateFlow<User?> = _currentUser.asStateFlow()
-
-    // Funktion zum asynchronen Laden des aktuellen Benutzers
-    fun loadCurrentUser() = viewModelScope.launch {
-        // ID des aktuellen Benutzers abrufen
-        val userId = sharedPreferences.getInt("userIdKey", -1).toLong()
-        val user = if (userId != -1L) {
-            userRepository.getUserById(userId.toInt())
-        } else {
-            null
-        }
-        _currentUser.value = user
     }
 }

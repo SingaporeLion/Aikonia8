@@ -55,6 +55,7 @@ fun ChatScreen(
     val messagesMap by viewModel.messagesState.collectAsState()
     val isGenerating by viewModel.isGenerating.collectAsState()
     val context = LocalContext.current
+
     LaunchedEffect(Unit) {
         viewModel.getProVersion()
         viewModel.getFreeMessageCount()
@@ -116,7 +117,7 @@ fun ChatScreen(
                             .padding(horizontal = 9.dp)
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.app_icon),
+                            painter = painterResource(R.drawable.aikonia_screen),
                             contentDescription = "image",
                             tint = MaterialTheme.colors.primary,
                             modifier = Modifier

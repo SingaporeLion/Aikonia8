@@ -13,14 +13,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import com.aikonia.app.R
-import android.content.SharedPreferences
 import com.aikonia.app.data.source.local.UserRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import com.aikonia.app.ui.startchat.StartChatViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun SplashScreen(
     navigateToStartChat: () -> Unit,
     navigateToWelcome: () -> Unit,
-    userRepository: UserRepository
+    startChatViewModel: StartChatViewModel = hiltViewModel()
 ) {
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnimation = animateFloatAsState(
@@ -28,23 +31,22 @@ fun SplashScreen(
         animationSpec = tween(durationMillis = 4000)
     )
 
+    // Beobachtung des Benutzerstatus aus dem ViewModel
+    val isUserDataSaved by startChatViewModel.isUserDataSaved.collectAsState()
+
     LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(2000)
-        // Prüfen, ob Benutzerdaten vorhanden sind
-        val userName = userRepository.getCurrentUserName()
-        if (userName.isEmpty() || userName == "Unbekannter Benutzer") {
-            // Keine Benutzerdaten vorhanden, navigiere zu StartChat
-            navigateToStartChat()
-        } else {
-            // Benutzerdaten vorhanden, navigiere zu Welcome
+        // Entscheiden, ob zu StartChat oder Welcome navigiert wird
+        if (isUserDataSaved) {
             navigateToWelcome()
+        } else {
+            navigateToStartChat()
         }
     }
 
     SplashDesign(alpha = alphaAnimation.value)
 }
-
 
 @Composable
 fun SplashDesign(alpha: Float) {

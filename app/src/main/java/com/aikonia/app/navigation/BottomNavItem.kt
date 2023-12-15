@@ -13,7 +13,7 @@ sealed class BottomNavItem(
         title = R.string.chat,
         icon = R.drawable.chat,
         icon_filled = R.drawable.chat_filled,
-        route = Screen.StartChat.route
+        route = Screen.Chat.route
     )
 
     //object AiAssistants : BottomNavItem(
