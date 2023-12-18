@@ -47,7 +47,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import android.content.SharedPreferences
-
+import android.util.Log
 @Composable
 fun StartChatScreen(
     navigateToMenu: () -> Unit,
@@ -77,6 +77,7 @@ fun StartChatScreen(
     }
 
     LaunchedEffect(Unit) {
+        Log.d("StarChatScreen", "Checking user data saved status")
         if (shouldStartInMenu) {
             navigateToMenu()
         } else {
@@ -90,8 +91,10 @@ fun StartChatScreen(
 
             // Entscheidung, ob zum Chat oder zum Welcome-Screen navigiert werden soll
             if (isUserDataSaved) {
+                Log.d("StartChatScreen", "User data is saved, navigating to ChatScreen")
                 navigateToChat(name, birthYear, listOf(gender))
             } else {
+                Log.d("StarChatScreen", "User data is saved, navigating to WelcomeScreen")
                 navigateToWelcome()
             }
         }
@@ -101,9 +104,6 @@ fun StartChatScreen(
         if (startChatViewModel.isThereUpdate.value) showUpdateDialog = true
     }
 
-    if (!shouldStartInMenu && isUserDataSaved) {
-        navigateToChat(name, birthYear, listOf(gender))
-    }
 
 
     if (showDialog) {
@@ -289,6 +289,7 @@ fun StartChatScreen(
             // Navigation zum Chat bei erfolgreicher Speicherung der Benutzerdaten
             val isSaved = startChatViewModel.isUserDataSaved.collectAsState().value
             if (isSaved) navigateToChat(name, birthYear, listOf(gender))
+
 
 
         }

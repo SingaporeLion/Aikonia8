@@ -20,7 +20,31 @@ import androidx.compose.ui.unit.dp
 import com.aikonia.app.R // Ersetzen Sie dies durch Ihren tatsächlichen Ressourcen-Importpfad
 import com.aikonia.app.data.source.local.UserRepository
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.animation.core.*
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.background
+import androidx.compose.ui.graphics.graphicsLayer
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.content.Context
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.ui.draw.alpha
+
 
 @Composable
 fun WelcomeScreen(
@@ -28,51 +52,98 @@ fun WelcomeScreen(
     playClickSound: () -> Unit
 ) {
     val viewModel: WelcomeScreenViewModel = hiltViewModel()
-    val backgroundImage = painterResource(id = R.drawable.aikonia_screen)
-
+    val density = LocalDensity.current.density
     var userName by remember { mutableStateOf("") }
+    val customTextColor = Color(0xFE, 0xFD, 0xF5, 0xFF)
+    val dancingScriptFontFamily = FontFamily(Font(R.font.dancingscript_medium))
+    val alpha: Float by rememberInfiniteTransition().animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1500, easing = FastOutSlowInEasing),
+            RepeatMode.Reverse
+        )
+    )
 
     LaunchedEffect(Unit) {
         viewModel.getCurrentUserName { name ->
             userName = name
-            if (userName != "Unbekannter Benutzer") {
-                navigateToChat()
-            }
         }
     }
+    fun smoothTransition(currentValue: Float, targetValue: Float, smoothing: Float): Float {
+        return currentValue + (targetValue - currentValue) * smoothing
+    }
+    // Parallaxeneffekt
 
-    // UI für den Willkommensbildschirm
-    if (userName.isEmpty() || userName == "Unbekannter Benutzer") {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = backgroundImage,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
 
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Schön Dich wiederzusehen, $userName!",
-                    style = TextStyle(color = Color.White, fontSize = 24.sp)
-                )
+    val context = LocalContext.current
+    val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+    var x by remember { mutableStateOf(0f) }
+    var y by remember { mutableStateOf(0f) }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Button(
-                    onClick = {
-                        playClickSound()
-                        navigateToChat()
-                    }
-                ) {
-                    Text("Zum Menü")
-                }
+    DisposableEffect(Unit) {
+        val listener = object : SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent) {
+                x = smoothTransition(x, -event.values[0] * 1.5f, 0.1f)
+                y = smoothTransition(y, -event.values[1] * 1.5f, 0.1f)
             }
+            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+        }
+        sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_UI)
+        onDispose { sensorManager.unregisterListener(listener) }
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = R.drawable.aikonia_screen),
+            contentDescription = "Hintergrund",
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    scaleX = 1.1f
+                    scaleY = 1.1f
+                    translationX = x * density
+                    translationY = y * density
+                },
+            contentScale = ContentScale.Crop
+        )
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 40.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Button(
+                onClick = {
+                    playClickSound()
+                    navigateToChat()
+                },
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text("Los geht's")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Willkommen in Aikonia, $userName",
+                style = TextStyle(
+                    color = customTextColor,
+                    fontSize = 24.sp,
+                    fontFamily = dancingScriptFontFamily,
+                    shadow = Shadow(
+                        color = customTextColor.copy(alpha = 0.5f),
+                        offset = androidx.compose.ui.geometry.Offset(0f, 0f),
+                        blurRadius = 24.dp.value * density
+                    )
+                ),
+                modifier = Modifier.alpha(alpha)
+            )
         }
     }
     // Hintergrundmusik abspielen
     // ...
+
 }

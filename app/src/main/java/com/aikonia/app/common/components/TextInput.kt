@@ -42,6 +42,11 @@ fun TextInput(
     viewModel: ChatViewModel = hiltViewModel(),
     inputText: MutableState<String>
 ) {
+    // Fügen Sie die neuen Farben hinzu, wenn Sie diese noch nicht definiert haben
+    val VibrantYellow = Color(0xFFFFEFB5)
+    val VibrantBlue = Color(0xFF6A5ACD)
+    val DeepBlue = Color(0xFF000033)
+    val DarkViolet = Color(0xFF2E005C)
     val context = LocalContext.current
 
     var showDialog by remember {
@@ -123,17 +128,17 @@ fun TextInput(
                             .weight(1f)
                             .border(
                                 1.dp,
-                                if (hasFocus) Green else Color.Transparent,
+                                if (hasFocus) VibrantYellow else Color.Transparent, // Hier ändern wir die Border-Farbe
                                 RoundedCornerShape(16.dp)
                             )
                             .onFocusChanged { focusState -> hasFocus = focusState.hasFocus },
                         shape = RoundedCornerShape(16.dp),
                         colors = TextFieldDefaults.textFieldColors(
-                            textColor = MaterialTheme.colors.surface,
+                            textColor = White,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent,
-                            backgroundColor = if (hasFocus) GreenShadow else MaterialTheme.colors.secondary
+                            backgroundColor = if (hasFocus) VibrantBlue else DeepBlue // Verwendung von VibrantBlue für den Fokus und DeepBlue als Standard
                         )
                     )
 
@@ -192,7 +197,7 @@ fun TextInput(
                             }
                         }, modifier = Modifier
                             .size(50.dp)
-                            .background(color = Green, shape = RoundedCornerShape(90.dp))
+                            .background(color = VibrantBlue, shape = RoundedCornerShape(90.dp)) // Verwendung von VibrantBlue für den Hintergrund
 
                     ) {
                         Icon(

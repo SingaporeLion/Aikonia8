@@ -53,3 +53,9 @@ val PastelRose = Color(0xFFFFC0CB)
 val PastelAqua = Color(0xFFADD8E6)
 
 
+// Aikonia Colors
+
+val VibrantYellow = Color(0xFFFFF0BA)
+val VibrantBlue = Color(0xFF6A5ACD)
+val DeepBlue = Color(0xFF000033)
+val DarkViolet = Color(0xFF2E005C)

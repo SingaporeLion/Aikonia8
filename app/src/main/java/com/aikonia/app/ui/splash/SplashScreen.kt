@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.aikonia.app.ui.startchat.StartChatViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import android.util.Log
 
 @Composable
 fun SplashScreen(
@@ -38,12 +39,16 @@ fun SplashScreen(
         startAnimation = true
         delay(2000)
         // Entscheiden, ob zu StartChat oder Welcome navigiert wird
-        if (isUserDataSaved) {
-            navigateToWelcome()
-        } else {
-            navigateToStartChat()
+
+            Log.d("SplashScreen", "Checking user data saved status")
+            if (isUserDataSaved) {
+                Log.d("SplashScreen", "User data is saved, navigating to WelcomeScreen")
+                navigateToWelcome()
+            } else {
+                Log.d("SplashScreen", "No user data, navigating to StartChatScreen")
+                navigateToStartChat()
+            }
         }
-    }
 
     SplashDesign(alpha = alphaAnimation.value)
 }

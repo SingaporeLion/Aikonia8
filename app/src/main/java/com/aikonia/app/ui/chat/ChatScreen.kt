@@ -40,142 +40,74 @@ import com.aikonia.app.ui.theme.GreenShadow
 import com.aikonia.app.ui.theme.RedShadow
 import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.R
+import com.aikonia.app.ui.theme.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
 
 @Composable
 fun ChatScreen(
     navigateToBack: () -> Unit,
-    name: String?,
-    examples: List<String>?,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-
+    val backgroundImagePainter: Painter = painterResource(id = R.drawable.background_chat10) // Stellen Sie sicher, dass Sie den korrekten Ressourcen-ID verwenden
     val freeMessageCount by viewModel.freeMessageCount.collectAsState()
     val isProVersion by viewModel.isProVersion.collectAsState()
     val conversationId by viewModel.currentConversationState.collectAsState()
     val messagesMap by viewModel.messagesState.collectAsState()
     val isGenerating by viewModel.isGenerating.collectAsState()
     val context = LocalContext.current
+    var userName by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         viewModel.getProVersion()
         viewModel.getFreeMessageCount()
+        viewModel.getCurrentUserName { name ->
+            userName = name
+        }
     }
 
     val messages: List<MessageModel> =
-        if (messagesMap[conversationId] == null) listOf() else messagesMap[conversationId]!!
+        messagesMap[conversationId] ?: listOf()
 
     val paddingBottom =
         animateDpAsState(
-            if (isGenerating) {
-                90.dp
-            } else {
-                0.dp
-            },
-            animationSpec = tween(Constants.TRANSITION_ANIMATION_DURATION)
+            targetValue = if (isGenerating) 90.dp else 0.dp,
+            animationSpec = tween(durationMillis = Constants.TRANSITION_ANIMATION_DURATION)
         )
 
     val inputText = remember { mutableStateOf("") }
 
-    Column(Modifier) {
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+    Box(
+        Modifier
+            .fillMaxSize()
+    ) {
+        Image(
+            painter = backgroundImagePainter,
+            contentDescription = "Chat Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Column(
+            Modifier
+                .fillMaxSize()
+        ) {
             AppBar(
                 onClickAction = navigateToBack,
                 image = R.drawable.arrow_left,
-                text = if (name.isNullOrBlank()) {
+                text = if (userName.isBlank()) {
                     stringResource(R.string.app_name)
                 } else {
-                    name
+                    "Abenteurer $userName!"
                 },
                 MaterialTheme.colors.surface
             )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Spacer(modifier = Modifier.weight(1f))
-                if (isProVersion) {
-                    Text(
-                        text = stringResource(R.string.pro),
-                        color = MaterialTheme.colors.primary,
-                        style = TextStyle(
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.W600,
-                            fontFamily = Urbanist,
-                            lineHeight = 25.sp
-                        ),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .background(GreenShadow, shape = RoundedCornerShape(90.dp))
-                            .padding(horizontal = 9.dp)
-                    )
-                } else {
-                    Row(
-                        modifier = Modifier
-                            .background(GreenShadow, shape = RoundedCornerShape(90.dp))
-                            .padding(horizontal = 9.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.aikonia_screen),
-                            contentDescription = "image",
-                            tint = MaterialTheme.colors.primary,
-                            modifier = Modifier
-                                .width(27.dp)
-                                .height(27.dp)
-                                .padding(end = 5.dp)
-                        )
-
-                        Text(
-                            text = freeMessageCount.toString(),
-                            color = MaterialTheme.colors.primary,
-                            style = TextStyle(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.W600,
-                                fontFamily = Urbanist,
-                                lineHeight = 25.sp
-                            ),
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
-            }
         }
-
-        Box(
-            modifier = Modifier
-                .weight(1f)
-        ) {
-            if (messages.isEmpty()) {
-                if (examples.isNullOrEmpty()) {
-                    Capabilities(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 16.dp)
-                    )
-                } else {
-                    Examples(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 16.dp),
-                        examples = examples,
-                        inputText = inputText
-                    )
-                }
-            } else {
-                MessageList(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = paddingBottom.value), messages
-                )
-            }
-        }
-
-        TextInput(inputText = inputText)
     }
 }
-
-
 
 @Composable
 fun StopButton(modifier: Modifier, onClick: () -> Unit) {
@@ -236,88 +168,6 @@ fun Capabilities(modifier: Modifier = Modifier) {
                 contentDescription = stringResource(R.string.app_name),
                 tint = MaterialTheme.colors.onSurface,
                 modifier = Modifier.size(width = 80.dp, height = 80.dp)
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = stringResource(R.string.capabilities),
-                color = MaterialTheme.colors.onSurface,
-                style = TextStyle(
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.W700,
-                    fontFamily = Urbanist,
-                    lineHeight = 25.sp
-                ),
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Text(
-                text = stringResource(R.string.capabilities_1),
-                color = MaterialTheme.colors.onSurface,
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
-                    lineHeight = 25.sp
-                ),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colors.onSecondary,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-                    .padding(20.dp)
-                    .fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = stringResource(R.string.capabilities_2),
-                color = MaterialTheme.colors.onSurface,
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
-                    lineHeight = 25.sp
-                ),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colors.onSecondary,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-                    .padding(20.dp)
-                    .fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = stringResource(R.string.capabilities_3),
-                color = MaterialTheme.colors.onSurface,
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
-                    lineHeight = 25.sp
-                ),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colors.onSecondary,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-                    .padding(20.dp)
-                    .fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = stringResource(R.string.capabilities_desc),
-                color = MaterialTheme.colors.onSurface,
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
-                    lineHeight = 25.sp
-                ),
-                textAlign = TextAlign.Center
             )
 
         }
