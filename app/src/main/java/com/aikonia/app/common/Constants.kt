@@ -2,7 +2,7 @@ package com.aikonia.app.common
 
 object Constants {
     const val BASE_URL = "https://api.openai.com/v1/"
-    const val API_KEY = "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"
+    const val API_KEY = "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"
 
     const val REWARDED_AD_UNIT_ID =
         "ca-app-pub-2182457367918105/7878846240"

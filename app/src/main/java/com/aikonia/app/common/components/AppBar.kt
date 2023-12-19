@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.ui.theme.Urbanist
+import androidx.compose.foundation.background
 
 @Composable
 fun AppBar(
@@ -23,11 +24,15 @@ fun AppBar(
     image: Int,
     text: String,
     tint: Color,
+    backgroundColor: Color = MaterialTheme.colors.primary, // Parameter für Hintergrundfarbe
     menuItems: (@Composable () -> Unit)? = null
 ) {
-
-    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center)
-    {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = backgroundColor), // Korrekte Verwendung von backgroundColor
+        contentAlignment = Alignment.Center
+    ) {
         Text(
             text = text,
             modifier = Modifier
@@ -48,15 +53,12 @@ fun AppBar(
                 .padding(horizontal = 16.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
-
             IconButton(
                 onClick = onClickAction,
                 modifier = Modifier
                     .width(27.dp)
                     .height(27.dp)
             ) {
-
                 Icon(
                     painter = painterResource(image),
                     contentDescription = "image",
@@ -72,9 +74,6 @@ fun AppBar(
             if (menuItems != null) {
                 menuItems()
             }
-
         }
     }
-
-
 }

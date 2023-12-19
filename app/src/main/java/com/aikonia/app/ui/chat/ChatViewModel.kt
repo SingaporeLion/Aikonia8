@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.aikonia.app.common.Constants
 import com.aikonia.app.common.Constants.DEFAULT_AI
 import com.aikonia.app.data.model.*
+import com.aikonia.app.data.source.local.UserRepository
 import com.aikonia.app.domain.use_case.conversation.CreateConversationUseCase
 import com.aikonia.app.domain.use_case.message.*
 import com.aikonia.app.domain.use_case.upgrade.IsProVersionUseCase
@@ -34,7 +35,9 @@ class ChatViewModel @Inject constructor(
     private val isProVersionUseCase: IsProVersionUseCase,
     private val getFreeMessageCountUseCase: GetFreeMessageCountUseCase,
     private val setFreeMessageCountUseCase: SetFreeMessageCountUseCase,
-    private val setProVersionUseCase: SetProVersionUseCase
+    private val setProVersionUseCase: SetProVersionUseCase,
+    private val userRepository: UserRepository
+
 ) : ViewModel() {
 
     private var answerFromGPT = ""
@@ -100,6 +103,12 @@ class ChatViewModel @Inject constructor(
         viewModelScope.launch {
             _freeMessageCount.value = _freeMessageCount.value + Constants.Preferences.INCREASE_MESSAGE_COUNT
             setFreeMessageCountUseCase(_freeMessageCount.value)
+        }
+    }
+    fun getCurrentUserName(onResult: (String) -> Unit) {
+        viewModelScope.launch {
+            val userName = userRepository.getCurrentUserName()
+            onResult(userName)
         }
     }
 
@@ -196,7 +205,8 @@ class ChatViewModel @Inject constructor(
         val messagesMap: HashMap<String, MutableList<MessageModel>> =
             _messages.value.clone() as HashMap<String, MutableList<MessageModel>>
 
-        val role: String = checkNotNull(savedStateHandle["role"])
+        val role = savedStateHandle["role"] ?: "DefaultRole" // Ersetzen Sie "DefaultRole" durch einen angemessenen Standardwert
+
 
 
         val response: MutableList<MessageTurbo> = mutableListOf(

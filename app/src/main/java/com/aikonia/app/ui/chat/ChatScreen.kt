@@ -50,9 +50,11 @@ import androidx.compose.ui.layout.ContentScale
 @Composable
 fun ChatScreen(
     navigateToBack: () -> Unit,
+    name: String?, // Hinzufügen des Parameters `name`
+    examples: List<String>?, // Hinzufügen des Parameters `examples`
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-    val backgroundImagePainter: Painter = painterResource(id = R.drawable.background_chat10) // Stellen Sie sicher, dass Sie den korrekten Ressourcen-ID verwenden
+    val backgroundImagePainter: Painter = painterResource(id = R.drawable.background_chat10)
     val freeMessageCount by viewModel.freeMessageCount.collectAsState()
     val isProVersion by viewModel.isProVersion.collectAsState()
     val conversationId by viewModel.currentConversationState.collectAsState()
@@ -81,8 +83,7 @@ fun ChatScreen(
     val inputText = remember { mutableStateOf("") }
 
     Box(
-        Modifier
-            .fillMaxSize()
+        Modifier.fillMaxSize()
     ) {
         Image(
             painter = backgroundImagePainter,
@@ -92,8 +93,7 @@ fun ChatScreen(
         )
 
         Column(
-            Modifier
-                .fillMaxSize()
+            Modifier.fillMaxSize()
         ) {
             AppBar(
                 onClickAction = navigateToBack,
@@ -101,13 +101,28 @@ fun ChatScreen(
                 text = if (userName.isBlank()) {
                     stringResource(R.string.app_name)
                 } else {
-                    "Abenteurer $userName!"
+                    "Sternenwanderer $userName"
                 },
-                MaterialTheme.colors.surface
+                backgroundColor = DeepBlue
             )
+
+            Box(
+                modifier = Modifier.weight(1f)
+            ) {
+                if (messages.isEmpty()) {
+                    // Implementieren Sie hier die Capabilities und Examples Komponenten
+                } else {
+                    MessageList(messages = messages, modifier = Modifier.padding(bottom = paddingBottom.value))
+                }
+            }
+
+            TextInput(inputText = inputText, backgroundColor = DarkViolet)
         }
     }
 }
+
+
+
 
 @Composable
 fun StopButton(modifier: Modifier, onClick: () -> Unit) {
