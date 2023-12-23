@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.common.bounceClick
-import com.aikonia.app.ui.theme.Green
+
 import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.ui.theme.White
 import com.valentinilk.shimmer.LocalShimmerTheme
@@ -59,7 +59,7 @@ fun AnimatedButton(onClick: () -> Unit = {}, text: String) {
                 .padding(15.dp)
                 .bounceClick(onClick = onClick),
             elevation = 5.dp,
-            backgroundColor = Green,
+
             shape = RoundedCornerShape(90.dp),
         ) {
             Row(

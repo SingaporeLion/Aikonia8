@@ -46,8 +46,17 @@ import androidx.compose.ui.layout.ContentScale
 import android.widget.VideoView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
-
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.VolumeOff
+import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import android.media.MediaPlayer
 
 @Composable
 fun ChatScreen(
@@ -68,11 +77,43 @@ fun ChatScreen(
     val themeColors = MaterialTheme.colors
     var videoView: VideoView? = null
 
+    var isMuted by remember { mutableStateOf(false) }
+    val mediaPlayer = remember {
+        MediaPlayer.create(context, R.raw.rise_again_adobestock_356927429).apply {
+            isLooping = true
+        }
+    }
+
+
     LaunchedEffect(Unit) {
         viewModel.getProVersion()
       //  viewModel.getFreeMessageCount()
         viewModel.getCurrentUserName { name ->
             userName = name
+            viewModel.getCurrentUserName { userName ->
+                viewModel.createGreetingMessage() // Aufruf der Begrüßungsmethode beim Laden des ChatScreens
+            }
+        }
+    }
+
+    //Stumm oder Play
+    if (isMuted) {
+        mediaPlayer.pause()
+    } else {
+        mediaPlayer.start()
+    }
+    DisposableEffect(Unit) {
+        onDispose {
+            mediaPlayer.release()
+        }
+    }
+    Column {
+        // IconButton mit Lautsprecher-Icon
+        IconButton(onClick = { isMuted = !isMuted }) {
+            Icon(
+                imageVector = if (isMuted) Icons.Filled.VolumeOff else Icons.Filled.VolumeUp,
+                contentDescription = if (isMuted) "Musik fortsetzen" else "Musik stummstellen"
+            )
         }
     }
 
@@ -147,28 +188,22 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
                 .bounceClick(onClick = onClick)
                 .background(
                     shape = RoundedCornerShape(16.dp),
-                    color = MaterialTheme.colors.onSecondary
+                    color = VibrantBlue2
                 )
                 .border(
                     2.dp,
-                    color = MaterialTheme.colors.onPrimary,
+                    color = Color.White,
                     shape = RoundedCornerShape(16.dp)
                 )
                 .padding(vertical = 15.dp, horizontal = 20.dp)
         ) {
-            Icon(
-                painter = painterResource(R.drawable.square),
-                contentDescription = stringResource(R.string.app_name),
-                tint = MaterialTheme.colors.secondary, // Verwendet die sekundäre Farbe des Themes
-                modifier = Modifier
-                    .size(width = 30.dp, height = 30.dp)
-            )
+
 
             Spacer(modifier = Modifier.width(10.dp))
 
             Text(
                 text = stringResource(id = R.string.stop_generating),
-                color = MaterialTheme.colors.onSurface,
+                color = White,
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W600,
@@ -211,7 +246,7 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
 
             Text(
                 text = stringResource(R.string.type_something_like),
-                color = MaterialTheme.colors.onSurface,
+                color = White,
                 style = TextStyle(
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W700,
@@ -231,7 +266,7 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
                 items(examples) { example ->
                     Text(
                         text = example,
-                        color = MaterialTheme.colors.onSurface,
+                        color = Color.White,
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W600,
@@ -245,7 +280,7 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
                                     inputText.value = example
                                 })
                             .background(
-                                color = MaterialTheme.colors.secondaryVariant, // Sekundäre Variante für Abwechslung
+                                color = VibrantBlue2, // Sekundäre Variante für Abwechslung
                                 shape = RoundedCornerShape(16.dp)
                             )
 

@@ -13,8 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.common.bounceClick
-import com.aikonia.app.ui.theme.Green
+
 import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.White
 
 @Composable
@@ -25,7 +26,7 @@ fun ChipItem(
 ) {
     Text(
         text = text,
-        color = if (selected) White else Green,
+        color = if (selected) White else VibrantBlue,
         style = TextStyle(
             fontSize = 14.sp,
             fontWeight = FontWeight.W600,
@@ -38,9 +39,9 @@ fun ChipItem(
             })
             .background(
                 shape = RoundedCornerShape(90.dp),
-                color = if (selected) Green else Color.Transparent
+                color = if (selected) VibrantBlue else Color.Transparent
             )
-            .border(2.dp, color = Green, shape = RoundedCornerShape(90.dp))
+            .border(2.dp, color = VibrantBlue, shape = RoundedCornerShape(90.dp))
             .padding(vertical = 10.dp, horizontal = 20.dp)
     )
 

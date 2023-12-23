@@ -23,7 +23,8 @@ import com.aikonia.app.common.click
 import com.aikonia.app.common.components.AppBar
 import com.aikonia.app.common.components.IosSwitch
 import com.aikonia.app.common.components.UpgradeButton
-import com.aikonia.app.ui.theme.Green
+import com.aikonia.app.ui.theme.GreenShadow
+import com.aikonia.app.ui.theme.GreenShadow
 import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.ui.upgrade.PurchaseHelper
 import com.yagmurerdogan.toasticlib.Toastic
@@ -86,7 +87,7 @@ fun SettingsScreen(
             onClickAction = {},
             image = R.drawable.app_icon,
             text = stringResource(R.string.settings),
-            Green
+            GreenShadow
         )
 //        Row(
 //            modifier = Modifier

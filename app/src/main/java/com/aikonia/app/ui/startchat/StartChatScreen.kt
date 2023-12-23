@@ -29,8 +29,6 @@ import com.aikonia.app.common.components.AppBar
 import com.aikonia.app.common.components.NoConnectionDialog
 import com.aikonia.app.common.components.ThereIsUpdateDialog
 import com.aikonia.app.ui.activity.isOnline
-import com.aikonia.app.ui.theme.Green
-import com.aikonia.app.ui.theme.GreenShadow
 import com.aikonia.app.ui.theme.Urbanist
 // import com.aikonia.app.ui.upgrade.PurchaseHelper
 import kotlinx.coroutines.delay
@@ -259,7 +257,7 @@ fun StartChatScreen(
                         ),
                         textAlign = TextAlign.Center,
                         modifier = Modifier
-                            .background(GreenShadow, shape = RoundedCornerShape(90.dp))
+                            .background(VibrantBlue, shape = RoundedCornerShape(90.dp))
                             .padding(horizontal = 9.dp)
                     )
 
@@ -267,18 +265,7 @@ fun StartChatScreen(
             }
 
             Spacer(modifier = Modifier.height(30.dp))
-            Text(
-                text = stringResource(R.string.welcome_description),
-                color = MaterialTheme.colors.surface,
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.W500,
-                    fontFamily = Urbanist,
-                    lineHeight = 25.sp
-                ),
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(40.dp))
+
 
             // Start-Chat-Button
             AnimatedButton(onClick = {

@@ -409,7 +409,7 @@ fun AiAssistantsScreen(
                 onClickAction = {},
                 image = R.drawable.app_icon,
                 text = stringResource(R.string.ai_assistants),
-                Green
+                White
             )
 
             LazyRow(
@@ -502,7 +502,7 @@ fun AiAssistantsScreen(
                                 Icon(
                                     painter = painterResource(id = R.drawable.arrow_right),
                                     contentDescription = null,
-                                    tint = Green
+                                    tint = White
                                 )
                             }
 

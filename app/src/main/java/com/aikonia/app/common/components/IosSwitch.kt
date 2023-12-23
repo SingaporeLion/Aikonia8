@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.aikonia.app.common.click
 import com.aikonia.app.ui.settings.SettingsViewModel
-import com.aikonia.app.ui.theme.Green
+import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.White
 
 @Composable
@@ -24,7 +24,7 @@ fun IosSwitch(
     switchOn: MutableState<Boolean>,
     width: Dp = 45.dp,
     height: Dp = 27.dp,
-    checkedTrackColor: Color = Green,
+    checkedTrackColor: Color = VibrantBlue,
     uncheckedTrackColor: Color = MaterialTheme.colors.secondary,
     gapBetweenThumbAndTrackEdge: Dp = 2.dp,
     cornerSize: Int = 50,

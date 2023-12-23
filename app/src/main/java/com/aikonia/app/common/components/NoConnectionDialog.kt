@@ -19,10 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.aikonia.app.common.bounceClick
-import com.aikonia.app.ui.theme.Green
+import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.GreenShadow
 import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.R
+import com.aikonia.app.ui.theme.White
 
 
 @Composable
@@ -93,7 +94,7 @@ fun NoConnectionDialog(
                     ) {
                         Text(
                             text = stringResource(R.string.cancel),
-                            color = Green,
+                            color = White,
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W700,

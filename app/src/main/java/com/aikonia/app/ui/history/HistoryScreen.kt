@@ -111,7 +111,7 @@ fun HistoryScreen(
                         Icon(
                             painter = painterResource(R.drawable.arrow_left),
                             contentDescription = "image",
-                            tint = MaterialTheme.colors.surface,
+                            tint = White,
                             modifier = Modifier
                                 .width(27.dp)
                                 .height(27.dp)
@@ -149,7 +149,7 @@ fun HistoryScreen(
                             .weight(1f)
                             .border(
                                 1.dp,
-                                if (hasFocus) Green else Color.Transparent,
+                                if (hasFocus) VibrantBlue else Color.Transparent,
                                 RoundedCornerShape(16.dp)
                             )
                             .onFocusChanged { focusState -> hasFocus = focusState.hasFocus },
@@ -159,7 +159,7 @@ fun HistoryScreen(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent,
-                            backgroundColor = if (hasFocus) GreenShadow else MaterialTheme.colors.secondary
+                            backgroundColor = if (hasFocus) GreenShadow else VibrantBlue2
                         )
                     )
                 }
@@ -169,7 +169,7 @@ fun HistoryScreen(
                     onClickAction = {},
                     image = R.drawable.app_icon,
                     text = stringResource(R.string.history),
-                    Green,
+                    VibrantBlue,
                     menuItems = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -186,7 +186,7 @@ fun HistoryScreen(
                                 Icon(
                                     painter = painterResource(R.drawable.search_vector),
                                     contentDescription = "image",
-                                    tint = MaterialTheme.colors.surface,
+                                    tint = White,
                                     modifier = Modifier
                                         .width(27.dp)
                                         .height(27.dp)
@@ -205,7 +205,7 @@ fun HistoryScreen(
                                 Icon(
                                     painter = painterResource(R.drawable.delete),
                                     contentDescription = "image",
-                                    tint = MaterialTheme.colors.surface,
+                                    tint = White,
                                     modifier = Modifier
                                         .width(27.dp)
                                         .height(27.dp)
@@ -227,7 +227,7 @@ fun HistoryScreen(
                     Icon(
                         painter = painterResource(id = R.drawable.app_icon),
                         contentDescription = null,
-                        tint = Green,
+                        tint = VibrantBlue,
                         modifier = Modifier
                             .size(150.dp)
                             .rotate(rotation)
@@ -249,7 +249,7 @@ fun HistoryScreen(
                     )
                     Text(
                         text = stringResource(R.string.empty),
-                        color = Green,
+                        color = White,
                         style = TextStyle(
                             fontSize = 25.sp,
                             fontWeight = FontWeight.W700,
@@ -260,7 +260,7 @@ fun HistoryScreen(
                     )
                     Text(
                         text = stringResource(R.string.no_history),
-                        color = MaterialTheme.colors.surface,
+                        color = Color.White,
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W500,
@@ -302,7 +302,7 @@ fun HistoryScreen(
                             background = {
                                 val color by animateColorAsState(
                                     when (dismissState.targetValue) {
-                                        DismissValue.Default -> MaterialTheme.colors.background
+                                        DismissValue.Default -> VibrantBlue2
                                         else -> DeepBlue
                                     },
                                     animationSpec = tween(100)
@@ -350,7 +350,7 @@ fun HistoryScreen(
                                         )
                                         .border(
                                             2.dp,
-                                            MaterialTheme.colors.onPrimary,
+                                            VibrantBlue2,
                                             RoundedCornerShape(16.dp)
                                         )
                                         .padding(vertical = 15.dp, horizontal = 15.dp),
@@ -362,7 +362,7 @@ fun HistoryScreen(
                                     ) {
                                         Text(
                                             text = currentItem.title,
-                                            color = MaterialTheme.colors.surface,
+                                            color = White,
                                             maxLines = 1,
                                             style = TextStyle(
                                                 fontSize = 18.sp,
@@ -374,7 +374,7 @@ fun HistoryScreen(
                                         Spacer(modifier = Modifier.height(10.dp))
                                         Text(
                                             text = currentItem.createdAt.toFormattedDate(),
-                                            color = MaterialTheme.colors.onSurface,
+                                            color = White,
                                             style = TextStyle(
                                                 fontSize = 12.sp,
                                                 fontWeight = FontWeight.W600,
@@ -386,7 +386,7 @@ fun HistoryScreen(
                                     Icon(
                                         painter = painterResource(id = R.drawable.right),
                                         contentDescription = null,
-                                        tint = MaterialTheme.colors.surface,
+                                        tint = White,
                                         modifier = Modifier
                                             .padding(start = 5.dp)
                                             .size(30.dp)

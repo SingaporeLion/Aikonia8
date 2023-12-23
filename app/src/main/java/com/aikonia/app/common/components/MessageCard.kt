@@ -56,7 +56,7 @@ fun HumanMessageCard(message: MessageModel) {
         modifier = Modifier
             .widthIn(0.dp)
             .background(
-                Green,
+                VibrantBlue,
                 shape = RoundedCornerShape(
                     topEnd = 16.dp,
                     topStart = 16.dp,

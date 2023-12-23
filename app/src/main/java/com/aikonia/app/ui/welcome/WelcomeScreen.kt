@@ -47,12 +47,20 @@ import androidx.compose.ui.draw.alpha
 import android.widget.VideoView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.viewinterop.AndroidView
+import android.media.MediaPlayer
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+
 
 @Composable
 fun WelcomeScreen(
     navigateToChat: () -> Unit,
     playClickSound: () -> Unit
+
 ) {
+
     var videoView: VideoView? = null  // VideoView-Referenz hinzufügen
     val viewModel: WelcomeScreenViewModel = hiltViewModel()
     val density = LocalDensity.current.density
@@ -68,11 +76,24 @@ fun WelcomeScreen(
         )
     )
 
+// MediaPlayer initialisieren
+    val lifecycleOwner = LocalLifecycleOwner.current
+    var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
+    val appContext = LocalContext.current // Umbenennung zur Vermeidung von Konflikten
+
+
     LaunchedEffect(Unit) {
         viewModel.getCurrentUserName { name ->
             userName = name
         }
+        mediaPlayer = MediaPlayer.create(appContext, R.raw.the_light_from_within_adobestock_356526076).apply {
+            setOnCompletionListener {
+                // Aktionen nach Beendigung der Wiedergabe
+            }
+        }
+        mediaPlayer?.start()
     }
+
     fun smoothTransition(currentValue: Float, targetValue: Float, smoothing: Float): Float {
         return currentValue + (targetValue - currentValue) * smoothing
     }
@@ -95,6 +116,23 @@ fun WelcomeScreen(
         }
         sensorManager.registerListener(listener, accelerometer, SensorManager.SENSOR_DELAY_UI)
         onDispose { sensorManager.unregisterListener(listener) }
+
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_PAUSE -> mediaPlayer?.pause()
+                Lifecycle.Event.ON_RESUME -> mediaPlayer?.start()
+                else -> Unit
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            mediaPlayer?.release()
+            mediaPlayer = null
+        }
+
+
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

@@ -18,11 +18,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.common.bounceClick
-import com.aikonia.app.ui.theme.Green
 import com.aikonia.app.ui.theme.GreenShadow
 import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.ui.theme.White
 import  com.aikonia.app.R
+import com.aikonia.app.ui.theme.VibrantBlue
 
 @Composable
 fun LogoutBottomSheet(
@@ -94,7 +94,7 @@ fun LogoutBottomSheet(
                 ) {
                     Text(
                         text = stringResource(R.string.cancel),
-                        color = Green,
+                        color = White,
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W700,
@@ -115,7 +115,7 @@ fun LogoutBottomSheet(
                         onConfirmClick()
                     },
                 elevation = 5.dp,
-                backgroundColor = Green,
+                backgroundColor = VibrantBlue,
                 shape = RoundedCornerShape(90.dp),
             ) {
                 Row(

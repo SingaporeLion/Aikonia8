@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.aikonia.app.common.bounceClick
-import com.aikonia.app.ui.theme.Green
 import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.ui.theme.White
 import com.aikonia.app.R
+import com.aikonia.app.ui.theme.VibrantBlue
 
 
 @Composable
@@ -83,7 +83,7 @@ fun ThereIsUpdateDialog(
                             onDismiss()
                         },
                     elevation = 0.dp,
-                    backgroundColor = Green,
+                    backgroundColor = VibrantBlue,
                     shape = RoundedCornerShape(90.dp),
                 ) {
                     Row(

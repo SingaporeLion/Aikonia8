@@ -18,12 +18,13 @@ val VibrantBlue = Color(0xFF6A5ACD)
 val VibrantBlue2 = Color(0xFF155294)
 val DeepBlue = Color(0xFF000033)
 val DarkViolet = Color(0xFF2E005C)
-val Green = Color(0xFF00FF00) // Beispiel für Grüntöne
+
 val White = Color(0xFFFFFFFF)
 val GreenShadow = Color(0xFF004400) // Beispiel für einen dunkleren Grünton
 val TextColorDark = Color(0xFFAAAAAA) // Ein mittlerer Grauton für dunklere Bereiche
 val TextColor = DeepBlue // Verwenden Sie einen dunklen Farbton für guten Kontrast auf hellem Hintergrund
 val CodeBackground = DeepBlue
+
 // Dunkle Farbpalette
 private val DarkColorPalette = darkColors(
     primary = VibrantBlue,

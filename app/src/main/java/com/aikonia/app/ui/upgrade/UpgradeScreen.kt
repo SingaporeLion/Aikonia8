@@ -27,9 +27,10 @@ import com.aikonia.app.R
 import com.aikonia.app.common.ProVersionTypeEnum
 import com.aikonia.app.common.bounceClick
 import com.aikonia.app.common.click
-import com.aikonia.app.ui.theme.Green
+import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.GreenShadow
 import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.White
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.shimmer
@@ -208,7 +209,7 @@ fun UpgradeScreen(
         Icon(
             painter = painterResource(R.drawable.app_icon),
             contentDescription = stringResource(R.string.app_name),
-            tint = Green,
+            tint = White,
             modifier = Modifier.size(100.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -239,7 +240,7 @@ fun UpgradeScreen(
                 ),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .background(GreenShadow, shape = RoundedCornerShape(90.dp))
+                    .background(White, shape = RoundedCornerShape(90.dp))
                     .padding(horizontal = 9.dp)
             )
 
@@ -600,7 +601,7 @@ fun UpgradeScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .background(
-                            color = Green,
+                            color = White,
                             shape = RoundedCornerShape(
                                 topEnd = 16.dp,
                                 topStart = 0.dp,

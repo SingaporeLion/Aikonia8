@@ -25,7 +25,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.aikonia.app.common.Constants.TRANSITION_ANIMATION_DURATION
 import com.aikonia.app.common.click
-import com.aikonia.app.ui.theme.Green
+import com.aikonia.app.ui.theme.White
 import com.aikonia.app.ui.theme.Urbanist
 
 @Composable
@@ -89,7 +89,7 @@ fun BottomNavigationBar(
                         Icon(
                             painter = painterResource(if (selected) item.icon_filled else item.icon),
                             contentDescription = stringResource(id = item.title),
-                            tint = if (selected) Green else MaterialTheme.colors.onSurface
+                            tint = if (selected) White else MaterialTheme.colors.onSurface
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
@@ -97,7 +97,7 @@ fun BottomNavigationBar(
                             fontFamily = Urbanist,
                             fontSize = 11.sp,
                             fontWeight = if (selected) FontWeight.W700 else FontWeight.W600,
-                            color = if (selected) Green else MaterialTheme.colors.onSurface,
+                            color = if (selected) White else MaterialTheme.colors.onSurface,
                         )
                     }
 
