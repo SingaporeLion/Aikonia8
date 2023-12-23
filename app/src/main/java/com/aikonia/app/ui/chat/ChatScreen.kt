@@ -35,9 +35,6 @@ import com.aikonia.app.common.components.MessageCard
 import com.aikonia.app.common.components.TextInput
 import com.aikonia.app.common.showRewarded
 import com.aikonia.app.data.model.MessageModel
-import com.aikonia.app.ui.theme.Green
-import com.aikonia.app.ui.theme.GreenShadow
-import com.aikonia.app.ui.theme.RedShadow
 import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.R
 import com.aikonia.app.ui.theme.*
@@ -46,6 +43,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
 import androidx.compose.ui.layout.ContentScale
+import android.widget.VideoView
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.viewinterop.AndroidView
+
 
 @Composable
 fun ChatScreen(
@@ -54,18 +56,21 @@ fun ChatScreen(
     examples: List<String>?, // Hinzufügen des Parameters `examples`
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-    val backgroundImagePainter: Painter = painterResource(id = R.drawable.background_chat10)
-    val freeMessageCount by viewModel.freeMessageCount.collectAsState()
+
+    //val backgroundImagePainter: Painter = painterResource(id = R.drawable.background_chat10)
+   // val freeMessageCount by viewModel.freeMessageCount.collectAsState()
     val isProVersion by viewModel.isProVersion.collectAsState()
     val conversationId by viewModel.currentConversationState.collectAsState()
     val messagesMap by viewModel.messagesState.collectAsState()
     val isGenerating by viewModel.isGenerating.collectAsState()
     val context = LocalContext.current
     var userName by remember { mutableStateOf("") }
+    val themeColors = MaterialTheme.colors
+    var videoView: VideoView? = null
 
     LaunchedEffect(Unit) {
         viewModel.getProVersion()
-        viewModel.getFreeMessageCount()
+      //  viewModel.getFreeMessageCount()
         viewModel.getCurrentUserName { name ->
             userName = name
         }
@@ -82,19 +87,23 @@ fun ChatScreen(
 
     val inputText = remember { mutableStateOf("") }
 
-    Box(
-        Modifier.fillMaxSize()
-    ) {
-        Image(
-            painter = backgroundImagePainter,
-            contentDescription = "Chat Background",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+    Box(Modifier.fillMaxSize()) {
+        AndroidView(
+            factory = { context ->
+                VideoView(context).also {
+                    videoView = it
+                    it.setVideoPath("android.resource://${context.packageName}/${R.raw.background_chat_animation}")
+                    it.setOnPreparedListener { mediaPlayer ->
+                        mediaPlayer.isLooping = true
+                    }
+                    it.start()
+                }
+            },
+            modifier = Modifier.fillMaxSize() // Füllt den gesamten Bildschirm
         )
 
-        Column(
-            Modifier.fillMaxSize()
-        ) {
+        // Der Rest des Layouts wird über dem Video platziert
+        Column(Modifier.fillMaxSize()) {
             AppBar(
                 onClickAction = navigateToBack,
                 image = R.drawable.arrow_left,
@@ -103,25 +112,28 @@ fun ChatScreen(
                 } else {
                     "Sternenwanderer $userName"
                 },
-                backgroundColor = DeepBlue
+                tint = MaterialTheme.colors.onSurface,
+                backgroundColor = VibrantBlue2
             )
 
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
+
+            Box(modifier = Modifier.weight(1f)) {
                 if (messages.isEmpty()) {
-                    // Implementieren Sie hier die Capabilities und Examples Komponenten
+                    Capabilities(modifier = Modifier.fillMaxSize())
                 } else {
                     MessageList(messages = messages, modifier = Modifier.padding(bottom = paddingBottom.value))
                 }
             }
 
-            TextInput(inputText = inputText, backgroundColor = DarkViolet)
+            TextInput(
+                viewModel = viewModel,
+                inputText = inputText
+                // Hinweis: backgroundColor wird nicht mehr verwendet
+            )
         }
     }
+
 }
-
-
 
 
 @Composable
@@ -147,12 +159,11 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
             Icon(
                 painter = painterResource(R.drawable.square),
                 contentDescription = stringResource(R.string.app_name),
-                tint = Green,
+                tint = MaterialTheme.colors.secondary, // Verwendet die sekundäre Farbe des Themes
                 modifier = Modifier
                     .size(width = 30.dp, height = 30.dp)
-
-
             )
+
             Spacer(modifier = Modifier.width(10.dp))
 
             Text(
@@ -169,8 +180,8 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
     }
 }
 
-@Composable
-fun Capabilities(modifier: Modifier = Modifier) {
+    @Composable
+    fun Capabilities(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Column(
             Modifier
@@ -178,23 +189,18 @@ fun Capabilities(modifier: Modifier = Modifier) {
                 .padding(top = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                painter = painterResource(R.drawable.app_icon),
-                contentDescription = stringResource(R.string.app_name),
-                tint = MaterialTheme.colors.onSurface,
-                modifier = Modifier.size(width = 80.dp, height = 80.dp)
-            )
+
 
         }
     }
 }
 
-@Composable
-fun Examples(
-    modifier: Modifier = Modifier,
-    examples: List<String>,
-    inputText: MutableState<String>
-) {
+    @Composable
+    fun Examples(
+        modifier: Modifier = Modifier,
+        examples: List<String>,
+        inputText: MutableState<String>
+    ) {
     Box(modifier = modifier) {
         Column(
             Modifier
@@ -239,10 +245,10 @@ fun Examples(
                                     inputText.value = example
                                 })
                             .background(
-                                color = MaterialTheme.colors.onSecondary,
+                                color = MaterialTheme.colors.secondaryVariant, // Sekundäre Variante für Abwechslung
                                 shape = RoundedCornerShape(16.dp)
                             )
-                            .padding(20.dp)
+
                             .fillMaxWidth()
 
                     )
@@ -255,7 +261,7 @@ fun Examples(
     }
 }
 
-const val ConversationTestTag = "ConversationTestTag"
+val ConversationTestTag = "ConversationTestTag"
 
 @Composable
 fun MessageList(
@@ -288,4 +294,6 @@ fun MessageList(
             }
         }
     }
-}
+
+  }
+

@@ -25,9 +25,9 @@ import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.*
 import com.aikonia.app.R
 import com.aikonia.app.common.bounceClick
-import com.aikonia.app.ui.theme.Green
+
 import com.aikonia.app.ui.theme.Urbanist
-import com.aikonia.app.ui.theme.White
+
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.shimmer
@@ -71,7 +71,7 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                 .padding(horizontal = 16.dp)
                 .bounceClick(onClick = onClick),
             elevation = 5.dp,
-            backgroundColor = Green,
+
             shape = RoundedCornerShape(20.dp),
         ) {
             Row(
@@ -87,14 +87,14 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                     progress = { progress },
                     modifier = Modifier
                         .size(width = 60.dp, height = 60.dp)
-                        .background(White, shape = RoundedCornerShape(90.dp))
+
                 )
 
                 Spacer(modifier = Modifier.width(10.dp))
                 Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
                     Text(
                         text = stringResource(id = R.string.upgrade_to_pro),
-                        color = White,
+
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontWeight = FontWeight.W700,
@@ -105,7 +105,7 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = stringResource(id = R.string.upgrade_to_pro_description),
-                        color = White,
+
                         style = TextStyle(
                             fontSize = 13.sp,
                             fontWeight = FontWeight.W500,
@@ -118,7 +118,7 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                 Icon(
                     painter = painterResource(id = R.drawable.right),
                     contentDescription = null,
-                    tint = White,
+
                     modifier = Modifier
                         .padding(start = 5.dp)
                         .size(30.dp)

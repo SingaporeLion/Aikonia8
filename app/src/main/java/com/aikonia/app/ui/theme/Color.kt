@@ -1,6 +1,7 @@
-package com.aikonia.app.ui.theme
+package com.aikonia.app.ui.color
 
 import androidx.compose.ui.graphics.Color
+
 
 val Black = Color(0xFF000000)
 val White = Color(0xFFFFFFFF)
@@ -59,3 +60,6 @@ val VibrantYellow = Color(0xFFFFF0BA)
 val VibrantBlue = Color(0xFF6A5ACD)
 val DeepBlue = Color(0xFF000033)
 val DarkViolet = Color(0xFF2E005C)
+val ElectricBlue = Color(0xFF007FFF)
+val NeonYellow = Color(0xFFE5FF00)
+val DeepPurple = Color(0xFF6A0DAD)

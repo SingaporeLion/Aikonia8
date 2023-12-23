@@ -17,6 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.ui.theme.Urbanist
 import androidx.compose.foundation.background
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import com.aikonia.app.R
 
 @Composable
 fun AppBar(
@@ -27,6 +30,8 @@ fun AppBar(
     backgroundColor: Color = MaterialTheme.colors.primary, // Parameter für Hintergrundfarbe
     menuItems: (@Composable () -> Unit)? = null
 ) {
+    val dancingScriptFontFamily = FontFamily(Font(R.font.dancingscript_medium))
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,11 +43,11 @@ fun AppBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp),
-            color = MaterialTheme.colors.surface,
+            color = Color.White, // Setzt die Textfarbe auf Weiß
             style = TextStyle(
                 fontWeight = FontWeight.W700,
                 fontSize = 20.sp,
-                fontFamily = Urbanist,
+                fontFamily = dancingScriptFontFamily,
                 textAlign = TextAlign.Center
             )
         )

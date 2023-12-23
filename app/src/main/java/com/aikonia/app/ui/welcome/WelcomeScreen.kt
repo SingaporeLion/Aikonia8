@@ -44,13 +44,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.ui.draw.alpha
-
+import android.widget.VideoView
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun WelcomeScreen(
     navigateToChat: () -> Unit,
     playClickSound: () -> Unit
 ) {
+    var videoView: VideoView? = null  // VideoView-Referenz hinzufügen
     val viewModel: WelcomeScreenViewModel = hiltViewModel()
     val density = LocalDensity.current.density
     var userName by remember { mutableStateOf("") }
@@ -95,20 +98,22 @@ fun WelcomeScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.aikonia_screen),
-            contentDescription = "Hintergrund",
-            modifier = Modifier
-                .fillMaxSize()
-                .graphicsLayer {
-                    scaleX = 1.1f
-                    scaleY = 1.1f
-                    translationX = x * density
-                    translationY = y * density
-                },
-            contentScale = ContentScale.Crop
+        // VideoView als Hintergrund
+        AndroidView(
+            factory = { context ->
+                VideoView(context).also {
+                    videoView = it
+                    it.setVideoPath("android.resource://${context.packageName}/${R.raw.launch_animation}")
+                    it.setOnPreparedListener { mediaPlayer ->
+                        mediaPlayer.isLooping = true
+                        mediaPlayer.start()
+                    }
+                }
+            },
+            modifier = Modifier.matchParentSize() // Stellt sicher, dass das Video den gesamten Bildschirm ausfüllt
         )
 
+        // Der Rest des UI-Layouts wird über dem Video platziert
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -121,16 +126,23 @@ fun WelcomeScreen(
                     navigateToChat()
                 },
                 modifier = Modifier.padding(16.dp)
-            ) {
-                Text("Los geht's")
-            }
 
+            ) {
+                Text(
+                    "Los geht's",
+                    style = TextStyle(
+                        color = Color.White, // Setzt die Textfarbe auf Weiß
+                        fontSize = 18.sp, // Passen Sie die Schriftgröße nach Bedarf an
+                        fontFamily = dancingScriptFontFamily // Verwenden Sie dieselbe Schriftart wie den anderen Text
+                    )
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = "Willkommen in Aikonia, $userName",
                 style = TextStyle(
-                    color = customTextColor,
+                    color = Color.White, // Setzt die Textfarbe auf Weiß
                     fontSize = 24.sp,
                     fontFamily = dancingScriptFontFamily,
                     shadow = Shadow(
@@ -143,7 +155,12 @@ fun WelcomeScreen(
             )
         }
     }
-    // Hintergrundmusik abspielen
-    // ...
 
-}
+    // Stellen Sie sicher, dass das Video gestoppt wird, wenn der Bildschirm nicht mehr sichtbar ist
+    DisposableEffect(Unit) {
+        onDispose {
+            videoView?.stopPlayback()
+        }
+    }
+    // ... (Hintergrundmusik und andere Effekte)
+ }

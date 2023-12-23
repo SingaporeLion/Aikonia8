@@ -13,6 +13,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -28,6 +29,18 @@ import com.aikonia.app.data.model.AiAssistantModel
 import com.aikonia.app.data.model.AiAssistantsModel
 import com.aikonia.app.ui.theme.*
 import  com.aikonia.app.R
+import com.aikonia.app.ui.color.PastelAqua
+import com.aikonia.app.ui.color.PastelBlue
+import com.aikonia.app.ui.color.PastelCoral
+import com.aikonia.app.ui.color.PastelGreen
+import com.aikonia.app.ui.color.PastelLavender
+import com.aikonia.app.ui.color.PastelLilac
+import com.aikonia.app.ui.color.PastelOrange
+import com.aikonia.app.ui.color.PastelPink
+import com.aikonia.app.ui.color.PastelPurple
+import com.aikonia.app.ui.color.PastelRed
+import com.aikonia.app.ui.color.PastelTeal
+import com.aikonia.app.ui.color.PastelYellow
 
 @Composable
 fun AiAssistantsScreen(
@@ -40,7 +53,7 @@ fun AiAssistantsScreen(
             title = stringResource(R.string.writing), assistant = listOf(
                 AiAssistantModel(
                     image = R.drawable.memo,
-                    color = PastelGreen,
+                    color = VibrantBlue,
                     name = stringResource(R.string.write_article),
                     description = stringResource(R.string.write_article_description),
                     role = Constants.Writing.WRITE_ARTICLE,
@@ -365,7 +378,7 @@ fun AiAssistantsScreen(
                 ),
                 AiAssistantModel(
                     image = R.drawable.food,
-                    color = PastelRed,
+                    color = Color.Blue,
                     name = stringResource(R.string.food_recipes),
                     description = stringResource(R.string.food_recipes_description),
                     role = Constants.Other.FOOD_RECIPES,
@@ -376,7 +389,7 @@ fun AiAssistantsScreen(
                     )
                 ), AiAssistantModel(
                     image = R.drawable.leafy,
-                    color = PastelGreen,
+                    color = GreenShadow,
                     name = stringResource(R.string.diet_plan),
                     description = stringResource(R.string.diet_plan_description),
                     role = Constants.Other.DIET_PLAN,

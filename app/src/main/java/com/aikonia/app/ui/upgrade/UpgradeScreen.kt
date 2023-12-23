@@ -27,7 +27,6 @@ import com.aikonia.app.R
 import com.aikonia.app.common.ProVersionTypeEnum
 import com.aikonia.app.common.bounceClick
 import com.aikonia.app.common.click
-import com.aikonia.app.ui.theme.GrayShadow
 import com.aikonia.app.ui.theme.Green
 import com.aikonia.app.ui.theme.GreenShadow
 import com.aikonia.app.ui.theme.Urbanist
@@ -175,7 +174,7 @@ fun UpgradeScreen(
                 modifier = Modifier
                     .size(30.dp)
                     .background(
-                        color = GrayShadow,
+                        color = Color.Gray,
                         shape = RoundedCornerShape(90.dp)
                     )
                     .padding(5.dp)
@@ -192,7 +191,7 @@ fun UpgradeScreen(
                 ),
                 modifier = Modifier
                     .background(
-                        color = GrayShadow,
+                        color = Color.Gray,
                         shape = RoundedCornerShape(90.dp)
                     )
                     .padding(vertical = 5.dp, horizontal = 10.dp)

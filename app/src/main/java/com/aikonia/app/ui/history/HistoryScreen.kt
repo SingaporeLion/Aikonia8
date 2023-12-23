@@ -303,7 +303,7 @@ fun HistoryScreen(
                                 val color by animateColorAsState(
                                     when (dismissState.targetValue) {
                                         DismissValue.Default -> MaterialTheme.colors.background
-                                        else -> Red
+                                        else -> DeepBlue
                                     },
                                     animationSpec = tween(100)
                                 )

@@ -9,6 +9,7 @@ import android.content.SharedPreferences
 class UserRepositoryImpl(private val userDao: UserDao, private val sharedPreferences: SharedPreferences) : UserRepository {
 
 
+
     override suspend fun saveUser(user: User) {
         withContext(Dispatchers.IO) {
             val userId = userDao.insertUser(user)  // Nimmt an, dass insertUser die ID des eingefügten Benutzers zurückgibt
@@ -32,6 +33,26 @@ class UserRepositoryImpl(private val userDao: UserDao, private val sharedPrefere
         } else {
             // Fallback, falls keine Benutzer-ID gespeichert ist
             return "Unbekannter Benutzer"
+        }
+    }
+
+    override suspend fun getUserBirthYear(): Int {
+        val userId = sharedPreferences.getInt("userIdKey", -1).toLong()
+        if (userId != -1L) {
+            val currentUser = userDao.getCurrentUser(userId.toInt())
+            return currentUser.birthYear.toIntOrNull() ?: -1 // Konvertiert den String in Int, -1 als Fallback
+        } else {
+            return -1 // oder ein angemessener Fallback-Wert
+        }
+    }
+
+    override suspend fun getUserGender(): String {
+        val userId = sharedPreferences.getInt("userIdKey", -1).toLong()
+        if (userId != -1L) {
+            val currentUser = userDao.getCurrentUser(userId.toInt())
+            return currentUser.gender // Annahme, dass das Geschlecht als gender im User-Objekt gespeichert ist
+        } else {
+            return "Unbekannt" // oder ein angemessener Fallback-Wert
         }
     }
 }

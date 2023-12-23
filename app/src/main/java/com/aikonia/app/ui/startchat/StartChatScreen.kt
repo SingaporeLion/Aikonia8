@@ -48,6 +48,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import android.content.SharedPreferences
 import android.util.Log
+import com.aikonia.app.ui.theme.VibrantBlue
+
+
 @Composable
 fun StartChatScreen(
     navigateToMenu: () -> Unit,
@@ -141,7 +144,7 @@ fun StartChatScreen(
             onClickAction = {},
             image = R.drawable.app_icon,
             text = stringResource(R.string.app_name),
-            Green
+            tint = VibrantBlue // Farbe für AppBar-Icon
         )
         Column(
             Modifier.fillMaxSize(),
@@ -219,7 +222,7 @@ fun StartChatScreen(
                 )
                 Text(
                     text = stringResource(R.string.welcome_app_name),
-                    color = Green,
+                    color = VibrantBlue,
                     style = TextStyle(
                         fontSize = 40.sp,
                         fontWeight = FontWeight.W700,

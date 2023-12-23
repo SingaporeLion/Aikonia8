@@ -1,7 +1,10 @@
 package com.aikonia.app.ui.chat
 
 import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,8 +36,7 @@ class ChatViewModel @Inject constructor(
     private val createConversationUseCase: CreateConversationUseCase,
     private val savedStateHandle: SavedStateHandle,
     private val isProVersionUseCase: IsProVersionUseCase,
-    private val getFreeMessageCountUseCase: GetFreeMessageCountUseCase,
-    private val setFreeMessageCountUseCase: SetFreeMessageCountUseCase,
+
     private val setProVersionUseCase: SetProVersionUseCase,
     private val userRepository: UserRepository
 
@@ -59,26 +61,38 @@ class ChatViewModel @Inject constructor(
         _messages.asStateFlow()
     val isGenerating: StateFlow<Boolean> = _isGenerating.asStateFlow()
 
-
     private val _isProVersion = MutableStateFlow(false)
     val isProVersion get() = _isProVersion.asStateFlow()
 
-    private val _freeMessageCount = MutableStateFlow(3)
-    val freeMessageCount get() = _freeMessageCount.asStateFlow()
-
     val showAdsAndProVersion = mutableStateOf(false)
+
+    fun createGreetingMessage() {
+        viewModelScope.launch {
+            val userName = userRepository.getCurrentUserName()
+            val birthYear = userRepository.getUserBirthYear()
+            val gender = userRepository.getUserGender()
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+            val userAge = currentYear - birthYear
+
+            val greeting = if (userAge >= 0 && birthYear != -1) {
+                "Du sprichst mit ${gender.lowercase(Locale.ROOT)} ${userAge}-jährigen Kind namens $userName. Bitte begrüße das Kind, so wie es Wesen aus Aikonia machen würden."
+            } else {
+                "Bitte begrüße den Benutzer $userName."
+            }
+
+            // Hier würden Sie die Begrüßungsnachricht an ChatGPT senden
+            sendMessage(greeting)
+        }
+    }
 
     init {
         _currentConversation.value = savedStateHandle.get<String>("id")
             ?: Date().time.toString()
         viewModelScope.launch { fetchMessages() }
+
     }
 
-    fun setProVersion(isPro: Boolean) {
-        setProVersionUseCase(isPro)
-        _isProVersion.value = isPro
-        showAdsAndProVersion.value = false
-    }
+
 
     fun getProVersion() = viewModelScope.launch {
         _isProVersion.value = isProVersionUseCase()
@@ -87,30 +101,16 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    fun getFreeMessageCount() = viewModelScope.launch {
-        _freeMessageCount.value = getFreeMessageCountUseCase()
-        Log.e("freeMessageCount", _freeMessageCount.value.toString())
-    }
 
-    fun decreaseFreeMessageCount() {
-        viewModelScope.launch {
-            _freeMessageCount.value = _freeMessageCount.value - 1
-            setFreeMessageCountUseCase(_freeMessageCount.value)
-        }
-    }
 
-    fun increaseFreeMessageCount() {
-        viewModelScope.launch {
-            _freeMessageCount.value = _freeMessageCount.value + Constants.Preferences.INCREASE_MESSAGE_COUNT
-            setFreeMessageCountUseCase(_freeMessageCount.value)
-        }
-    }
     fun getCurrentUserName(onResult: (String) -> Unit) {
         viewModelScope.launch {
             val userName = userRepository.getCurrentUserName()
             onResult(userName)
         }
     }
+
+
 
     fun sendMessage(message: String) = viewModelScope.launch {
         if (getMessagesByConversation(_currentConversation.value).isEmpty()) {
@@ -156,6 +156,7 @@ class ChatViewModel @Inject constructor(
 
 
     }
+
 
     fun stopGenerate() = viewModelScope.launch {
         job?.cancel()

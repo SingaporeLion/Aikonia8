@@ -1,44 +1,55 @@
 package com.aikonia.app.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.Color
 
-val MagischesBlau = Color(0xFF4D6D9A) // Ein tiefes, leuchtendes Blau
-val LeuchtendesSmaragdgrün = Color(0xFF32CD32) // Helles, lebendiges Grün
-val SanftesHimmelblau = Color(0xFF87CEEB) // Beruhigendes Blau
-val MystischesViolett = Color(0xFF8A2BE2) // Sattes Violett
-val LeuchtendesGelb = Color(0xFFFFD700) // Warmes, helles Gelb
+import com.aikonia.app.ui.theme.VibrantYellow
+import com.aikonia.app.ui.theme.VibrantBlue
+import com.aikonia.app.ui.theme.DeepBlue
+import com.aikonia.app.ui.theme.DarkViolet
 
+// Definieren Sie Ihre Farbpalette
+val VibrantYellow = Color(0xFFFFF0BA)
+val VibrantBlue = Color(0xFF6A5ACD)
+val VibrantBlue2 = Color(0xFF155294)
+val DeepBlue = Color(0xFF000033)
+val DarkViolet = Color(0xFF2E005C)
+val Green = Color(0xFF00FF00) // Beispiel für Grüntöne
+val White = Color(0xFFFFFFFF)
+val GreenShadow = Color(0xFF004400) // Beispiel für einen dunkleren Grünton
+val TextColorDark = Color(0xFFAAAAAA) // Ein mittlerer Grauton für dunklere Bereiche
+val TextColor = DeepBlue // Verwenden Sie einen dunklen Farbton für guten Kontrast auf hellem Hintergrund
+val CodeBackground = DeepBlue
+// Dunkle Farbpalette
 private val DarkColorPalette = darkColors(
-    primary = MagischesBlau,
-    primaryVariant = MystischesViolett,
-    secondary = LeuchtendesSmaragdgrün,
-    secondaryVariant = SanftesHimmelblau,
-    background = MystischesViolett,
-    surface = LeuchtendesGelb,
-    error = Red, // Sie können hier eine spezifische Fehlerfarbe definieren
-    onPrimary = MagischesBlau,
-    onSecondary = LeuchtendesSmaragdgrün,
-    onSurface = SanftesHimmelblau,
-    onBackground = MystischesViolett
+    primary = VibrantBlue,
+    primaryVariant = DarkViolet,
+    secondary = VibrantYellow,
+    background = DeepBlue,
+    surface = DarkViolet,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.White,
+    onSurface = Color.White,
+
 )
 
+// Helle Farbpalette
 private val LightColorPalette = lightColors(
-    primary = SanftesHimmelblau,
-    primaryVariant = LeuchtendesGelb,
-    secondary = LeuchtendesSmaragdgrün,
-    secondaryVariant = MagischesBlau,
-    background = SanftesHimmelblau,
-    surface = LeuchtendesGelb,
-    error = Red, // Spezifische Fehlerfarbe
-    onPrimary = SanftesHimmelblau,
-    onSecondary = LeuchtendesSmaragdgrün,
-    onSurface = MagischesBlau,
-    onBackground = MystischesViolett
+    primary = VibrantBlue,
+    primaryVariant = DarkViolet,
+    secondary = VibrantYellow,
+    background = DeepBlue,
+
+    surface = DarkViolet,
+    onPrimary = Color.White,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
 )
 
 @Composable
@@ -48,7 +59,6 @@ fun ConversAITheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
     } else {
         LightColorPalette
     }
-
     val typography = if (darkTheme) {
         TypographyDark
     } else {
@@ -57,7 +67,7 @@ fun ConversAITheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
 
     MaterialTheme(
         colors = colors,
-        typography = typography,
+        typography = Typography,
         shapes = Shapes,
         content = content
     )
