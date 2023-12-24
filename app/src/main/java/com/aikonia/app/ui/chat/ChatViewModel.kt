@@ -54,7 +54,8 @@ class ChatViewModel @Inject constructor(
                     addProperty("prompt", greeting)
                     addProperty("model", "ft:gpt-3.5-turbo-1106:personal::8JRC1Idj") // oder das entsprechende Modell
                 }
-                val response = conversAIService.textCompletionsTurboWithStream(body)
+                val call = conversAIService.textCompletionsTurboWithStream(body)
+                val response = call.execute()
                 if (response.isSuccessful) {
                     // Verarbeiten Sie hier die Antwort von der API
                 } else {

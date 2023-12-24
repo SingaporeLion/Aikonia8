@@ -7,7 +7,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Streaming
-
+import retrofit2.Response
 interface ConversAIService {
 
     @POST(Constants.Endpoints.TEXT_COMPLETIONS)
@@ -21,4 +21,6 @@ interface ConversAIService {
     @POST(Constants.Endpoints.TEXT_COMPLETIONS_TURBO)
     @Streaming
     fun sendGreeting(@Body body: JsonObject): Call<ResponseBody>
+
+
 }
