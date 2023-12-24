@@ -9,19 +9,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.R
 
+// Definition der Urbanist-Schriftfamilie
 val Urbanist = FontFamily(
     Font(R.font.urbanist_font_family)
 )
 
+val dancingScriptFontFamily = FontFamily(
+    Font(R.font.dancingscript_regular),
+    Font(R.font.dancingscript_medium, FontWeight.W500),
+    Font(R.font.dancingscript_semi_bold, FontWeight.W600),
+    Font(R.font.dancingscript_bold, FontWeight.Bold)
+)
 
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = Urbanist,
+        fontFamily = dancingScriptFontFamily,
         fontWeight = FontWeight.W600,
         fontSize = 16.sp,
         lineHeight = 25.sp,
         color = TextColor
     ),
+
     caption = TextStyle(
         fontFamily = Urbanist,
         fontWeight = FontWeight.W100,

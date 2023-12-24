@@ -52,7 +52,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.ui.draw.shadow
+import com.aikonia.app.ui.theme.VibrantBlue2
 
 @Composable
 fun WelcomeScreen(
@@ -65,8 +67,8 @@ fun WelcomeScreen(
     val viewModel: WelcomeScreenViewModel = hiltViewModel()
     val density = LocalDensity.current.density
     var userName by remember { mutableStateOf("") }
-    val customTextColor = Color(0xFE, 0xFD, 0xF5, 0xFF)
-    val dancingScriptFontFamily = FontFamily(Font(R.font.dancingscript_medium))
+    val customTextColor = Color(0xFF, 0xFB, 0xD8, 0xFF)
+    val dancingScriptFontFamily = FontFamily(Font(R.font.dancingscript_bold))
     val alpha: Float by rememberInfiniteTransition().animateFloat(
         initialValue = 0f,
         targetValue = 1f,
@@ -155,26 +157,41 @@ fun WelcomeScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 40.dp),
+                .padding(bottom = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(
-                onClick = {
-                    playClickSound()
-                    navigateToChat()
-                },
-                modifier = Modifier.padding(16.dp)
 
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .background(Color.Gray, shape = RoundedCornerShape(10.dp)) // Dunklerer äußerer Rand
             ) {
-                Text(
-                    "Los geht's",
-                    style = TextStyle(
-                        color = Color.White, // Setzt die Textfarbe auf Weiß
-                        fontSize = 18.sp, // Passen Sie die Schriftgröße nach Bedarf an
-                        fontFamily = dancingScriptFontFamily // Verwenden Sie dieselbe Schriftart wie den anderen Text
-                    )
-                )
+                Box(
+                    modifier = Modifier
+                        .padding(1.dp) // Geringer Abstand zum äußeren Rand
+                        .background(Color.LightGray, shape = RoundedCornerShape(9.dp)) // Hellerer innerer Rand
+                ) {
+                    Button(
+                        onClick = {
+                            playClickSound()
+                            navigateToChat()
+                        },
+                        colors = ButtonDefaults.buttonColors(backgroundColor = VibrantBlue2),
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier
+                            .padding(1.dp) // Geringer Abstand zum inneren Rand
+                    ) {
+                        Text(
+                            "Besuche Aikonia",
+                            color = Color.White,
+                            fontFamily = dancingScriptFontFamily, // Ihre benutzerdefinierte Schriftfamilie
+                            fontSize = 24.sp
+                        )
+                    }
+                }
             }
+
+
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
@@ -199,6 +216,7 @@ fun WelcomeScreen(
         onDispose {
             videoView?.stopPlayback()
         }
+      }
     }
-    // ... (Hintergrundmusik und andere Effekte)
- }
+
+ 

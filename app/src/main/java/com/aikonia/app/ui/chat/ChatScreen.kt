@@ -56,7 +56,14 @@ import androidx.compose.material.icons.filled.VolumeOff
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material.*
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import android.media.MediaPlayer
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.font.FontFamily
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 
 @Composable
 fun ChatScreen(
@@ -66,23 +73,46 @@ fun ChatScreen(
     viewModel: ChatViewModel = hiltViewModel()
 ) {
 
-    //val backgroundImagePainter: Painter = painterResource(id = R.drawable.background_chat10)
-   // val freeMessageCount by viewModel.freeMessageCount.collectAsState()
+        val context = LocalContext.current
+        val lifecycleOwner = LocalLifecycleOwner.current
+        val mediaPlayer = remember {
+            MediaPlayer.create(context, R.raw.rise_again_adobestock_356927429).apply {
+                isLooping = true
+                start()
+            }
+        }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_PAUSE -> mediaPlayer.pause()
+                Lifecycle.Event.ON_RESUME -> mediaPlayer.start()
+                Lifecycle.Event.ON_DESTROY -> mediaPlayer.release()
+                else -> Unit
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            mediaPlayer.release()
+        }
+    }
+
+
     val isProVersion by viewModel.isProVersion.collectAsState()
     val conversationId by viewModel.currentConversationState.collectAsState()
     val messagesMap by viewModel.messagesState.collectAsState()
     val isGenerating by viewModel.isGenerating.collectAsState()
-    val context = LocalContext.current
+
     var userName by remember { mutableStateOf("") }
     val themeColors = MaterialTheme.colors
     var videoView: VideoView? = null
 
     var isMuted by remember { mutableStateOf(false) }
-    val mediaPlayer = remember {
-        MediaPlayer.create(context, R.raw.rise_again_adobestock_356927429).apply {
-            isLooping = true
-        }
-    }
+
+
+
+
 
 
     LaunchedEffect(Unit) {
@@ -147,14 +177,13 @@ fun ChatScreen(
         Column(Modifier.fillMaxSize()) {
             AppBar(
                 onClickAction = navigateToBack,
+                onMuteClick = { isMuted = !isMuted },
+                isMuted = isMuted,
                 image = R.drawable.arrow_left,
-                text = if (userName.isBlank()) {
-                    stringResource(R.string.app_name)
-                } else {
-                    "Sternenwanderer $userName"
-                },
+                text = if (userName.isBlank()) stringResource(R.string.app_name) else "Sternenwanderer $userName",
                 tint = MaterialTheme.colors.onSurface,
-                backgroundColor = VibrantBlue2
+                backgroundColor = VibrantBlue2,
+                dancingScriptFontFamily = dancingScriptFontFamily // Ihre Schriftfamilie, falls verwendet
             )
 
 
@@ -173,9 +202,61 @@ fun ChatScreen(
             )
         }
     }
-
 }
 
+@Composable
+fun AppBar(
+    onClickAction: () -> Unit,
+    onMuteClick: () -> Unit = {}, // Standardaktion hinzufügen, falls nicht verwendet
+    isMuted: Boolean = false,     // Standardwert hinzufügen, falls nicht verwendet
+    image: Int,
+    text: String,
+    tint: Color,
+    backgroundColor: Color,
+    dancingScriptFontFamily: FontFamily // Optional, falls verwendet
+) {
+    TopAppBar(
+        backgroundColor = backgroundColor,
+        contentColor = MaterialTheme.colors.onSurface,
+        elevation = 4.dp
+    ) {
+        IconButton(onClick = onClickAction) {
+            Icon(
+                painter = painterResource(id = image),
+                contentDescription = "Navigation Icon",
+                tint = tint
+            )
+        }
+
+        Text(
+            text = text,
+            style = TextStyle(
+                fontFamily = dancingScriptFontFamily, // Verwenden Sie die Schriftart, falls erforderlich
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            modifier = Modifier.weight(1f),
+            textAlign = TextAlign.Center
+        )
+
+        IconButton(onClick = onMuteClick) {
+            Icon(
+                imageVector = if (isMuted) Icons.Filled.VolumeOff else Icons.Filled.VolumeUp,
+                contentDescription = "Stumm"
+            )
+        }
+    }
+}
+
+
+
+@Composable
+fun TextInput(
+    viewModel: ChatViewModel,
+    inputText: MutableState<String>
+) {
+    // Implementierung des TextInputs für Chat-Nachrichten
+}
 
 @Composable
 fun StopButton(modifier: Modifier, onClick: () -> Unit) {

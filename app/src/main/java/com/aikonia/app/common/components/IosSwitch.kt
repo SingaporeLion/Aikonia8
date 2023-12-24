@@ -16,16 +16,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.aikonia.app.common.click
 import com.aikonia.app.ui.settings.SettingsViewModel
-import com.aikonia.app.ui.theme.VibrantBlue
+import com.aikonia.app.ui.theme.VibrantBlue2
 import com.aikonia.app.ui.theme.White
 
 @Composable
 fun IosSwitch(
     switchOn: MutableState<Boolean>,
-    width: Dp = 45.dp,
-    height: Dp = 27.dp,
-    checkedTrackColor: Color = VibrantBlue,
-    uncheckedTrackColor: Color = MaterialTheme.colors.secondary,
+    width: Dp = 70.dp,
+    height: Dp = 35.dp,
+    checkedTrackColor: Color = VibrantBlue2,
+    uncheckedTrackColor: Color = VibrantBlue2,
     gapBetweenThumbAndTrackEdge: Dp = 2.dp,
     cornerSize: Int = 50,
     iconInnerPadding: Dp = 2.dp,
@@ -47,7 +47,7 @@ fun IosSwitch(
         modifier = Modifier
             .size(width = width, height = height)
             .background(
-                color = if (switchOnCurrent) checkedTrackColor else uncheckedTrackColor,
+                color = VibrantBlue2,
                 shape = CircleShape
             )
             .click {

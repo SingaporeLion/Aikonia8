@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import com.aikonia.app.ui.theme.dancingScriptFontFamily
 
 @Composable
 fun TextInput(
@@ -86,12 +87,13 @@ fun TextInput(
                         placeholder = {
                             Text(
                                 stringResource(R.string.ask_me_anything),
-                                fontSize = 16.sp,
+                                fontSize = 18.sp,
                                 color = MaterialTheme.colors.onSurface,
-                                fontFamily = Urbanist,
+                                fontFamily = dancingScriptFontFamily,
                                 fontWeight = FontWeight.W600
                             )
                         },
+
                         textStyle = TextStyle(
                             color = MaterialTheme.colors.onSurface,
                             fontSize = 16.sp,
@@ -156,6 +158,7 @@ fun TextInput(
                                         )
                                         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Talk")
                                         launcher.launch(intent)
+
                                     }
                                 }
                             }

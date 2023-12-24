@@ -57,6 +57,7 @@ fun StartChatScreen(
     startChatViewModel: StartChatViewModel = hiltViewModel(),
     sharedPreferences: SharedPreferences
 ) {
+
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
     var showUpdateDialog by remember { mutableStateOf(false) }

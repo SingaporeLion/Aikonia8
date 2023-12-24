@@ -66,6 +66,8 @@ class ChatViewModel @Inject constructor(
 
     val showAdsAndProVersion = mutableStateOf(false)
 
+
+
     fun createGreetingMessage() {
         viewModelScope.launch {
             val userName = userRepository.getCurrentUserName()
