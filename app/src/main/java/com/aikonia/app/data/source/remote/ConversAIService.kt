@@ -17,4 +17,8 @@ interface ConversAIService {
     @POST(Constants.Endpoints.TEXT_COMPLETIONS_TURBO)
     @Streaming
     fun textCompletionsTurboWithStream(@Body body: JsonObject): Call<ResponseBody>
+
+    @POST(Constants.Endpoints.TEXT_COMPLETIONS_TURBO)
+    @Streaming
+    fun sendGreeting(@Body body: JsonObject): Call<ResponseBody>
 }

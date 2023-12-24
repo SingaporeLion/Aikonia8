@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+import com.aikonia.app.data.source.remote.ConversAIService
+import com.google.gson.JsonObject
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
@@ -36,11 +38,51 @@ class ChatViewModel @Inject constructor(
     private val createConversationUseCase: CreateConversationUseCase,
     private val savedStateHandle: SavedStateHandle,
     private val isProVersionUseCase: IsProVersionUseCase,
-
     private val setProVersionUseCase: SetProVersionUseCase,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val conversAIService: ConversAIService // Hinzugefügt
+
+
 
 ) : ViewModel() {
+
+    // Neue Methode, um die Begrüßungsnachricht an die API zu senden
+    fun sendGreetingToAPI(greeting: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val body = JsonObject().apply {
+                    addProperty("prompt", greeting)
+                    addProperty("model", "ft:gpt-3.5-turbo-1106:personal::8JRC1Idj") // oder das entsprechende Modell
+                }
+                val response = conversAIService.textCompletionsTurboWithStream(body)
+                if (response.isSuccessful) {
+                    // Verarbeiten Sie hier die Antwort von der API
+                } else {
+                    // Behandeln Sie Fehlerfälle
+                }
+            } catch (e: Exception) {
+                // Behandeln Sie Netzwerk- oder andere Ausnahmen
+            }
+        }
+    }
+
+    fun createGreetingMessage() {
+        viewModelScope.launch {
+            val userName = userRepository.getCurrentUserName()
+            val birthYear = userRepository.getUserBirthYear()
+            val gender = userRepository.getUserGender()
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+            val userAge = currentYear - birthYear
+
+            val greeting = if (userAge >= 0 && birthYear != -1) {
+                "Du sprichst mit ${gender.lowercase(Locale.ROOT)} ${userAge}-jährigen Kind namens $userName. Bitte begrüße das Kind, so wie es Wesen aus Aikonia machen würden."
+            } else {
+                "Bitte begrüße den Benutzer $userName."
+            }
+
+            sendGreetingToAPI(greeting) // Geändert, um die Nachricht an die API zu senden
+        }
+    }
 
     private var answerFromGPT = ""
     private var newMessageModel = MessageModel()
@@ -68,24 +110,6 @@ class ChatViewModel @Inject constructor(
 
 
 
-    fun createGreetingMessage() {
-        viewModelScope.launch {
-            val userName = userRepository.getCurrentUserName()
-            val birthYear = userRepository.getUserBirthYear()
-            val gender = userRepository.getUserGender()
-            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-            val userAge = currentYear - birthYear
-
-            val greeting = if (userAge >= 0 && birthYear != -1) {
-                "Du sprichst mit ${gender.lowercase(Locale.ROOT)} ${userAge}-jährigen Kind namens $userName. Bitte begrüße das Kind, so wie es Wesen aus Aikonia machen würden."
-            } else {
-                "Bitte begrüße den Benutzer $userName."
-            }
-
-            // Hier würden Sie die Begrüßungsnachricht an ChatGPT senden
-            sendMessage(greeting)
-        }
-    }
 
     init {
         _currentConversation.value = savedStateHandle.get<String>("id")
