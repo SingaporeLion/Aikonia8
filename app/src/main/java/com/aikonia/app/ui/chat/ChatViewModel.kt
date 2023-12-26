@@ -50,6 +50,9 @@ class ChatViewModel @Inject constructor(
     fun sendGreetingToAPI(greeting: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                // Log-Ausgabe vor dem Senden der Nachricht
+                Log.d("ChatViewModel", "Senden der Begrüßungsnachricht an API: $greeting")
+
                 val body = JsonObject().apply {
                     addProperty("prompt", greeting)
                     addProperty("model", "ft:gpt-3.5-turbo-1106:personal::8JRC1Idj") // oder das entsprechende Modell
@@ -61,8 +64,14 @@ class ChatViewModel @Inject constructor(
                 } else {
                     // Behandeln Sie Fehlerfälle
                 }
+                // Log-Ausgabe nach Erhalt der Antwort
+                Log.d("ChatViewModel", "API-Antwort erhalten: Erfolgreich: ${response.isSuccessful}")
+
             } catch (e: Exception) {
                 // Behandeln Sie Netzwerk- oder andere Ausnahmen
+                // Log-Ausgabe bei Ausnahme
+                Log.e("ChatViewModel", "Fehler beim Senden der Begrüßungsnachricht: ${e.message}")
+
             }
         }
     }
@@ -72,11 +81,14 @@ class ChatViewModel @Inject constructor(
             val userName = userRepository.getCurrentUserName()
             val birthYear = userRepository.getUserBirthYear()
             val gender = userRepository.getUserGender()
+            // Log-Ausgabe nach dem Abrufen der Benutzerdaten
+            Log.d("ChatViewModel", "Benutzerdaten: Name: $userName, Geburtsjahr: $birthYear, Geschlecht: $gender")
+
             val currentYear = Calendar.getInstance().get(Calendar.YEAR)
             val userAge = currentYear - birthYear
 
             val greeting = if (userAge >= 0 && birthYear != -1) {
-                "Du sprichst mit ${gender.lowercase(Locale.ROOT)} ${userAge}-jährigen Kind namens $userName. Bitte begrüße das Kind, so wie es Wesen aus Aikonia machen würden."
+                "Du sprichst mit ${userAge}-jährigen Kind ${gender.lowercase(Locale.ROOT)} namens $userName. Bitte begrüße das Kind, so wie es Wesen aus Aikonia machen würden."
             } else {
                 "Bitte begrüße den Benutzer $userName."
             }

@@ -64,6 +64,8 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontFamily
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import android.util.Log
+
 
 @Composable
 fun ChatScreen(
@@ -116,6 +118,9 @@ fun ChatScreen(
 
 
     LaunchedEffect(Unit) {
+        // Log-Ausgabe beim Laden des Bildschirms
+        Log.d("ChatScreen", "ChatScreen geladen, Begrüßungsnachricht wird erstellt")
+
         viewModel.getProVersion()
       //  viewModel.getFreeMessageCount()
         viewModel.getCurrentUserName { name ->
