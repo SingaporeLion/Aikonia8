@@ -28,7 +28,10 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 import com.aikonia.app.data.source.remote.ConversAIService
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import retrofit2.Response
+import retrofit2.Call
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
@@ -47,55 +50,33 @@ class ChatViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Neue Methode, um die Begrüßungsnachricht an die API zu senden
-    fun sendGreetingToAPI(greeting: String) {
+    private fun sendGreetingToAPI(userName: String, userAge: Int, gender: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                // Log-Ausgabe vor dem Senden der Nachricht
-                Log.d("ChatViewModel", "Senden der Begrüßungsnachricht an API: $greeting")
+                val greeting = "Du sprichst mit ${userAge}-jährigen Kind ${gender.lowercase(Locale.ROOT)} namens $userName. Bitte begrüße das Kind, so wie es Wesen aus Aikonia machen würden."
 
-                val body = JsonObject().apply {
-                    addProperty("prompt", greeting)
-                    addProperty("model", "ft:gpt-3.5-turbo-1106:personal::8JRC1Idj") // oder das entsprechende Modell
+                val requestBody = JsonObject().apply {
+                    addProperty("model", "ft:gpt-3.5-turbo-1106:personal::8JRC1Idj")
+                    add("messages", JsonArray().apply {
+                        add(JsonObject().apply {
+                            addProperty("role", "user")
+                            addProperty("content", greeting)
+                        })
+                    })
                 }
-                val call = conversAIService.textCompletionsTurboWithStream(body)
-                val response = call.execute()
-                if (response.isSuccessful) {
+
+                val response = conversAIService.textCompletionsTurboWithStream(requestBody)
+                if (response.isSuccessful && response.body() != null) {
                     // Verarbeiten Sie hier die Antwort von der API
                 } else {
                     // Behandeln Sie Fehlerfälle
                 }
-                // Log-Ausgabe nach Erhalt der Antwort
-                Log.d("ChatViewModel", "API-Antwort erhalten: Erfolgreich: ${response.isSuccessful}")
-
             } catch (e: Exception) {
                 // Behandeln Sie Netzwerk- oder andere Ausnahmen
-                // Log-Ausgabe bei Ausnahme
-                Log.e("ChatViewModel", "Fehler beim Senden der Begrüßungsnachricht: ${e.message}")
-
             }
         }
     }
 
-    fun createGreetingMessage() {
-        viewModelScope.launch {
-            val userName = userRepository.getCurrentUserName()
-            val birthYear = userRepository.getUserBirthYear()
-            val gender = userRepository.getUserGender()
-            // Log-Ausgabe nach dem Abrufen der Benutzerdaten
-            Log.d("ChatViewModel", "Benutzerdaten: Name: $userName, Geburtsjahr: $birthYear, Geschlecht: $gender")
-
-            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-            val userAge = currentYear - birthYear
-
-            val greeting = if (userAge >= 0 && birthYear != -1) {
-                "Du sprichst mit ${userAge}-jährigen Kind ${gender.lowercase(Locale.ROOT)} namens $userName. Bitte begrüße das Kind, so wie es Wesen aus Aikonia machen würden."
-            } else {
-                "Bitte begrüße den Benutzer $userName."
-            }
-
-            sendGreetingToAPI(greeting) // Geändert, um die Nachricht an die API zu senden
-        }
-    }
 
     private var answerFromGPT = ""
     private var newMessageModel = MessageModel()

@@ -13,7 +13,7 @@ import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-import android.util.Log
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -33,7 +33,6 @@ object NetworkModule {
             })
         .build()
 
-
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
@@ -46,13 +45,9 @@ object NetworkModule {
             .build()
     }
 
-
-    @Singleton
     @Provides
-    fun provideConversAIService(retrofit: Retrofit): ConversAIService {
-        // Log-Ausgabe beim Erstellen des API-Services
-        Log.d("NetworkModule", "ConversAIService wird bereitgestellt")
-
-        return retrofit.create(ConversAIService::class.java)
-    }
+    @Singleton
+    fun provideConversAIService(retrofit: Retrofit): ConversAIService =
+        retrofit.create(ConversAIService::class.java)
 }
+
