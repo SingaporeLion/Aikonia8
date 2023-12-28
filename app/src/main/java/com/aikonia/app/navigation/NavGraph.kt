@@ -18,7 +18,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.bottomSheet
 import com.aikonia.app.common.Constants
 import com.aikonia.app.common.Constants.TRANSITION_ANIMATION_DURATION
-import com.aikonia.app.ui.assistants.AiAssistantsScreen
+
 import com.aikonia.app.ui.chat.ChatScreen
 import com.aikonia.app.ui.history.DeleteHistoryBottomSheet
 import com.aikonia.app.ui.history.HistoryScreen
@@ -319,12 +319,7 @@ fun NavGraph(
                 }
             }
         ) {
-            AiAssistantsScreen(
-                navigateToChat = { name, role, examples ->
-                    val examplesString = examples.joinToString(separator = "|")
-                    navController.navigate("${Screen.Chat.route}?name=$name&role=$role&examples=$examplesString")
-                }
-            )
+
         }
 
         composable(route = Screen.History.route) {

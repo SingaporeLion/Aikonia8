@@ -65,24 +65,24 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import android.util.Log
-
+import java.util.Calendar
 
 @Composable
 fun ChatScreen(
     navigateToBack: () -> Unit,
-    name: String?, // Hinzufügen des Parameters `name`
-    examples: List<String>?, // Hinzufügen des Parameters `examples`
+    name: String?, // Parameter `name` hinzugefügt
+    examples: List<String>?, // Parameter `examples` hinzugefügt
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-
-        val context = LocalContext.current
-        val lifecycleOwner = LocalLifecycleOwner.current
-        val mediaPlayer = remember {
-            MediaPlayer.create(context, R.raw.rise_again_adobestock_356927429).apply {
-                isLooping = true
-                start()
-            }
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val mediaPlayer = remember {
+        MediaPlayer.create(context, R.raw.rise_again_adobestock_356927429).apply {
+            isLooping = true
+            start()
         }
+    }
+
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
@@ -101,6 +101,7 @@ fun ChatScreen(
     }
 
 
+
     val isProVersion by viewModel.isProVersion.collectAsState()
     val conversationId by viewModel.currentConversationState.collectAsState()
     val messagesMap by viewModel.messagesState.collectAsState()
@@ -115,21 +116,17 @@ fun ChatScreen(
 
 
 
-
-
     LaunchedEffect(Unit) {
-        // Log-Ausgabe beim Laden des Bildschirms
-        Log.d("ChatScreen", "ChatScreen geladen, Begrüßungsnachricht wird erstellt")
+        Log.d("ChatScreen", "ChatScreen geladen, Begrüßungsnachricht wird vorbereitet")
 
         viewModel.getProVersion()
-      //  viewModel.getFreeMessageCount()
         viewModel.getCurrentUserName { name ->
             userName = name
-            viewModel.getCurrentUserName { userName ->
-                viewModel.createGreetingMessage() // Aufruf der Begrüßungsmethode beim Laden des ChatScreens
-            }
+            viewModel.prepareAndSendGreeting()
         }
     }
+
+
 
     //Stumm oder Play
     if (isMuted) {
@@ -163,19 +160,19 @@ fun ChatScreen(
 
     val inputText = remember { mutableStateOf("") }
 
+    // Entfernen Sie alle Modifier, die das Layout beeinflussen könnten
     Box(Modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
-                VideoView(context).also {
-                    videoView = it
-                    it.setVideoPath("android.resource://${context.packageName}/${R.raw.background_chat_animation}")
-                    it.setOnPreparedListener { mediaPlayer ->
+                VideoView(context).apply {
+                    setVideoPath("android.resource://${context.packageName}/${R.raw.background_chat_animation}")
+                    setOnPreparedListener { mediaPlayer ->
                         mediaPlayer.isLooping = true
+                        mediaPlayer.start()
                     }
-                    it.start()
                 }
             },
-            modifier = Modifier.fillMaxSize() // Füllt den gesamten Bildschirm
+            modifier = Modifier.matchParentSize() // Füllt den gesamten verfügbaren Platz
         )
 
         // Der Rest des Layouts wird über dem Video platziert

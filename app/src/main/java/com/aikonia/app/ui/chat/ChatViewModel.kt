@@ -30,6 +30,7 @@ import javax.inject.Inject
 import com.aikonia.app.data.source.remote.ConversAIService
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import retrofit2.Response
 import retrofit2.Call
 
@@ -49,8 +50,10 @@ class ChatViewModel @Inject constructor(
 
 ) : ViewModel() {
 
+
+
     // Neue Methode, um die Begrüßungsnachricht an die API zu senden
-    private fun sendGreetingToAPI(userName: String, userAge: Int, gender: String) {
+    fun sendGreetingToAPI(userName: String, userAge: Int, gender: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val greeting = "Du sprichst mit ${userAge}-jährigen Kind ${gender.lowercase(Locale.ROOT)} namens $userName. Bitte begrüße das Kind, so wie es Wesen aus Aikonia machen würden."
@@ -65,18 +68,51 @@ class ChatViewModel @Inject constructor(
                     })
                 }
 
-                val response = conversAIService.textCompletionsTurboWithStream(requestBody)
+                val call = conversAIService.sendGreeting(requestBody)
+                val response = call.execute()
                 if (response.isSuccessful && response.body() != null) {
-                    // Verarbeiten Sie hier die Antwort von der API
+                    val responseBody = response.body()?.string()
+
+                    // Parsen der JSON-Antwort
+                    val jsonResponse = JsonParser.parseString(responseBody).asJsonObject
+                    val messageContent = jsonResponse.getAsJsonArray("choices")
+                        .get(0).asJsonObject
+                        .getAsJsonObject("message")
+                        .get("content").asString
+
+                    // Umwandlung der Nachricht in ein MessageModel
+                    val messageModel = MessageModel(answer = messageContent, /* Weitere Parameter */)
+
+                    // Hinzufügen zur Nachrichtenliste
+                    val currentListMessage = getMessagesByConversation(_currentConversation.value).toMutableList()
+                    currentListMessage.add(0, messageModel)
+                    setMessages(currentListMessage)
+
                 } else {
-                    // Behandeln Sie Fehlerfälle
+                    Log.e("ChatViewModel", "Fehler beim Senden der Begrüßungsnachricht: ${response.errorBody()?.string()}")
                 }
+
             } catch (e: Exception) {
-                // Behandeln Sie Netzwerk- oder andere Ausnahmen
+                Log.e("ChatViewModel", "Ausnahme beim Senden der Begrüßungsnachricht", e)
             }
         }
     }
 
+    fun prepareAndSendGreeting() {
+        viewModelScope.launch {
+            val userName = userRepository.getCurrentUserName()
+            val birthYear = userRepository.getUserBirthYear()
+            val gender = userRepository.getUserGender()
+            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+            val userAge = if (birthYear > 0) currentYear - birthYear else -1
+
+            if (userAge >= 0 && gender.isNotEmpty()) {
+                sendGreetingToAPI(userName, userAge, gender)
+            } else {
+                Log.d("ChatViewModel", "Ungültige Benutzerdaten: Alter oder Geschlecht nicht verfügbar")
+            }
+        }
+    }
 
     private var answerFromGPT = ""
     private var newMessageModel = MessageModel()
