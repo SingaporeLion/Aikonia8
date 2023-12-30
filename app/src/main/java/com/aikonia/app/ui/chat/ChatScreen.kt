@@ -66,116 +66,104 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import android.util.Log
 import java.util.Calendar
+import android.graphics.Rect
+import android.view.ViewTreeObserver
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.dp
+
 
 @Composable
 fun ChatScreen(
     navigateToBack: () -> Unit,
-    name: String?, // Parameter `name` hinzugefügt
-    examples: List<String>?, // Parameter `examples` hinzugefügt
+    name: String?,
+    examples: List<String>?,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    val mediaPlayer = remember {
+    val density = LocalDensity.current
+    val rootView = LocalView.current
+
+    val musicPlayer = remember {
         MediaPlayer.create(context, R.raw.rise_again_adobestock_356927429).apply {
             isLooping = true
             start()
         }
     }
 
+    // Lifecycle-Management für Musikplayer
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_PAUSE -> mediaPlayer.pause()
-                Lifecycle.Event.ON_RESUME -> mediaPlayer.start()
-                Lifecycle.Event.ON_DESTROY -> mediaPlayer.release()
+                Lifecycle.Event.ON_PAUSE -> musicPlayer.pause()
+                Lifecycle.Event.ON_RESUME -> musicPlayer.start()
+                Lifecycle.Event.ON_DESTROY -> musicPlayer.release()
                 else -> Unit
             }
         }
-
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-            mediaPlayer.release()
+            musicPlayer.release()
         }
     }
 
-
-
-    val isProVersion by viewModel.isProVersion.collectAsState()
-    val conversationId by viewModel.currentConversationState.collectAsState()
-    val messagesMap by viewModel.messagesState.collectAsState()
-    val isGenerating by viewModel.isGenerating.collectAsState()
-
-    var userName by remember { mutableStateOf("") }
-    val themeColors = MaterialTheme.colors
-    var videoView: VideoView? = null
-
     var isMuted by remember { mutableStateOf(false) }
-
-
-
+    var userName by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         Log.d("ChatScreen", "ChatScreen geladen, Begrüßungsnachricht wird vorbereitet")
-
-        viewModel.getProVersion()
-        viewModel.getCurrentUserName { name ->
-            userName = name
+        viewModel.getCurrentUserName { newName ->
+            userName = newName
             viewModel.prepareAndSendGreeting()
         }
     }
 
-
-
-    //Stumm oder Play
-    if (isMuted) {
-        mediaPlayer.pause()
-    } else {
-        mediaPlayer.start()
-    }
-    DisposableEffect(Unit) {
-        onDispose {
-            mediaPlayer.release()
-        }
-    }
-    Column {
-        // IconButton mit Lautsprecher-Icon
-        IconButton(onClick = { isMuted = !isMuted }) {
-            Icon(
-                imageVector = if (isMuted) Icons.Filled.VolumeOff else Icons.Filled.VolumeUp,
-                contentDescription = if (isMuted) "Musik fortsetzen" else "Musik stummstellen"
-            )
+    val videoView = remember {
+        VideoView(context).apply {
+            setVideoPath("android.resource://${context.packageName}/${R.raw.background_chat_animation}")
+            setOnPreparedListener { mediaPlayer ->
+                mediaPlayer.isLooping = true
+                mediaPlayer.start()
+            }
         }
     }
 
-    val messages: List<MessageModel> =
-        messagesMap[conversationId] ?: listOf()
+    val conversationId by viewModel.currentConversationState.collectAsState()
+    val messagesMap by viewModel.messagesState.collectAsState()
+    val isGenerating by viewModel.isGenerating.collectAsState()
+    val messages: List<MessageModel> = messagesMap[conversationId] ?: listOf()
 
-    val paddingBottom =
-        animateDpAsState(
-            targetValue = if (isGenerating) 90.dp else 0.dp,
-            animationSpec = tween(durationMillis = Constants.TRANSITION_ANIMATION_DURATION)
-        )
+    val paddingBottom = animateDpAsState(
+        targetValue = if (isGenerating) 90.dp else 0.dp,
+        animationSpec = tween(durationMillis = Constants.TRANSITION_ANIMATION_DURATION)
+    )
 
     val inputText = remember { mutableStateOf("") }
 
-    // Entfernen Sie alle Modifier, die das Layout beeinflussen könnten
-    Box(Modifier.fillMaxSize()) {
-        AndroidView(
-            factory = { context ->
-                VideoView(context).apply {
-                    setVideoPath("android.resource://${context.packageName}/${R.raw.background_chat_animation}")
-                    setOnPreparedListener { mediaPlayer ->
-                        mediaPlayer.isLooping = true
-                        mediaPlayer.start()
-                    }
-                }
-            },
-            modifier = Modifier.matchParentSize() // Füllt den gesamten verfügbaren Platz
-        )
+    var keyboardHeight by remember { mutableStateOf(0.dp) }
+    DisposableEffect(rootView) {
+        val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+            val rect = Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+            if (keypadHeight > screenHeight * 0.15) {
+                keyboardHeight = with(density) { keypadHeight.toDp() }
+            } else {
+                keyboardHeight = 0.dp
+            }
+        }
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
+        onDispose {
+            rootView.viewTreeObserver.removeOnGlobalLayoutListener(globalLayoutListener)
+        }
+    }
 
-        // Der Rest des Layouts wird über dem Video platziert
+    Box(modifier = Modifier.fillMaxSize()) {
+        AndroidView(factory = { videoView }, modifier = Modifier.fillMaxSize())
+
         Column(Modifier.fillMaxSize()) {
             AppBar(
                 onClickAction = navigateToBack,
@@ -185,9 +173,8 @@ fun ChatScreen(
                 text = if (userName.isBlank()) stringResource(R.string.app_name) else "Sternenwanderer $userName",
                 tint = MaterialTheme.colors.onSurface,
                 backgroundColor = VibrantBlue2,
-                dancingScriptFontFamily = dancingScriptFontFamily // Ihre Schriftfamilie, falls verwendet
+                dancingScriptFontFamily = dancingScriptFontFamily
             )
-
 
             Box(modifier = Modifier.weight(1f)) {
                 if (messages.isEmpty()) {
@@ -200,11 +187,12 @@ fun ChatScreen(
             TextInput(
                 viewModel = viewModel,
                 inputText = inputText
-                // Hinweis: backgroundColor wird nicht mehr verwendet
             )
         }
     }
 }
+
+
 
 @Composable
 fun AppBar(
@@ -313,71 +301,7 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
     }
 }
 
-    @Composable
-    fun Examples(
-        modifier: Modifier = Modifier,
-        examples: List<String>,
-        inputText: MutableState<String>
-    ) {
-    Box(modifier = modifier) {
-        Column(
-            Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
 
-            Text(
-                text = stringResource(R.string.type_something_like),
-                color = White,
-                style = TextStyle(
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.W700,
-                    fontFamily = Urbanist,
-                    lineHeight = 25.sp
-                ),
-                textAlign = TextAlign.Center
-            )
-
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(examples) { example ->
-                    Text(
-                        text = example,
-                        color = Color.White,
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.W600,
-                            fontFamily = Urbanist,
-                            lineHeight = 25.sp
-                        ),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .bounceClick(
-                                onClick = {
-                                    inputText.value = example
-                                })
-                            .background(
-                                color = VibrantBlue2, // Sekundäre Variante für Abwechslung
-                                shape = RoundedCornerShape(16.dp)
-                            )
-
-                            .fillMaxWidth()
-
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
-            }
-
-
-        }
-    }
-}
 
 val ConversationTestTag = "ConversationTestTag"
 
@@ -389,25 +313,25 @@ fun MessageList(
     val listState = rememberLazyListState()
 
     Box(modifier = modifier) {
-        LazyColumn(
-            contentPadding =
-            WindowInsets.statusBars.add(WindowInsets(top = 90.dp)).asPaddingValues(),
-            modifier = Modifier
-                .testTag(ConversationTestTag)
-                .fillMaxSize(),
-            reverseLayout = true,
-            state = listState,
-        ) {
-            items(messages.size) { index ->
-                Box(modifier = Modifier.padding(bottom = if (index == 0) 10.dp else 0.dp)) {
-                    Column {
-                        MessageCard(
-                            message = messages[index],
-                            isLast = index == messages.size - 1,
-                            isHuman = true
-                        )
-                        MessageCard(message = messages[index])
-                    }
+                            LazyColumn(
+                                contentPadding =
+                                WindowInsets.statusBars.add(WindowInsets(top = 90.dp)).asPaddingValues(),
+                                modifier = Modifier
+                                    .testTag(ConversationTestTag)
+                                    .fillMaxSize(),
+                                reverseLayout = true,
+                                state = listState,
+                            ) {
+                                items(messages.size) { index ->
+                                    Box(modifier = Modifier.padding(bottom = if (index == 0) 10.dp else 0.dp)) {
+                                        Column {
+                                            MessageCard(
+                                                message = messages[index],
+                                                isLast = index == messages.size - 1,
+                                                isHuman = true
+                                            )
+                                            MessageCard(message = messages[index])
+                                        }
                 }
             }
         }

@@ -20,6 +20,7 @@ import androidx.compose.foundation.background
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import com.aikonia.app.R
+import com.aikonia.app.ui.theme.VibrantBlue2
 
 @Composable
 fun AppBar(
@@ -27,7 +28,7 @@ fun AppBar(
     image: Int,
     text: String,
     tint: Color,
-    backgroundColor: Color = MaterialTheme.colors.primary, // Parameter für Hintergrundfarbe
+    backgroundColor: Color = VibrantBlue2, // Parameter für Hintergrundfarbe
     menuItems: (@Composable () -> Unit)? = null
 ) {
     val dancingScriptFontFamily = FontFamily(Font(R.font.dancingscript_medium))
@@ -60,6 +61,7 @@ fun AppBar(
         ) {
             IconButton(
                 onClick = onClickAction,
+
                 modifier = Modifier
                     .width(27.dp)
                     .height(27.dp)

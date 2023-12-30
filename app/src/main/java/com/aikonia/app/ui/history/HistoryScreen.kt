@@ -243,7 +243,7 @@ fun HistoryScreen(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(id = if (darkMode) R.drawable.empty_list_dark else R.drawable.empty_list),
+                        painter = painterResource(id = if (darkMode) R.drawable.history_screen_background else R.drawable.history_screen_background),
                         contentDescription = null,
                         modifier = Modifier.size(200.dp)
                     )
@@ -345,7 +345,7 @@ fun HistoryScreen(
                                         .padding(vertical = 5.dp, horizontal = 5.dp)
                                         .fillMaxWidth()
                                         .background(
-                                            MaterialTheme.colors.onSecondary,
+                                            VibrantBlue2,
                                             RoundedCornerShape(16.dp)
                                         )
                                         .border(

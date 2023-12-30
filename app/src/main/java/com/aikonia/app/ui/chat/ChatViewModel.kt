@@ -14,8 +14,7 @@ import com.aikonia.app.data.model.*
 import com.aikonia.app.data.source.local.UserRepository
 import com.aikonia.app.domain.use_case.conversation.CreateConversationUseCase
 import com.aikonia.app.domain.use_case.message.*
-import com.aikonia.app.domain.use_case.upgrade.IsProVersionUseCase
-import com.aikonia.app.domain.use_case.upgrade.SetProVersionUseCase
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,8 +40,7 @@ class ChatViewModel @Inject constructor(
     private val getMessagesUseCase: GetMessagesUseCase,
     private val createConversationUseCase: CreateConversationUseCase,
     private val savedStateHandle: SavedStateHandle,
-    private val isProVersionUseCase: IsProVersionUseCase,
-    private val setProVersionUseCase: SetProVersionUseCase,
+
     private val userRepository: UserRepository,
     private val conversAIService: ConversAIService // Hinzugefügt
 
@@ -133,11 +131,6 @@ class ChatViewModel @Inject constructor(
         _messages.asStateFlow()
     val isGenerating: StateFlow<Boolean> = _isGenerating.asStateFlow()
 
-    private val _isProVersion = MutableStateFlow(false)
-    val isProVersion get() = _isProVersion.asStateFlow()
-
-    val showAdsAndProVersion = mutableStateOf(false)
-
 
 
 
@@ -150,14 +143,6 @@ class ChatViewModel @Inject constructor(
 
 
 
-    fun getProVersion() = viewModelScope.launch {
-        _isProVersion.value = isProVersionUseCase()
-        if (_isProVersion.value) {
-            showAdsAndProVersion.value = false
-        }
-    }
-
-
 
     fun getCurrentUserName(onResult: (String) -> Unit) {
         viewModelScope.launch {
@@ -165,7 +150,6 @@ class ChatViewModel @Inject constructor(
             onResult(userName)
         }
     }
-
 
 
     fun sendMessage(message: String) = viewModelScope.launch {
@@ -209,7 +193,6 @@ class ChatViewModel @Inject constructor(
             createMessagesUseCase(newMessageModel.copy(answer = answerFromGPT))
             _isGenerating.value = false
         }
-
 
     }
 

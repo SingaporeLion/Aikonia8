@@ -32,6 +32,8 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import com.aikonia.app.ui.theme.VibrantBlue
+import com.aikonia.app.ui.theme.VibrantBlue2
 import com.aikonia.app.ui.theme.dancingScriptFontFamily
 
 @Composable
@@ -117,7 +119,7 @@ fun TextInput(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent,
-                            backgroundColor = if (hasFocus) MaterialTheme.colors.primary else MaterialTheme.colors.surface
+                            backgroundColor = if (hasFocus) VibrantBlue2 else VibrantBlue2
                         ),
                         shape = RoundedCornerShape(16.dp)
                     )
@@ -165,7 +167,7 @@ fun TextInput(
                         },
                         modifier = Modifier
                             .size(50.dp)
-                            .background(color = MaterialTheme.colors.primary, shape = RoundedCornerShape(90.dp))
+                            .background(color = VibrantBlue2, shape = RoundedCornerShape(90.dp))
                     ) {
                         Icon(
                             if (text.text.isNotEmpty()) painterResource(R.drawable.send) else painterResource(R.drawable.voice),
