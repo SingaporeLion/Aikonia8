@@ -1,5 +1,6 @@
 package com.aikonia.app.ui.chat
 
+import android.graphics.Matrix
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -67,10 +68,17 @@ import androidx.lifecycle.LifecycleEventObserver
 import android.util.Log
 import java.util.Calendar
 import android.graphics.Rect
+import android.graphics.SurfaceTexture
 import android.view.ViewTreeObserver
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import android.view.SurfaceView
+import android.view.SurfaceHolder
+import android.net.Uri
+import android.view.TextureView
+import android.view.Surface
 
 
 @Composable
@@ -84,6 +92,41 @@ fun ChatScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val density = LocalDensity.current
     val rootView = LocalView.current
+    val textureView = remember { TextureView(context) }
+    val mediaPlayer = remember { MediaPlayer() }
+    val videoUri = "android.resource://${context.packageName}/${R.raw.background_chat_animation}"
+
+    // TextureView und MediaPlayer Konfiguration
+    DisposableEffect(textureView) {
+        textureView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+            override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+                mediaPlayer.apply {
+                    setDataSource(context, Uri.parse("android.resource://${context.packageName}/${R.raw.background_chat_animation}"))
+                    setSurface(Surface(surface))
+                    isLooping = true
+                    prepare()
+                    start()
+                }
+            }
+
+            override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {}
+            override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+                mediaPlayer.stop()
+                mediaPlayer.release()
+                return true
+            }
+
+            override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
+        }
+
+        onDispose {
+            if (mediaPlayer.isPlaying) {
+                mediaPlayer.stop()
+            }
+            mediaPlayer.release()
+        }
+    }
+
 
     val musicPlayer = remember {
         MediaPlayer.create(context, R.raw.rise_again_adobestock_356927429).apply {
@@ -109,24 +152,23 @@ fun ChatScreen(
         }
     }
 
-    var isMuted by remember { mutableStateOf(false) }
     var userName by remember { mutableStateOf("") }
+
+    var isMuted by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isMuted) {
+        if (isMuted) {
+            musicPlayer.pause()
+        } else {
+            musicPlayer.start()
+        }
+    }
 
     LaunchedEffect(Unit) {
         Log.d("ChatScreen", "ChatScreen geladen, Begrüßungsnachricht wird vorbereitet")
         viewModel.getCurrentUserName { newName ->
             userName = newName
             viewModel.prepareAndSendGreeting()
-        }
-    }
-
-    val videoView = remember {
-        VideoView(context).apply {
-            setVideoPath("android.resource://${context.packageName}/${R.raw.background_chat_animation}")
-            setOnPreparedListener { mediaPlayer ->
-                mediaPlayer.isLooping = true
-                mediaPlayer.start()
-            }
         }
     }
 
@@ -161,33 +203,34 @@ fun ChatScreen(
         }
     }
 
+    // Hauptlayout mit TextureView für das Video
     Box(modifier = Modifier.fillMaxSize()) {
-        AndroidView(factory = { videoView }, modifier = Modifier.fillMaxSize())
+        AndroidView(factory = { textureView }, modifier = Modifier.fillMaxSize())
 
-        Column(Modifier.fillMaxSize()) {
-            AppBar(
-                onClickAction = navigateToBack,
-                onMuteClick = { isMuted = !isMuted },
-                isMuted = isMuted,
-                image = R.drawable.arrow_left,
-                text = if (userName.isBlank()) stringResource(R.string.app_name) else "Sternenwanderer $userName",
-                tint = MaterialTheme.colors.onSurface,
-                backgroundColor = VibrantBlue2,
-                dancingScriptFontFamily = dancingScriptFontFamily
-            )
+        // Chat-Oberfläche als Overlay
+        Box(modifier = Modifier.fillMaxSize().zIndex(1f)) {
+            Column(Modifier.fillMaxSize()) {
+                AppBar(
+                    onClickAction = navigateToBack,
+                    onMuteClick = { isMuted = !isMuted },
+                    isMuted = isMuted,
+                    image = R.drawable.arrow_left,
+                    text = if (userName.isBlank()) stringResource(R.string.app_name) else "Sternenwanderer $userName",
+                    tint = MaterialTheme.colors.onSurface,
+                    backgroundColor = VibrantBlue2,
+                    dancingScriptFontFamily = dancingScriptFontFamily
+                )
 
-            Box(modifier = Modifier.weight(1f)) {
-                if (messages.isEmpty()) {
-                    Capabilities(modifier = Modifier.fillMaxSize())
-                } else {
-                    MessageList(messages = messages, modifier = Modifier.padding(bottom = paddingBottom.value))
+                Box(modifier = Modifier.weight(1f)) {
+                    if (messages.isEmpty()) {
+                        Capabilities(modifier = Modifier.fillMaxSize())
+                    } else {
+                        MessageList(messages = messages, modifier = Modifier.padding(bottom = paddingBottom.value))
+                    }
                 }
-            }
 
-            TextInput(
-                viewModel = viewModel,
-                inputText = inputText
-            )
+                TextInput(viewModel = viewModel, inputText = inputText)
+            }
         }
     }
 }
