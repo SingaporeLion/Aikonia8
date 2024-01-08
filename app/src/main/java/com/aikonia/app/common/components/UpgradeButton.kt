@@ -27,6 +27,8 @@ import com.aikonia.app.R
 import com.aikonia.app.common.bounceClick
 
 import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.VibrantBlue2
+import com.aikonia.app.ui.theme.dancingScriptFontFamily
 
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
@@ -70,6 +72,7 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                 .padding(top = 25.dp)
                 .padding(horizontal = 16.dp)
                 .bounceClick(onClick = onClick),
+            backgroundColor = VibrantBlue2,
             elevation = 5.dp,
 
             shape = RoundedCornerShape(20.dp),
@@ -96,9 +99,9 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                         text = stringResource(id = R.string.upgrade_to_pro),
 
                         style = TextStyle(
-                            fontSize = 20.sp,
+                            fontSize = 22.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = Urbanist,
+                            fontFamily = dancingScriptFontFamily,
                             lineHeight = 25.sp
                         )
                     )
@@ -107,9 +110,9 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                         text = stringResource(id = R.string.upgrade_to_pro_description),
 
                         style = TextStyle(
-                            fontSize = 13.sp,
+                            fontSize = 19.sp,
                             fontWeight = FontWeight.W500,
-                            fontFamily = Urbanist,
+                            fontFamily = dancingScriptFontFamily,
                             lineHeight = 25.sp
                         )
                     )

@@ -30,25 +30,41 @@ import com.halilibo.richtext.ui.material.MaterialRichText
 import com.aikonia.app.R
 import com.aikonia.app.data.model.MessageModel
 import com.aikonia.app.ui.theme.*
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.ui.graphics.Color
+
 
 @Composable
 fun MessageCard(message: MessageModel, isHuman: Boolean = false, isLast: Boolean = false) {
-    Column(
-        horizontalAlignment = if (isHuman) Alignment.End else Alignment.Start,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(end = if (isHuman) 0.dp else 10.dp)
-            .padding(start = if (isHuman) 10.dp else 0.dp)
-            .padding(vertical = 4.dp)
-            .padding(top = if (isLast) 50.dp else 0.dp)
+    // Starten Sie mit der Nachricht unsichtbar und blenden Sie sie dann ein
+    var isVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = message) {
+        isVisible = true
+    }
+
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn(animationSpec = tween(1300)) // Anpassen der Dauer nach Bedarf
     ) {
-        if (isHuman) {
-            HumanMessageCard(message = message)
-        } else {
-            BotMessageCard(message = message)
+        Column(
+            horizontalAlignment = if (isHuman) Alignment.End else Alignment.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = if (isHuman) 0.dp else 10.dp)
+                .padding(start = if (isHuman) 10.dp else 0.dp)
+                .padding(vertical = 4.dp)
+                .padding(top = if (isLast) 50.dp else 0.dp)
+        ) {
+            if (isHuman) {
+                HumanMessageCard(message = message)
+            } else {
+                BotMessageCard(message = message)
+            }
         }
     }
 }
+
 
 @Composable
 fun HumanMessageCard(message: MessageModel) {
@@ -56,7 +72,7 @@ fun HumanMessageCard(message: MessageModel) {
         modifier = Modifier
             .widthIn(0.dp)
             .background(
-                VibrantBlue,
+                VibrantBlue2,
                 shape = RoundedCornerShape(
                     topEnd = 16.dp,
                     topStart = 16.dp,
@@ -68,6 +84,7 @@ fun HumanMessageCard(message: MessageModel) {
         Text(
             text = message.question,
             color = White,
+            fontSize = 16.sp,
             modifier = Modifier.padding(horizontal = 18.dp, vertical = 12.dp),
             textAlign = TextAlign.End,
             style = Typography.body1
@@ -117,8 +134,8 @@ fun BotMessageCard(message: MessageModel) {
                 style = RichTextStyle(
                     codeBlockStyle = CodeBlockStyle(
                         textStyle = TextStyle(
-                            fontFamily = Urbanist,
-                            fontSize = 14.sp,
+                            fontFamily = dancingScriptFontFamily,
+                            fontSize = 16.sp,
                             color = White
                         ),
                         wordWrap = true,
@@ -143,7 +160,7 @@ fun BotMessageCard(message: MessageModel) {
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
                 modifier = Modifier
-                    .background(MaterialTheme.colors.onSecondary, RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colors.primary, RoundedCornerShape(16.dp))
                     .border(1.dp, MaterialTheme.colors.onPrimary, RoundedCornerShape(16.dp)),
                 properties = PopupProperties(focusable = false)
             ) {
@@ -157,13 +174,14 @@ fun BotMessageCard(message: MessageModel) {
                         painterResource(R.drawable.copy),
                         "copyMessage",
                         modifier = Modifier.size(25.dp),
-                        tint = MaterialTheme.colors.surface,
+                        tint = Color.White,
                     )
                     Text(
                         text = stringResource(R.string.copy),
-                        color = MaterialTheme.colors.surface,
+                        color = Color.White,
                         modifier = Modifier.padding(horizontal = 10.dp),
                         style = Typography.body1
+
                     )
                 }
                 Divider(
@@ -180,11 +198,11 @@ fun BotMessageCard(message: MessageModel) {
                         painterResource(R.drawable.share),
                         "shareMessage",
                         modifier = Modifier.size(25.dp),
-                        tint = MaterialTheme.colors.surface,
+                        tint = Color.White,
                     )
                     Text(
                         text = stringResource(R.string.share),
-                        color = MaterialTheme.colors.surface,
+                        color = Color.White,
                         modifier = Modifier.padding(horizontal = 10.dp),
                         style = Typography.body1
                     )

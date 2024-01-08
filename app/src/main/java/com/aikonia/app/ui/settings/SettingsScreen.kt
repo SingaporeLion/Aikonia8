@@ -3,7 +3,6 @@ package com.aikonia.app.ui.settings
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,9 +22,10 @@ import com.aikonia.app.common.click
 import com.aikonia.app.common.components.AppBar
 import com.aikonia.app.common.components.IosSwitch
 import com.aikonia.app.common.components.UpgradeButton
-import com.aikonia.app.ui.theme.GreenShadow
-import com.aikonia.app.ui.theme.GreenShadow
-import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.dancingScriptFontFamily
+import com.aikonia.app.ui.theme.VibrantBlue2
+import com.aikonia.app.ui.theme.White
+
 import com.aikonia.app.ui.upgrade.PurchaseHelper
 import com.yagmurerdogan.toasticlib.Toastic
 
@@ -83,17 +83,18 @@ fun SettingsScreen(
     val language by settingsViewModel.currentLanguage.collectAsState()
 
     Column(Modifier.fillMaxSize()) {
+
         AppBar(
             onClickAction = {},
             image = R.drawable.app_icon,
             text = stringResource(R.string.settings),
-            GreenShadow
+            VibrantBlue2
         )
 //        Row(
 //            modifier = Modifier
 //                .fillMaxWidth()
 //                .padding(top = 20.dp)
-//                .padding(horizontal = 16.dp),
+//                .padding(horizontal = 18.dp),
 //            verticalAlignment = Alignment.CenterVertically
 //        ) {
 //            Image(
@@ -110,23 +111,23 @@ fun SettingsScreen(
 //            Spacer(modifier = Modifier.width(10.dp))
 //            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center) {
 //                Text(
-//                    text = "Murat ÖZTÜRK",
-//                    color = MaterialTheme.colors.surface,
+//                    text = "",
+//                    color = White,
 //                    style = TextStyle(
 //                        fontSize = 18.sp,
 //                        fontWeight = FontWeight.W700,
-//                        fontFamily = Urbanist,
+//                        fontFamily = dancingScriptFontFamily,
 //                        lineHeight = 25.sp
 //                    )
 //                )
 //                Spacer(modifier = Modifier.height(10.dp))
 //                Text(
 //                    text = "murat318ozturk@gmail.com",
-//                    color = MaterialTheme.colors.onSurface,
+//                    color = White,
 //                    style = TextStyle(
-//                        fontSize = 14.sp,
+//                        fontSize = 16.sp,
 //                        fontWeight = FontWeight.W600,
-//                        fontFamily = Urbanist,
+//                        fontFamily = dancingScriptFontFamily,
 //                        lineHeight = 25.sp
 //                    )
 //                )
@@ -135,7 +136,7 @@ fun SettingsScreen(
 //            Icon(
 //                painter = painterResource(id = R.drawable.right),
 //                contentDescription = null,
-//                tint = MaterialTheme.colors.surface,
+//                tint = White,
 //                modifier = Modifier
 //                    .padding(start = 5.dp)
 //                    .size(30.dp)
@@ -143,36 +144,37 @@ fun SettingsScreen(
 //        }
 
         if (settingsViewModel.isProVersion.value.not()) {
-            UpgradeButton(onClick = { navigateToUpgrade() })
+            UpgradeButton(onClick = { })
+            // ---> navigateToUpgrade() <--- kommt in { } in Zeile weiter oben !!!!!!!!!!!
         }
 
 
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 18.dp)
                 .padding(top = 25.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = stringResource(id = R.string.general),
-                color = MaterialTheme.colors.onSurface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 14.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 )
             )
             Spacer(modifier = Modifier.width(10.dp))
             Divider(
-                color = MaterialTheme.colors.secondary, thickness = 1.dp,
+                color = White, thickness = 1.dp,
             )
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 18.dp)
                 .click {
                     navigateToLanguages()
                 },
@@ -180,7 +182,7 @@ fun SettingsScreen(
         ) {
             Icon(
                 painter = painterResource(R.drawable.more_circle),
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 contentDescription = stringResource(R.string.app_name),
                 modifier = Modifier
                     .size(width = 27.dp, height = 27.dp)
@@ -189,22 +191,22 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = stringResource(id = R.string.language),
-                color = MaterialTheme.colors.surface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
             )
             Text(
                 text = language,
-                color = MaterialTheme.colors.surface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W700,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 )
             )
@@ -212,7 +214,7 @@ fun SettingsScreen(
             Icon(
                 painter = painterResource(id = R.drawable.right),
                 contentDescription = null,
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .size(30.dp)
@@ -222,12 +224,12 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 18.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(R.drawable.dark_theme),
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 contentDescription = stringResource(R.string.app_name),
                 modifier = Modifier
                     .size(width = 27.dp, height = 27.dp)
@@ -236,11 +238,11 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = stringResource(id = R.string.dark_theme),
-                color = MaterialTheme.colors.surface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -251,23 +253,23 @@ fun SettingsScreen(
 
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 18.dp)
                 .padding(top = 25.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = stringResource(id = R.string.purchase),
-                color = MaterialTheme.colors.onSurface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 )
             )
             Spacer(modifier = Modifier.width(10.dp))
             Divider(
-                color = MaterialTheme.colors.secondary, thickness = 1.dp,
+                color = White, thickness = 1.dp,
             )
         }
 
@@ -275,7 +277,7 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 18.dp)
                 .click {
                     purchaseHelper.restorePurchase {
                         if (it) {
@@ -290,7 +292,7 @@ fun SettingsScreen(
         ) {
             Icon(
                 painter = painterResource(R.drawable.buy),
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 contentDescription = stringResource(R.string.app_name),
                 modifier = Modifier
                     .size(width = 27.dp, height = 27.dp)
@@ -299,11 +301,11 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = stringResource(id = R.string.restore_purchase),
-                color = MaterialTheme.colors.surface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -312,7 +314,7 @@ fun SettingsScreen(
             Icon(
                 painter = painterResource(id = R.drawable.right),
                 contentDescription = null,
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .size(30.dp)
@@ -321,23 +323,23 @@ fun SettingsScreen(
 
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 18.dp)
                 .padding(top = 25.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = stringResource(id = R.string.about),
-                color = MaterialTheme.colors.onSurface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 )
             )
             Spacer(modifier = Modifier.width(10.dp))
             Divider(
-                color = MaterialTheme.colors.secondary, thickness = 1.dp,
+                color = White, thickness = 1.dp,
             )
         }
 
@@ -345,7 +347,7 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 18.dp)
                 .click {
                     uriHandler.openUri(Constants.HELP)
                 },
@@ -353,7 +355,7 @@ fun SettingsScreen(
         ) {
             Icon(
                 painter = painterResource(R.drawable.paper),
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 contentDescription = stringResource(R.string.app_name),
                 modifier = Modifier
                     .size(width = 27.dp, height = 27.dp)
@@ -362,11 +364,11 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = stringResource(id = R.string.help_center),
-                color = MaterialTheme.colors.surface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -375,7 +377,7 @@ fun SettingsScreen(
             Icon(
                 painter = painterResource(id = R.drawable.right),
                 contentDescription = null,
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .size(30.dp)
@@ -385,7 +387,7 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 18.dp)
                 .click {
                     uriHandler.openUri(Constants.PRIVACY_POLICY)
                 },
@@ -393,7 +395,7 @@ fun SettingsScreen(
         ) {
             Icon(
                 painter = painterResource(R.drawable.shield_done),
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 contentDescription = stringResource(R.string.app_name),
                 modifier = Modifier
                     .size(width = 27.dp, height = 27.dp)
@@ -402,11 +404,11 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = stringResource(id = R.string.privacy_policy),
-                color = MaterialTheme.colors.surface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -415,7 +417,7 @@ fun SettingsScreen(
             Icon(
                 painter = painterResource(id = R.drawable.right),
                 contentDescription = null,
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .size(30.dp)
@@ -425,7 +427,7 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 18.dp)
                 .click {
                     uriHandler.openUri(Constants.ABOUT)
                 },
@@ -433,7 +435,7 @@ fun SettingsScreen(
         ) {
             Icon(
                 painter = painterResource(R.drawable.info_square),
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 contentDescription = stringResource(R.string.app_name),
                 modifier = Modifier
                     .size(width = 27.dp, height = 27.dp)
@@ -442,11 +444,11 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = stringResource(id = R.string.about_us),
-                color = MaterialTheme.colors.surface,
+                color = White,
                 style = TextStyle(
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -455,7 +457,7 @@ fun SettingsScreen(
             Icon(
                 painter = painterResource(id = R.drawable.right),
                 contentDescription = null,
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 modifier = Modifier
                     .padding(start = 5.dp)
                     .size(30.dp)
@@ -465,7 +467,7 @@ fun SettingsScreen(
 //            modifier = Modifier
 //                .fillMaxWidth()
 //                .padding(top = 20.dp)
-//                .padding(horizontal = 16.dp)
+//                .padding(horizontal = 18.dp)
 //                .clickable(
 //                    interactionSource = interactionSource,
 //                    indication = null,
@@ -485,9 +487,9 @@ fun SettingsScreen(
 //                text = stringResource(id = R.string.logout),
 //                color = Red,
 //                style = TextStyle(
-//                    fontSize = 16.sp,
+//                    fontSize = 18.sp,
 //                    fontWeight = FontWeight.W600,
-//                    fontFamily = Urbanist,
+//                    fontFamily = dancingScriptFontFamily,
 //                    lineHeight = 25.sp
 //                ),
 //                modifier = Modifier.weight(1f)
@@ -501,8 +503,9 @@ fun SettingsScreen(
 //                    .padding(start = 5.dp)
 //                    .size(30.dp)
 //            )
-//        }
+        }
+
     }
-}
+
 
 

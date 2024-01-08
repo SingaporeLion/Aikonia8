@@ -30,7 +30,9 @@ import com.aikonia.app.common.click
 import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.GreenShadow
 import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.VibrantBlue2
 import com.aikonia.app.ui.theme.White
+import com.aikonia.app.ui.theme.dancingScriptFontFamily
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.shimmer
@@ -171,7 +173,7 @@ fun UpgradeScreen(
             Icon(
                 painter = painterResource(id = R.drawable.close),
                 contentDescription = null,
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 modifier = Modifier
                     .size(30.dp)
                     .background(
@@ -183,16 +185,16 @@ fun UpgradeScreen(
 
             Text(
                 text = stringResource(R.string.restore),
-                color = MaterialTheme.colors.surface,
+                color = Color.White,
                 style = TextStyle(
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier
                     .background(
-                        color = Color.Gray,
+                        color = VibrantBlue2,
                         shape = RoundedCornerShape(90.dp)
                     )
                     .padding(vertical = 5.dp, horizontal = 10.dp)
@@ -209,7 +211,6 @@ fun UpgradeScreen(
         Icon(
             painter = painterResource(R.drawable.app_icon),
             contentDescription = stringResource(R.string.app_name),
-            tint = White,
             modifier = Modifier.size(100.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -219,11 +220,11 @@ fun UpgradeScreen(
         ) {
             Text(
                 text = stringResource(R.string.app_name),
-                color = MaterialTheme.colors.surface,
+                color = White,
                 style = TextStyle(
                     fontSize = 28.sp,
                     fontWeight = FontWeight.W700,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 textAlign = TextAlign.Center
@@ -235,7 +236,7 @@ fun UpgradeScreen(
                 style = TextStyle(
                     fontSize = 25.sp,
                     fontWeight = FontWeight.W700,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 textAlign = TextAlign.Center,
@@ -249,7 +250,7 @@ fun UpgradeScreen(
         Column(
             modifier = Modifier
                 .background(
-                    color = MaterialTheme.colors.onSecondary,
+                    color = VibrantBlue,
                     shape = RoundedCornerShape(16.dp)
                 )
                 .padding(20.dp)
@@ -262,7 +263,7 @@ fun UpgradeScreen(
                 Icon(
                     painter = painterResource(id = R.drawable.done),
                     contentDescription = null,
-                    tint = MaterialTheme.colors.primary,
+                    tint = White,
                     modifier = Modifier
                         .size(25.dp)
                         .background(
@@ -273,11 +274,11 @@ fun UpgradeScreen(
                 )
                 Text(
                     text = stringResource(R.string.powered_by_chat_gpt),
-                    color = MaterialTheme.colors.surface,
+                    color = Color.White,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -303,11 +304,11 @@ fun UpgradeScreen(
                 )
                 Text(
                     text = stringResource(R.string.remove_ads),
-                    color = MaterialTheme.colors.surface,
+                    color = Color.White,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -333,11 +334,11 @@ fun UpgradeScreen(
                 )
                 Text(
                     text = stringResource(R.string.unlimited_messages),
-                    color = MaterialTheme.colors.surface,
+                    color = Color.White,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -362,11 +363,11 @@ fun UpgradeScreen(
                 )
                 Text(
                     text = stringResource(R.string.cancel_anytime),
-                    color = MaterialTheme.colors.surface,
+                    color = Color.White,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -390,7 +391,7 @@ fun UpgradeScreen(
                     .weight(1f)
                     .background(
                         shape = RoundedCornerShape(16.dp),
-                        color = MaterialTheme.colors.onSecondary
+                        color = MaterialTheme.colors.primary
                     )
                     .border(
                         1.dp,
@@ -402,11 +403,11 @@ fun UpgradeScreen(
             ) {
                 Text(
                     text = stringResource(R.string.weekly),
-                    color = MaterialTheme.colors.primary,
+                    color = Color.White,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -417,11 +418,11 @@ fun UpgradeScreen(
                 )
                 Text(
                     text = proWeeklyPrice,
-                    color = MaterialTheme.colors.surface,
+                    color = Color.White,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -432,11 +433,11 @@ fun UpgradeScreen(
 
                 Text(
                     text = stringResource(id = R.string.per_week),
-                    color = MaterialTheme.colors.onSurface,
+                    color = Color.White,
                     style = TextStyle(
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.W500,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -454,7 +455,7 @@ fun UpgradeScreen(
                     .weight(1f)
                     .background(
                         shape = RoundedCornerShape(16.dp),
-                        color = MaterialTheme.colors.onSecondary
+                        color = VibrantBlue
                     )
                     .border(
                         1.dp,
@@ -470,7 +471,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -481,11 +482,11 @@ fun UpgradeScreen(
                 )
                 Text(
                     text = proMonthlyPrice,
-                    color = MaterialTheme.colors.surface,
+                    color = Color.White,
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -498,9 +499,9 @@ fun UpgradeScreen(
                     text = stringResource(id = R.string.per_month),
                     color = MaterialTheme.colors.onSurface,
                     style = TextStyle(
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.W500,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -530,7 +531,7 @@ fun UpgradeScreen(
                             color = MaterialTheme.colors.primary,
                             shape = RoundedCornerShape(16.dp)
                         ),
-                    backgroundColor = MaterialTheme.colors.onSecondary,
+                    backgroundColor = VibrantBlue,
                     shape = RoundedCornerShape(16.dp),
 
                     ) {
@@ -547,7 +548,7 @@ fun UpgradeScreen(
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W600,
-                                fontFamily = Urbanist,
+                                fontFamily = dancingScriptFontFamily,
                                 lineHeight = 25.sp
                             ),
                             textAlign = TextAlign.Center,
@@ -559,11 +560,11 @@ fun UpgradeScreen(
                         )
                         Text(
                             text = proYearlyPrice,
-                            color = MaterialTheme.colors.surface,
+                            color = Color.White,
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W600,
-                                fontFamily = Urbanist,
+                                fontFamily = dancingScriptFontFamily,
                                 lineHeight = 25.sp
                             ),
                             textAlign = TextAlign.Center,
@@ -576,9 +577,9 @@ fun UpgradeScreen(
                             text = stringResource(id = R.string.per_year),
                             color = MaterialTheme.colors.onSurface,
                             style = TextStyle(
-                                fontSize = 12.sp,
+                                fontSize = 14.sp,
                                 fontWeight = FontWeight.W500,
-                                fontFamily = Urbanist,
+                                fontFamily = dancingScriptFontFamily,
                                 lineHeight = 25.sp
                             ),
                             textAlign = TextAlign.Center,
@@ -591,11 +592,11 @@ fun UpgradeScreen(
 
                 Text(
                     text = stringResource(R.string.save85),
-                    color = MaterialTheme.colors.surface,
+                    color = Color.White,
                     style = TextStyle(
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = Urbanist,
+                        fontFamily = dancingScriptFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -624,18 +625,18 @@ fun UpgradeScreen(
             Icon(
                 painter = painterResource(id = R.drawable.shield_done),
                 contentDescription = null,
-                tint = MaterialTheme.colors.surface,
+                tint = White,
                 modifier = Modifier
                     .size(35.dp)
                     .padding(5.dp)
             )
             Text(
                 text = stringResource(R.string.secured_by_google_play),
-                color = MaterialTheme.colors.surface,
+                color = Color.White,
                 style = TextStyle(
                     fontSize = 13.sp,
                     fontWeight = FontWeight.W500,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 ),
                 textAlign = TextAlign.Center,

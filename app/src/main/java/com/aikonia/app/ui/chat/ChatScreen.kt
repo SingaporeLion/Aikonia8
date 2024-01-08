@@ -1,16 +1,11 @@
 package com.aikonia.app.ui.chat
 
-import android.graphics.Matrix
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -34,48 +29,31 @@ import com.aikonia.app.common.bounceClick
 import com.aikonia.app.common.components.AppBar
 import com.aikonia.app.common.components.MessageCard
 import com.aikonia.app.common.components.TextInput
-import com.aikonia.app.common.showRewarded
 import com.aikonia.app.data.model.MessageModel
-import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.R
 import com.aikonia.app.ui.theme.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.foundation.Image
-import androidx.compose.ui.layout.ContentScale
-import android.widget.VideoView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VolumeOff
 import androidx.compose.material.icons.filled.VolumeUp
-import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material.*
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.painterResource
 import android.media.MediaPlayer
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontFamily
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import android.util.Log
-import java.util.Calendar
 import android.graphics.Rect
 import android.graphics.SurfaceTexture
 import android.view.ViewTreeObserver
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import android.view.SurfaceView
-import android.view.SurfaceHolder
 import android.net.Uri
 import android.view.TextureView
 import android.view.Surface
@@ -94,14 +72,14 @@ fun ChatScreen(
     val rootView = LocalView.current
     val textureView = remember { TextureView(context) }
     val mediaPlayer = remember { MediaPlayer() }
-    val videoUri = "android.resource://${context.packageName}/${R.raw.background_chat_animation}"
+    val videoUri = "android.resource://${context.packageName}/${R.raw.background_chat_animation2}"
 
     // TextureView und MediaPlayer Konfiguration
     DisposableEffect(textureView) {
         textureView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
             override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
                 mediaPlayer.apply {
-                    setDataSource(context, Uri.parse("android.resource://${context.packageName}/${R.raw.background_chat_animation}"))
+                    setDataSource(context, Uri.parse("android.resource://${context.packageName}/${R.raw.background_chat_animation2}"))
                     setSurface(Surface(surface))
                     isLooping = true
                     prepare()
@@ -120,10 +98,14 @@ fun ChatScreen(
         }
 
         onDispose {
-            if (mediaPlayer.isPlaying) {
-                mediaPlayer.stop()
+            try {
+                if (mediaPlayer != null && mediaPlayer.isPlaying) {
+                    mediaPlayer.stop()
+                }
+                mediaPlayer.release()
+            } catch (e: IllegalStateException) {
+                Log.e("ChatScreen", "MediaPlayer ist in einem unerwarteten Zustand: ${e.message}")
             }
-            mediaPlayer.release()
         }
     }
 
@@ -321,7 +303,7 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = Urbanist,
+                    fontFamily = dancingScriptFontFamily,
                     lineHeight = 25.sp
                 )
             )
@@ -379,6 +361,6 @@ fun MessageList(
             }
         }
     }
+}
 
-  }
 

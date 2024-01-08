@@ -14,10 +14,11 @@ import com.aikonia.app.ui.theme.DarkViolet
 
 // Definieren Sie Ihre Farbpalette
 val VibrantYellow = Color(0xFFFFF0BA)
-val VibrantBlue = Color(0xFF6A5ACD)
+val VibrantBlue = Color(0xFF2224AF)
 val VibrantBlue2 = Color(0xFF155294)
 val DeepBlue = Color(0xFF000033)
 val DarkViolet = Color(0xFF2E005C)
+val Ocean = Color(0xFF03A9F4)
 
 val White = Color(0xFFFFFFFF)
 val GreenShadow = Color(0xFF004400) // Beispiel für einen dunkleren Grünton
@@ -27,7 +28,7 @@ val CodeBackground = DeepBlue
 
 // Dunkle Farbpalette
 private val DarkColorPalette = darkColors(
-    primary = VibrantBlue,
+    primary = VibrantBlue2,
     primaryVariant = DarkViolet,
     secondary = VibrantYellow,
     background = DeepBlue,
@@ -41,7 +42,7 @@ private val DarkColorPalette = darkColors(
 
 // Helle Farbpalette
 private val LightColorPalette = lightColors(
-    primary = VibrantBlue,
+    primary = VibrantBlue2,
     primaryVariant = DarkViolet,
     secondary = VibrantYellow,
     background = DeepBlue,

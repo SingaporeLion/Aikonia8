@@ -22,6 +22,7 @@ import com.aikonia.app.common.bounceClick
 
 import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.ui.theme.White
+import com.aikonia.app.ui.theme.dancingScriptFontFamily
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.shimmer
@@ -75,7 +76,7 @@ fun AnimatedButton(onClick: () -> Unit = {}, text: String) {
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W700,
-                        fontFamily = Urbanist
+                        fontFamily = dancingScriptFontFamily
                     ),
                     textAlign = TextAlign.Center
                 )

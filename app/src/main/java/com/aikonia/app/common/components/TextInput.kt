@@ -35,6 +35,9 @@ import androidx.compose.ui.res.stringResource
 import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.VibrantBlue2
 import com.aikonia.app.ui.theme.dancingScriptFontFamily
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
+
 
 @Composable
 fun TextInput(
@@ -50,7 +53,7 @@ fun TextInput(
     }
 
     val isGenerating by viewModel.isGenerating.collectAsState()
-  //  val freeMessageCount by viewModel.freeMessageCount.collectAsState()
+
 
     val scope = rememberCoroutineScope()
     var text by remember { mutableStateOf(TextFieldValue("")) }
@@ -63,44 +66,54 @@ fun TextInput(
         // ... (Spracherkennungslogik)
     }
 
-    Box(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .imePadding()
-            .background(MaterialTheme.colors.background),
+    val customTextSelectionColors = TextSelectionColors(
+        handleColor = Color.White, // Setzen Sie hier Ihre gewünschte Farbe für das Handle
+        backgroundColor = Color.White.copy(alpha = 0.4f) // Hintergrundfarbe der Auswahl
+    )
+
+    CompositionLocalProvider(
+        LocalTextSelectionColors provides customTextSelectionColors
     ) {
-        Column {
-            Divider(
-                color = MaterialTheme.colors.secondary, thickness = 1.dp,
-            )
-            Box(
-                Modifier
-                    .padding(horizontal = 10.dp)
-                    .padding(top = 10.dp, bottom = 10.dp)
-            ) {
-                Row(Modifier.padding(all = 5.dp), verticalAlignment = Alignment.Bottom) {
-                    OutlinedTextField(
-                        value = text,
-                        onValueChange = {
-                            inputText.value = it.text
-                            text = it
-                        },
-                        label = null,
-                        placeholder = {
-                            Text(
-                                stringResource(R.string.ask_me_anything),
-                                fontSize = 18.sp,
-                                color = MaterialTheme.colors.onSurface,
-                                fontFamily = dancingScriptFontFamily,
-                                fontWeight = FontWeight.W600
-                            )
-                        },
+        Box(
+            modifier = Modifier
+                .navigationBarsPadding()
+                .imePadding()
+                .background(MaterialTheme.colors.background),
+        ) {
+            Column {
+                Divider(
+                    color = MaterialTheme.colors.secondary, thickness = 1.dp,
+                )
+                Box(
+                    Modifier
+                        .padding(horizontal = 10.dp)
+                        .padding(top = 10.dp, bottom = 10.dp)
+                ) {
+                    Row(Modifier.padding(all = 5.dp), verticalAlignment = Alignment.Bottom) {
+                        OutlinedTextField(
+                            value = text,
+                            onValueChange = {
+                                inputText.value = it.text
+                                text = it
+                            },
+                            label = null,
+                            placeholder = {
+                                Text(
+                                    stringResource(R.string.ask_me_anything),
+                                    fontSize = 18.sp,
+                                    color = MaterialTheme.colors.onSurface,
+                                    fontFamily = dancingScriptFontFamily,
+                                    fontWeight = FontWeight.W600
+                                )
+                            },
 
                         textStyle = TextStyle(
                             color = MaterialTheme.colors.onSurface,
                             fontSize = 16.sp,
-                            fontFamily = Urbanist,
+                            fontFamily = dancingScriptFontFamily,
                             fontWeight = FontWeight.W600
+
+
                         ),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -110,15 +123,18 @@ fun TextInput(
                             .weight(1f)
                             .border(
                                 1.dp,
-                                if (hasFocus) MaterialTheme.colors.secondary else Color.Transparent,
+                                if (hasFocus) Color.White else Color.Transparent,
                                 RoundedCornerShape(16.dp)
                             )
                             .onFocusChanged { focusState -> hasFocus = focusState.hasFocus },
                         colors = TextFieldDefaults.textFieldColors(
-                            textColor = MaterialTheme.colors.onSurface,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent,
+                            textColor = Color.White,
+                            focusedIndicatorColor = Color.White,
+                            unfocusedIndicatorColor = Color.White,
+                            disabledIndicatorColor = Color.White,
+                            cursorColor = Color.White,
+                            focusedLabelColor = Color.White,
+                            unfocusedLabelColor = Color.Gray,
                             backgroundColor = if (hasFocus) VibrantBlue2 else VibrantBlue2
                         ),
                         shape = RoundedCornerShape(16.dp)
@@ -179,5 +195,6 @@ fun TextInput(
                 }
             }
         }
+    }
     }
 }

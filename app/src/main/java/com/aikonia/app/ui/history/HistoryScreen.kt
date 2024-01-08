@@ -130,15 +130,15 @@ fun HistoryScreen(
                             Text(
                                 stringResource(R.string.search_conversation),
                                 fontSize = 16.sp,
-                                color = MaterialTheme.colors.onSurface,
-                                fontFamily = Urbanist,
+                                color = Color.White,
+                                fontFamily = dancingScriptFontFamily,
                                 fontWeight = FontWeight.W600
                             )
                         },
                         textStyle = TextStyle(
-                            color = MaterialTheme.colors.surface,
+                            color = Color.White,
                             fontSize = 16.sp,
-                            fontFamily = Urbanist,
+                            fontFamily = dancingScriptFontFamily,
                             fontWeight = FontWeight.W600
                         ),
                         modifier = Modifier
@@ -149,17 +149,17 @@ fun HistoryScreen(
                             .weight(1f)
                             .border(
                                 1.dp,
-                                if (hasFocus) VibrantBlue else Color.Transparent,
+                                if (hasFocus) Color.White else Color.Transparent,
                                 RoundedCornerShape(16.dp)
                             )
                             .onFocusChanged { focusState -> hasFocus = focusState.hasFocus },
                         shape = RoundedCornerShape(16.dp),
                         colors = TextFieldDefaults.textFieldColors(
-                            textColor = MaterialTheme.colors.surface,
+                            textColor = Color.White,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent,
-                            backgroundColor = if (hasFocus) GreenShadow else VibrantBlue2
+                            backgroundColor = if (hasFocus) VibrantBlue2 else VibrantBlue2
                         )
                     )
                 }
@@ -249,11 +249,11 @@ fun HistoryScreen(
                     )
                     Text(
                         text = stringResource(R.string.empty),
-                        color = White,
+                        color = Color.White,
                         style = TextStyle(
                             fontSize = 25.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = Urbanist,
+                            fontFamily = dancingScriptFontFamily,
                             lineHeight = 25.sp
                         ),
                         modifier = Modifier.padding(top = 50.dp)
@@ -264,7 +264,7 @@ fun HistoryScreen(
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W500,
-                            fontFamily = Urbanist,
+                            fontFamily = dancingScriptFontFamily,
                             lineHeight = 25.sp
                         ),
                         modifier = Modifier.padding(top = 15.dp)
@@ -406,6 +406,6 @@ fun HistoryScreen(
 
         }
     }
-
-
 }
+
+

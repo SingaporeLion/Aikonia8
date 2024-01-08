@@ -11,7 +11,7 @@
     <string name="welcome_to">Willkommen in</string>
     <string name="welcome_app_name">Aikonia 👋</string>
     <string name="welcome_description">Starte jetzt den Chat mit mir.\nDu kannst mich alles fragen.</string>
-    <string name="ask_me_anything">Tippe hier, um mit Lynn zu sprechen...</string>
+    <string name="ask_me_anything">Tippe hier, um mit mir zu sprechen...</string>
     <string name="back_icon">Zurück-Symbol</string>
     <string name="share">Teilen</string>
     <string name="writing">Schreiben</string>
@@ -167,10 +167,10 @@
     <string name="type_something_like">Tippe so etwas wie:</string>
     <string name="empty">Leer</string>
     <string name="no_history">Du hast bis jetzt keine Nachrichten.</string>
-    <string name="clear_all_history">Alle Nachrichten löschen</string>
-    <string name="are_you_sure_delete_all_history">Bist du sicher, dass du alle Nachrichten löschen möchtest?</string>
+    <string name="clear_all_history">Unsere Gespräche in Aikonias Zaubernebel auflösen?</string>
+    <string name="are_you_sure_delete_all_history">Wenn unsere Gespräche im Zaubernebel verschwinden, vergesse ich unsere bisherigen Abenteuer. Bist du sicher?</string>
     <string name="cancel">Abbrechen</string>
-    <string name="yes_clear_all">Ja, löschen</string>
+    <string name="yes_clear_all">Ja, auflösen!</string>
     <string name="search_conversation">Suchen…</string>
     <string name="upgrade_to_pro">Auf PRO upgraden!</string>
     <string name="upgrade_to_pro_description">Genieße alle Vorteile ohne Einschränkungen</string>

@@ -1,7 +1,6 @@
 package com.aikonia.app.ui.startchat
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
@@ -15,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +29,6 @@ import com.aikonia.app.common.components.ThereIsUpdateDialog
 import com.aikonia.app.ui.activity.isOnline
 import com.aikonia.app.ui.theme.Urbanist
 // import com.aikonia.app.ui.upgrade.PurchaseHelper
-import kotlinx.coroutines.delay
 import java.util.Locale
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.DropdownMenu
@@ -43,10 +40,10 @@ import androidx.compose.ui.graphics.Color
 //import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import android.content.SharedPreferences
 import android.util.Log
 import com.aikonia.app.ui.theme.VibrantBlue
+import com.aikonia.app.ui.theme.dancingScriptFontFamily
 
 
 @Composable
@@ -143,7 +140,8 @@ fun StartChatScreen(
             onClickAction = {},
             image = R.drawable.app_icon,
             text = stringResource(R.string.app_name),
-            tint = VibrantBlue // Farbe für AppBar-Icon
+            tint = VibrantBlue
+
         )
         Column(
             Modifier.fillMaxSize(),

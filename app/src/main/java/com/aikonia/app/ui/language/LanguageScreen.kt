@@ -26,6 +26,7 @@ import com.aikonia.app.data.model.LanguageModel
 import com.aikonia.app.ui.theme.Urbanist
 import java.util.*
 import com.aikonia.app.R
+import com.aikonia.app.ui.theme.dancingScriptFontFamily
 
 @Composable
 fun LanguageScreen(
