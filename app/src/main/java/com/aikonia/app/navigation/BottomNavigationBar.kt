@@ -26,7 +26,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.aikonia.app.common.Constants.TRANSITION_ANIMATION_DURATION
 import com.aikonia.app.common.click
 import com.aikonia.app.ui.theme.White
-import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.FlowerFontFamily
 
 @Composable
 fun BottomNavigationBar(
@@ -94,7 +94,7 @@ fun BottomNavigationBar(
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = stringResource(id = item.title),
-                            fontFamily = Urbanist,
+                            fontFamily = FlowerFontFamily,
                             fontSize = 11.sp,
                             fontWeight = if (selected) FontWeight.W700 else FontWeight.W600,
                             color = if (selected) White else MaterialTheme.colors.onSurface,

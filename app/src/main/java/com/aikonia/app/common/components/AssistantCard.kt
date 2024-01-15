@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.common.bounceClick
-import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.FlowerFontFamily
 import com.aikonia.app.R
 
 @Composable
@@ -60,7 +60,7 @@ fun AssistantCard(
             style = TextStyle(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.W700,
-                fontFamily = Urbanist,
+                fontFamily = FlowerFontFamily,
                 lineHeight = 25.sp
             )
         )
@@ -71,7 +71,7 @@ fun AssistantCard(
             style = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W500,
-                fontFamily = Urbanist,
+                fontFamily = FlowerFontFamily,
                 lineHeight = 20.sp
             )
         )

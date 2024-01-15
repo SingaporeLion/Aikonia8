@@ -20,9 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.common.bounceClick
 
-import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.ui.theme.White
-import com.aikonia.app.ui.theme.dancingScriptFontFamily
+import com.aikonia.app.ui.theme.FlowerFontFamily
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.shimmer
@@ -76,7 +75,7 @@ fun AnimatedButton(onClick: () -> Unit = {}, text: String) {
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W700,
-                        fontFamily = dancingScriptFontFamily
+                        fontFamily = FlowerFontFamily
                     ),
                     textAlign = TextAlign.Center
                 )

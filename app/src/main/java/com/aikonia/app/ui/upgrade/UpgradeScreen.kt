@@ -29,10 +29,9 @@ import com.aikonia.app.common.bounceClick
 import com.aikonia.app.common.click
 import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.GreenShadow
-import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.FlowerFontFamily
 import com.aikonia.app.ui.theme.VibrantBlue2
 import com.aikonia.app.ui.theme.White
-import com.aikonia.app.ui.theme.dancingScriptFontFamily
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
 import com.valentinilk.shimmer.shimmer
@@ -189,7 +188,7 @@ fun UpgradeScreen(
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier
@@ -224,7 +223,7 @@ fun UpgradeScreen(
                 style = TextStyle(
                     fontSize = 28.sp,
                     fontWeight = FontWeight.W700,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 textAlign = TextAlign.Center
@@ -236,7 +235,7 @@ fun UpgradeScreen(
                 style = TextStyle(
                     fontSize = 25.sp,
                     fontWeight = FontWeight.W700,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 textAlign = TextAlign.Center,
@@ -278,7 +277,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -308,7 +307,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -338,7 +337,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -367,7 +366,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -407,7 +406,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -422,7 +421,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -437,7 +436,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W500,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -471,7 +470,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -486,7 +485,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -501,7 +500,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W500,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -548,7 +547,7 @@ fun UpgradeScreen(
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W600,
-                                fontFamily = dancingScriptFontFamily,
+                                fontFamily = FlowerFontFamily,
                                 lineHeight = 25.sp
                             ),
                             textAlign = TextAlign.Center,
@@ -564,7 +563,7 @@ fun UpgradeScreen(
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W600,
-                                fontFamily = dancingScriptFontFamily,
+                                fontFamily = FlowerFontFamily,
                                 lineHeight = 25.sp
                             ),
                             textAlign = TextAlign.Center,
@@ -579,7 +578,7 @@ fun UpgradeScreen(
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.W500,
-                                fontFamily = dancingScriptFontFamily,
+                                fontFamily = FlowerFontFamily,
                                 lineHeight = 25.sp
                             ),
                             textAlign = TextAlign.Center,
@@ -596,7 +595,7 @@ fun UpgradeScreen(
                     style = TextStyle(
                         fontSize = 14.sp,
                         fontWeight = FontWeight.W600,
-                        fontFamily = dancingScriptFontFamily,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center,
@@ -636,7 +635,7 @@ fun UpgradeScreen(
                 style = TextStyle(
                     fontSize = 13.sp,
                     fontWeight = FontWeight.W500,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 textAlign = TextAlign.Center,

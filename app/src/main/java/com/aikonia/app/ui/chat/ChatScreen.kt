@@ -200,7 +200,7 @@ fun ChatScreen(
                     text = if (userName.isBlank()) stringResource(R.string.app_name) else "Sternenwanderer $userName",
                     tint = MaterialTheme.colors.onSurface,
                     backgroundColor = VibrantBlue2,
-                    dancingScriptFontFamily = dancingScriptFontFamily
+                    FlowerFontFamily = FlowerFontFamily
                 )
 
                 Box(modifier = Modifier.weight(1f)) {
@@ -228,7 +228,7 @@ fun AppBar(
     text: String,
     tint: Color,
     backgroundColor: Color,
-    dancingScriptFontFamily: FontFamily // Optional, falls verwendet
+    FlowerFontFamily: FontFamily // Optional, falls verwendet
 ) {
     TopAppBar(
         backgroundColor = backgroundColor,
@@ -246,7 +246,7 @@ fun AppBar(
         Text(
             text = text,
             style = TextStyle(
-                fontFamily = dancingScriptFontFamily, // Verwenden Sie die Schriftart, falls erforderlich
+                fontFamily = FlowerFontFamily, // Verwenden Sie die Schriftart, falls erforderlich
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             ),
@@ -303,7 +303,7 @@ fun StopButton(modifier: Modifier, onClick: () -> Unit) {
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 )
             )

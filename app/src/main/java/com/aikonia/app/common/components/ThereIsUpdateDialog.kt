@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.aikonia.app.common.bounceClick
-import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.FlowerFontFamily
 import com.aikonia.app.ui.theme.White
 import com.aikonia.app.R
 import com.aikonia.app.ui.theme.VibrantBlue
@@ -47,7 +47,7 @@ fun ThereIsUpdateDialog(
                 style = TextStyle(
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W700,
-                    fontFamily = Urbanist,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 textAlign = TextAlign.Center,
@@ -67,7 +67,7 @@ fun ThereIsUpdateDialog(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W700,
-                    fontFamily = Urbanist,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 textAlign = TextAlign.Center,
@@ -97,7 +97,7 @@ fun ThereIsUpdateDialog(
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.W700,
-                                fontFamily = Urbanist
+                                fontFamily = FlowerFontFamily
                             ),
                             textAlign = TextAlign.Center
                         )

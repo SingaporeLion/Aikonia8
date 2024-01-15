@@ -27,14 +27,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.aikonia.app.R
 import com.aikonia.app.ui.activity.isOnline
 import com.aikonia.app.ui.chat.ChatViewModel
-import com.aikonia.app.ui.theme.Urbanist
 import kotlinx.coroutines.launch
 import java.util.Locale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.VibrantBlue2
-import com.aikonia.app.ui.theme.dancingScriptFontFamily
+import com.aikonia.app.ui.theme.FlowerFontFamily
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 
@@ -100,9 +99,9 @@ fun TextInput(
                             placeholder = {
                                 Text(
                                     stringResource(R.string.ask_me_anything),
-                                    fontSize = 18.sp,
+                                    fontSize = 15.sp,
                                     color = MaterialTheme.colors.onSurface,
-                                    fontFamily = dancingScriptFontFamily,
+                                    fontFamily = FlowerFontFamily,
                                     fontWeight = FontWeight.W600
                                 )
                             },
@@ -110,7 +109,7 @@ fun TextInput(
                         textStyle = TextStyle(
                             color = MaterialTheme.colors.onSurface,
                             fontSize = 16.sp,
-                            fontFamily = dancingScriptFontFamily,
+                            fontFamily = FlowerFontFamily,
                             fontWeight = FontWeight.W600
 
 
@@ -186,9 +185,9 @@ fun TextInput(
                             .background(color = VibrantBlue2, shape = RoundedCornerShape(90.dp))
                     ) {
                         Icon(
-                            if (text.text.isNotEmpty()) painterResource(R.drawable.send) else painterResource(R.drawable.voice),
+                            if (text.text.isNotEmpty()) painterResource(R.drawable.send_button) else painterResource(R.drawable.mic_button),
                             "sendMessage",
-                            modifier = Modifier.size(25.dp),
+                            modifier = Modifier.size(27.dp),
                             tint = MaterialTheme.colors.onSurface
                         )
                     }

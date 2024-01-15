@@ -26,9 +26,9 @@ import com.airbnb.lottie.compose.*
 import com.aikonia.app.R
 import com.aikonia.app.common.bounceClick
 
-import com.aikonia.app.ui.theme.Urbanist
+
 import com.aikonia.app.ui.theme.VibrantBlue2
-import com.aikonia.app.ui.theme.dancingScriptFontFamily
+import com.aikonia.app.ui.theme.FlowerFontFamily
 
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
@@ -101,7 +101,7 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                         style = TextStyle(
                             fontSize = 22.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = dancingScriptFontFamily,
+                            fontFamily = FlowerFontFamily,
                             lineHeight = 25.sp
                         )
                     )
@@ -112,7 +112,7 @@ fun UpgradeButton(onClick: () -> Unit = {}) {
                         style = TextStyle(
                             fontSize = 19.sp,
                             fontWeight = FontWeight.W500,
-                            fontFamily = dancingScriptFontFamily,
+                            fontFamily = FlowerFontFamily,
                             lineHeight = 25.sp
                         )
                     )

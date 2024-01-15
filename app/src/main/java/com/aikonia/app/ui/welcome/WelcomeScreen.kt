@@ -48,6 +48,7 @@ import android.widget.VideoView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.viewinterop.AndroidView
 import android.media.MediaPlayer
+import androidx.compose.foundation.indication
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
@@ -55,6 +56,11 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.ui.draw.shadow
 import com.aikonia.app.ui.theme.VibrantBlue2
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material.ripple.rememberRipple
+
+import androidx.compose.runtime.remember
+
 
 @Composable
 fun WelcomeScreen(
@@ -68,13 +74,23 @@ fun WelcomeScreen(
     val density = LocalDensity.current.density
     var userName by remember { mutableStateOf("") }
     val customTextColor = Color(0xFF, 0xFB, 0xD8, 0xFF)
-    val dancingScriptFontFamily = FontFamily(Font(R.font.dancingscript_bold))
+    val FlowerFontFamily = FontFamily(Font(R.font.indieflower))
     val alpha: Float by rememberInfiniteTransition().animateFloat(
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1500, easing = FastOutSlowInEasing),
             RepeatMode.Reverse
+        )
+    )
+
+    val infiniteTransition = rememberInfiniteTransition()
+    val glowRadius = infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 24f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1500, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
         )
     )
 
@@ -137,8 +153,14 @@ fun WelcomeScreen(
 
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        // VideoView als Hintergrund
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .indication(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(bounded = false, color = Color.White)
+            )
+    ) {
         AndroidView(
             factory = { context ->
                 VideoView(context).also {
@@ -184,8 +206,8 @@ fun WelcomeScreen(
                         Text(
                             "Besuche Aikonia",
                             color = Color.White,
-                            fontFamily = dancingScriptFontFamily, // Ihre benutzerdefinierte Schriftfamilie
-                            fontSize = 24.sp
+                            fontFamily = FlowerFontFamily, // Ihre benutzerdefinierte Schriftfamilie
+                            fontSize = 18.sp
                         )
                     }
                 }
@@ -198,8 +220,8 @@ fun WelcomeScreen(
                 text = "Willkommen in Aikonia, $userName",
                 style = TextStyle(
                     color = Color.White, // Setzt die Textfarbe auf Weiß
-                    fontSize = 24.sp,
-                    fontFamily = dancingScriptFontFamily,
+                    fontSize = 20.sp,
+                    fontFamily = FlowerFontFamily,
                     shadow = Shadow(
                         color = customTextColor.copy(alpha = 0.5f),
                         offset = androidx.compose.ui.geometry.Offset(0f, 0f),
@@ -219,4 +241,4 @@ fun WelcomeScreen(
       }
     }
 
- 
+

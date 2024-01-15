@@ -26,7 +26,7 @@ fun AppBar(
     backgroundColor: Color = VibrantBlue2, // Parameter für Hintergrundfarbe
     menuItems: (@Composable () -> Unit)? = null
 ) {
-    val dancingScriptFontFamily = FontFamily(Font(R.font.dancingscript_regular))
+    val FlowerFontFamily = FontFamily(Font(R.font.indieflower))
 
     Box(
         modifier = Modifier
@@ -42,8 +42,8 @@ fun AppBar(
             color = Color.White, // Setzt die Textfarbe auf Weiß
             style = TextStyle(
                 fontWeight = FontWeight.W700,
-                fontSize = 20.sp,
-                fontFamily = dancingScriptFontFamily,
+                fontSize = 16.sp,
+                fontFamily = FlowerFontFamily,
                 textAlign = TextAlign.Center
             )
         )

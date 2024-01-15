@@ -22,7 +22,7 @@ import com.aikonia.app.common.click
 import com.aikonia.app.common.components.AppBar
 import com.aikonia.app.common.components.IosSwitch
 import com.aikonia.app.common.components.UpgradeButton
-import com.aikonia.app.ui.theme.dancingScriptFontFamily
+import com.aikonia.app.ui.theme.FlowerFontFamily
 import com.aikonia.app.ui.theme.VibrantBlue2
 import com.aikonia.app.ui.theme.White
 
@@ -116,7 +116,7 @@ fun SettingsScreen(
 //                    style = TextStyle(
 //                        fontSize = 18.sp,
 //                        fontWeight = FontWeight.W700,
-//                        fontFamily = dancingScriptFontFamily,
+//                        fontFamily = FlowerFontFamily,
 //                        lineHeight = 25.sp
 //                    )
 //                )
@@ -127,7 +127,7 @@ fun SettingsScreen(
 //                    style = TextStyle(
 //                        fontSize = 16.sp,
 //                        fontWeight = FontWeight.W600,
-//                        fontFamily = dancingScriptFontFamily,
+//                        fontFamily = FlowerFontFamily,
 //                        lineHeight = 25.sp
 //                    )
 //                )
@@ -161,7 +161,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 )
             )
@@ -195,7 +195,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -206,7 +206,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W700,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 )
             )
@@ -242,7 +242,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -263,7 +263,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 )
             )
@@ -305,7 +305,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -333,7 +333,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 )
             )
@@ -368,7 +368,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -408,7 +408,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -448,7 +448,7 @@ fun SettingsScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W600,
-                    fontFamily = dancingScriptFontFamily,
+                    fontFamily = FlowerFontFamily,
                     lineHeight = 25.sp
                 ),
                 modifier = Modifier.weight(1f)
@@ -489,7 +489,7 @@ fun SettingsScreen(
 //                style = TextStyle(
 //                    fontSize = 18.sp,
 //                    fontWeight = FontWeight.W600,
-//                    fontFamily = dancingScriptFontFamily,
+//                    fontFamily = FlowerFontFamily,
 //                    lineHeight = 25.sp
 //                ),
 //                modifier = Modifier.weight(1f)

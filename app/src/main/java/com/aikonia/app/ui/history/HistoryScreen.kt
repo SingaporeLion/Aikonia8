@@ -131,14 +131,14 @@ fun HistoryScreen(
                                 stringResource(R.string.search_conversation),
                                 fontSize = 16.sp,
                                 color = Color.White,
-                                fontFamily = dancingScriptFontFamily,
+                                fontFamily = FlowerFontFamily,
                                 fontWeight = FontWeight.W600
                             )
                         },
                         textStyle = TextStyle(
                             color = Color.White,
                             fontSize = 16.sp,
-                            fontFamily = dancingScriptFontFamily,
+                            fontFamily = FlowerFontFamily,
                             fontWeight = FontWeight.W600
                         ),
                         modifier = Modifier
@@ -253,7 +253,7 @@ fun HistoryScreen(
                         style = TextStyle(
                             fontSize = 25.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = dancingScriptFontFamily,
+                            fontFamily = FlowerFontFamily,
                             lineHeight = 25.sp
                         ),
                         modifier = Modifier.padding(top = 50.dp)
@@ -264,7 +264,7 @@ fun HistoryScreen(
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W500,
-                            fontFamily = dancingScriptFontFamily,
+                            fontFamily = FlowerFontFamily,
                             lineHeight = 25.sp
                         ),
                         modifier = Modifier.padding(top = 15.dp)
@@ -367,7 +367,7 @@ fun HistoryScreen(
                                             style = TextStyle(
                                                 fontSize = 18.sp,
                                                 fontWeight = FontWeight.W700,
-                                                fontFamily = Urbanist,
+                                                fontFamily = FlowerFontFamily,
                                                 lineHeight = 25.sp
                                             )
                                         )
@@ -378,7 +378,7 @@ fun HistoryScreen(
                                             style = TextStyle(
                                                 fontSize = 12.sp,
                                                 fontWeight = FontWeight.W600,
-                                                fontFamily = Urbanist,
+                                                fontFamily = FlowerFontFamily,
                                                 lineHeight = 25.sp
                                             )
                                         )

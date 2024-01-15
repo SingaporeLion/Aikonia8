@@ -22,12 +22,11 @@ import androidx.compose.ui.unit.sp
 import com.aikonia.app.common.bounceClick
 
 import com.aikonia.app.ui.theme.GreenShadow
-import com.aikonia.app.ui.theme.Urbanist
 import com.aikonia.app.ui.theme.White
 import com.aikonia.app.R
 import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.VibrantBlue2
-import com.aikonia.app.ui.theme.dancingScriptFontFamily
+import com.aikonia.app.ui.theme.FlowerFontFamily
 
 @Composable
 fun DeleteHistoryBottomSheet(
@@ -55,7 +54,7 @@ fun DeleteHistoryBottomSheet(
             style = TextStyle(
                 fontSize = 26.sp,
                 fontWeight = FontWeight.W700,
-                fontFamily = dancingScriptFontFamily,
+                fontFamily = FlowerFontFamily,
                 lineHeight = 25.sp
             ),
             textAlign = TextAlign.Center,
@@ -75,7 +74,7 @@ fun DeleteHistoryBottomSheet(
             style = TextStyle(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.W700,
-                fontFamily = dancingScriptFontFamily,
+                fontFamily = FlowerFontFamily,
                 lineHeight = 25.sp
             ),
             textAlign = TextAlign.Center,
@@ -105,7 +104,7 @@ fun DeleteHistoryBottomSheet(
                         style = TextStyle(
                             fontSize = 22.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = dancingScriptFontFamily
+                            fontFamily = FlowerFontFamily
                         ),
                         textAlign = TextAlign.Center
                     )
@@ -137,7 +136,7 @@ fun DeleteHistoryBottomSheet(
                         style = TextStyle(
                             fontSize = 22.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = dancingScriptFontFamily
+                            fontFamily = FlowerFontFamily
                         ),
                         textAlign = TextAlign.Center
                     )

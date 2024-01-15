@@ -134,7 +134,7 @@ fun BotMessageCard(message: MessageModel) {
                 style = RichTextStyle(
                     codeBlockStyle = CodeBlockStyle(
                         textStyle = TextStyle(
-                            fontFamily = dancingScriptFontFamily,
+                            fontFamily = FlowerFontFamily,
                             fontSize = 16.sp,
                             color = White
                         ),

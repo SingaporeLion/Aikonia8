@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.common.bounceClick
 
-import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.FlowerFontFamily
 import com.aikonia.app.ui.theme.VibrantBlue
 import com.aikonia.app.ui.theme.White
 
@@ -30,7 +30,7 @@ fun ChipItem(
         style = TextStyle(
             fontSize = 14.sp,
             fontWeight = FontWeight.W600,
-            fontFamily = Urbanist,
+            fontFamily = FlowerFontFamily,
             lineHeight = 25.sp
         ), modifier = Modifier
             .padding(5.dp)

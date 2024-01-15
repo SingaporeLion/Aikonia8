@@ -23,10 +23,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.aikonia.app.common.click
 import com.aikonia.app.common.components.AppBar
 import com.aikonia.app.data.model.LanguageModel
-import com.aikonia.app.ui.theme.Urbanist
+
 import java.util.*
 import com.aikonia.app.R
-import com.aikonia.app.ui.theme.dancingScriptFontFamily
+import com.aikonia.app.ui.theme.FlowerFontFamily
 
 @Composable
 fun LanguageScreen(
@@ -87,7 +87,7 @@ fun LanguageScreen(
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontWeight = FontWeight.W600,
-                            fontFamily = Urbanist,
+                            fontFamily = FlowerFontFamily,
                             lineHeight = 25.sp
                         ),
                         modifier = Modifier.weight(1f)

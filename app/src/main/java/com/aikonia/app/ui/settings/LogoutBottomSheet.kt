@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aikonia.app.common.bounceClick
 import com.aikonia.app.ui.theme.GreenShadow
-import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.FlowerFontFamily
 import com.aikonia.app.ui.theme.White
 import  com.aikonia.app.R
 import com.aikonia.app.ui.theme.VibrantBlue
@@ -49,7 +49,7 @@ fun LogoutBottomSheet(
             style = TextStyle(
                 fontSize = 22.sp,
                 fontWeight = FontWeight.W700,
-                fontFamily = Urbanist,
+                fontFamily = FlowerFontFamily,
                 lineHeight = 25.sp
             ),
             textAlign = TextAlign.Center,
@@ -68,7 +68,7 @@ fun LogoutBottomSheet(
             style = TextStyle(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.W700,
-                fontFamily = Urbanist,
+                fontFamily = FlowerFontFamily,
                 lineHeight = 25.sp
             ),
             textAlign = TextAlign.Center,
@@ -98,7 +98,7 @@ fun LogoutBottomSheet(
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = Urbanist
+                            fontFamily = FlowerFontFamily
                         ),
                         textAlign = TextAlign.Center
                     )
@@ -129,7 +129,7 @@ fun LogoutBottomSheet(
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = Urbanist
+                            fontFamily = FlowerFontFamily
                         ),
                         textAlign = TextAlign.Center
                     )

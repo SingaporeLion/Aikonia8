@@ -27,7 +27,7 @@ import com.aikonia.app.common.components.AppBar
 import com.aikonia.app.common.components.NoConnectionDialog
 import com.aikonia.app.common.components.ThereIsUpdateDialog
 import com.aikonia.app.ui.activity.isOnline
-import com.aikonia.app.ui.theme.Urbanist
+import com.aikonia.app.ui.theme.FlowerFontFamily
 // import com.aikonia.app.ui.upgrade.PurchaseHelper
 import java.util.Locale
 import androidx.compose.material.OutlinedTextField
@@ -43,7 +43,7 @@ import androidx.compose.runtime.collectAsState
 import android.content.SharedPreferences
 import android.util.Log
 import com.aikonia.app.ui.theme.VibrantBlue
-import com.aikonia.app.ui.theme.dancingScriptFontFamily
+
 
 
 @Composable
@@ -212,7 +212,7 @@ fun StartChatScreen(
                     style = TextStyle(
                         fontSize = 40.sp,
                         fontWeight = FontWeight.W700,
-                        fontFamily = Urbanist,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center
@@ -223,7 +223,7 @@ fun StartChatScreen(
                     style = TextStyle(
                         fontSize = 40.sp,
                         fontWeight = FontWeight.W700,
-                        fontFamily = Urbanist,
+                        fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center
@@ -239,7 +239,7 @@ fun StartChatScreen(
                         style = TextStyle(
                             fontSize = 28.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = Urbanist,
+                            fontFamily = FlowerFontFamily,
                             lineHeight = 25.sp
                         ),
                         textAlign = TextAlign.Center
@@ -251,7 +251,7 @@ fun StartChatScreen(
                         style = TextStyle(
                             fontSize = 25.sp,
                             fontWeight = FontWeight.W700,
-                            fontFamily = Urbanist,
+                            fontFamily = FlowerFontFamily,
                             lineHeight = 25.sp
                         ),
                         textAlign = TextAlign.Center,
