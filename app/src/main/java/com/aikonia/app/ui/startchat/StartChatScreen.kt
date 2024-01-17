@@ -153,14 +153,25 @@ fun StartChatScreen(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Name") }
-                // Weitere Eigenschaften...
+                label = { Text("Name") },
+                textStyle = TextStyle(
+                    color = Color.White, // Textfarbe
+                    fontSize = 16.sp, // Textgröße
+                    fontFamily = FlowerFontFamily, // Schriftart
+                // Fügen Sie hier ggf. weitere Eigenschaften hinzu...
+               )
             )
+
             OutlinedTextField(
                 value = birthYear,
                 onValueChange = { birthYear = it },
-                label = { Text("Geburtsjahr") }
-                // Weitere Eigenschaften...
+                label = { Text("Geburtsjahr") },
+                textStyle = TextStyle(
+                    color = Color.White, // Textfarbe
+                    fontSize = 16.sp, // Textgröße
+                    fontFamily = FlowerFontFamily, // Schriftart
+                    // Fügen Sie hier ggf. weitere Eigenschaften hinzu...
+                )
             )
 
             Box(
@@ -171,7 +182,13 @@ fun StartChatScreen(
                 OutlinedTextField(
                     value = gender,
                     onValueChange = { /* Nichts tun, da die Auswahl über das Dropdown-Menü erfolgt */ },
-                    label = { Text("Geschlecht") },
+                    label = { Text("Mädchen oder Junge?") },
+                    textStyle = TextStyle(
+                        color = Color.White, // Textfarbe
+                        fontSize = 16.sp, // Textgröße
+                        fontFamily = FlowerFontFamily, // Schriftart
+                        // Fügen Sie hier ggf. weitere Eigenschaften hinzu...
+                    ),
                     readOnly = true,
                     trailingIcon = {
                         Icon(Icons.Filled.ArrowDropDown, "Dropdown-Icon", modifier = Modifier.clickable { expanded = !expanded })
@@ -191,7 +208,7 @@ fun StartChatScreen(
                             gender = option
                             expanded = false
                         }) {
-                            Text(option, color = Color.Black) // Setzt die Textfarbe explizit auf Schwarz
+                            Text(option, color = Color.White) // Setzt die Textfarbe explizit auf Schwarz
                         }
                     }
                 }
@@ -206,28 +223,31 @@ fun StartChatScreen(
             //)
             Spacer(modifier = Modifier.height(30.dp))
             if (startChatViewModel.isProVersion.value.not()) {
+
                 Text(
                     text = stringResource(R.string.welcome_to),
-                    color = MaterialTheme.colors.surface,
+                    color = Color.White,
                     style = TextStyle(
-                        fontSize = 40.sp,
+                        fontSize = 34.sp,
                         fontWeight = FontWeight.W700,
                         fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center
                 )
+
                 Text(
                     text = stringResource(R.string.welcome_app_name),
                     color = VibrantBlue,
                     style = TextStyle(
-                        fontSize = 40.sp,
+                        fontSize = 34.sp,
                         fontWeight = FontWeight.W700,
                         fontFamily = FlowerFontFamily,
                         lineHeight = 25.sp
                     ),
                     textAlign = TextAlign.Center
                 )
+
             } else {
                 Row(
                     modifier = Modifier.padding(horizontal = 16.dp),

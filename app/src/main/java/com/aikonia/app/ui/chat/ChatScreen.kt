@@ -247,7 +247,8 @@ fun AppBar(
             text = text,
             style = TextStyle(
                 fontFamily = FlowerFontFamily, // Verwenden Sie die Schriftart, falls erforderlich
-                fontSize = 20.sp,
+                fontSize = 18.sp,
+                color = Color.White,
                 fontWeight = FontWeight.Bold
             ),
             modifier = Modifier.weight(1f),
@@ -257,7 +258,8 @@ fun AppBar(
         IconButton(onClick = onMuteClick) {
             Icon(
                 imageVector = if (isMuted) Icons.Filled.VolumeOff else Icons.Filled.VolumeUp,
-                contentDescription = "Stumm"
+                contentDescription = "Stumm",
+                tint = Color.White
             )
         }
     }

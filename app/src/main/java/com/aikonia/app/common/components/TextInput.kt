@@ -36,7 +36,8 @@ import com.aikonia.app.ui.theme.VibrantBlue2
 import com.aikonia.app.ui.theme.FlowerFontFamily
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
-
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.Image
 
 @Composable
 fun TextInput(
@@ -106,92 +107,92 @@ fun TextInput(
                                 )
                             },
 
-                        textStyle = TextStyle(
-                            color = MaterialTheme.colors.onSurface,
-                            fontSize = 16.sp,
-                            fontFamily = FlowerFontFamily,
-                            fontWeight = FontWeight.W600
+                            textStyle = TextStyle(
+                                color = MaterialTheme.colors.onSurface,
+                                fontSize = 16.sp,
+                                fontFamily = FlowerFontFamily,
+                                fontWeight = FontWeight.W600
 
 
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .defaultMinSize(minHeight = 50.dp)
-                            .heightIn(max = 120.dp)
-                            .padding(end = 18.dp)
-                            .weight(1f)
-                            .border(
-                                1.dp,
-                                if (hasFocus) Color.White else Color.Transparent,
-                                RoundedCornerShape(16.dp)
-                            )
-                            .onFocusChanged { focusState -> hasFocus = focusState.hasFocus },
-                        colors = TextFieldDefaults.textFieldColors(
-                            textColor = Color.White,
-                            focusedIndicatorColor = Color.White,
-                            unfocusedIndicatorColor = Color.White,
-                            disabledIndicatorColor = Color.White,
-                            cursorColor = Color.White,
-                            focusedLabelColor = Color.White,
-                            unfocusedLabelColor = Color.Gray,
-                            backgroundColor = if (hasFocus) VibrantBlue2 else VibrantBlue2
-                        ),
-                        shape = RoundedCornerShape(16.dp)
-                    )
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .defaultMinSize(minHeight = 50.dp)
+                                .heightIn(max = 120.dp)
+                                .padding(end = 18.dp)
+                                .weight(1f)
+                                .border(
+                                    1.dp,
+                                    if (hasFocus) Color.White else Color.Transparent,
+                                    RoundedCornerShape(16.dp)
+                                )
+                                .onFocusChanged { focusState -> hasFocus = focusState.hasFocus },
+                            colors = TextFieldDefaults.textFieldColors(
+                                textColor = Color.White,
+                                focusedIndicatorColor = Color.White,
+                                unfocusedIndicatorColor = Color.White,
+                                disabledIndicatorColor = Color.White,
+                                cursorColor = Color.White,
+                                focusedLabelColor = Color.White,
+                                unfocusedLabelColor = Color.Gray,
+                                backgroundColor = if (hasFocus) VibrantBlue2 else VibrantBlue2
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        )
 
-                    IconButton(
-                        onClick = {
-                            scope.launch {
-                                if (text.text.isNotEmpty()) {
+                        IconButton(
+                            onClick = {
+                                scope.launch {
+                                    if (text.text.isNotEmpty()) {
 
-                                    if (isOnline(context).not()) {
-                                        showDialog = true
-                                        return@launch
-                                    }
+                                        if (isOnline(context).not()) {
+                                            showDialog = true
+                                            return@launch
+                                        }
 
-                                    // Sendet die Nachricht ohne Überprüfung der Pro-Version und des Nachrichtenlimits
-                                    viewModel.sendMessage(text.text)
-                                    text = TextFieldValue("")
-                                    inputText.value = ""
+                                        // Sendet die Nachricht ohne Überprüfung der Pro-Version und des Nachrichtenlimits
+                                        viewModel.sendMessage(text.text)
+                                        text = TextFieldValue("")
+                                        inputText.value = ""
 
-                                } else {
-                                    // Logik für Spracheingabe bleibt unverändert
-                                    if (!SpeechRecognizer.isRecognitionAvailable(context)) {
-                                        Toast.makeText(
-                                            context,
-                                            "Speech not Available",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
                                     } else {
-                                        val intent =
-                                            Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                                        intent.putExtra(
-                                            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                                            RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH
-                                        )
-                                        intent.putExtra(
-                                            RecognizerIntent.EXTRA_LANGUAGE,
-                                            Locale.getDefault()
-                                        )
-                                        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Talk")
-                                        launcher.launch(intent)
+                                        // Logik für Spracheingabe bleibt unverändert
+                                        if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+                                            Toast.makeText(
+                                                context,
+                                                "Speech not Available",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        } else {
+                                            val intent =
+                                                Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                                            intent.putExtra(
+                                                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                                                RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH
+                                            )
+                                            intent.putExtra(
+                                                RecognizerIntent.EXTRA_LANGUAGE,
+                                                Locale.getDefault()
+                                            )
+                                            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Talk")
+                                            launcher.launch(intent)
 
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        modifier = Modifier
-                            .size(50.dp)
-                            .background(color = VibrantBlue2, shape = RoundedCornerShape(90.dp))
-                    ) {
-                        Icon(
-                            if (text.text.isNotEmpty()) painterResource(R.drawable.send_button) else painterResource(R.drawable.mic_button),
-                            "sendMessage",
-                            modifier = Modifier.size(27.dp),
-                            tint = MaterialTheme.colors.onSurface
-                        )
+                            },
+                            modifier = Modifier.size(60.dp) // Größe des Buttons
+                        ) {
+                            // Verwenden Sie die volle Größe des Buttons für das Icon, um sicherzustellen, dass es sichtbar ist
+                            Image(
+                                painter = painterResource(
+                                    id = if (text.text.isNotEmpty()) R.drawable.send_button3_small else R.drawable.mic_button2_small
+                                ),
+                                contentDescription = if (text.text.isNotEmpty()) "Senden" else "Mikrofon",
+                                modifier = Modifier.fillMaxSize() // Füllen Sie den gesamten Button-Bereich aus
+                            )
+                        }
                     }
-                }
             }
         }
     }

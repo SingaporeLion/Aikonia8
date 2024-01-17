@@ -7,11 +7,11 @@
     <string name="account">Konto</string>
     <string name="app_icon">App-Symbol</string>
     <string name="welcome">Willkommen</string>
-    <string name="start_chat">Chat beginnen</string>
-    <string name="welcome_to">Willkommen in</string>
-    <string name="welcome_app_name">Aikonia 👋</string>
+    <string name="start_chat">Lynn erwartet Dich</string>
+    <string name="welcome_to">Entdecke</string>
+    <string name="welcome_app_name">Aikonia</string>
     <string name="welcome_description">Starte jetzt den Chat mit mir.\nDu kannst mich alles fragen.</string>
-    <string name="ask_me_anything">Tippe hier, um mit mir zu sprechen...</string>
+    <string name="ask_me_anything">Lass uns Gedanken teilen...</string>
     <string name="back_icon">Zurück-Symbol</string>
     <string name="share">Teilen</string>
     <string name="writing">Schreiben</string>

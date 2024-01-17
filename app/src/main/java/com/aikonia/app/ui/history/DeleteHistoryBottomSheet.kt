@@ -52,7 +52,7 @@ fun DeleteHistoryBottomSheet(
             text = stringResource(R.string.clear_all_history),
             color = Color.White,
             style = TextStyle(
-                fontSize = 26.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.W700,
                 fontFamily = FlowerFontFamily,
                 lineHeight = 25.sp
@@ -72,7 +72,7 @@ fun DeleteHistoryBottomSheet(
             text = stringResource(R.string.are_you_sure_delete_all_history),
             color = Color.White,
             style = TextStyle(
-                fontSize = 24.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.W700,
                 fontFamily = FlowerFontFamily,
                 lineHeight = 25.sp
@@ -102,7 +102,7 @@ fun DeleteHistoryBottomSheet(
                         text = stringResource(R.string.cancel),
                         color = White,
                         style = TextStyle(
-                            fontSize = 22.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.W700,
                             fontFamily = FlowerFontFamily
                         ),
@@ -134,7 +134,7 @@ fun DeleteHistoryBottomSheet(
                         text = stringResource(R.string.yes_clear_all),
                         color = VibrantBlue2, // Text in VibrantBlue2
                         style = TextStyle(
-                            fontSize = 22.sp,
+                            fontSize = 20.sp,
                             fontWeight = FontWeight.W700,
                             fontFamily = FlowerFontFamily
                         ),
